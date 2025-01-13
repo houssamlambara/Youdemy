@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -69,7 +70,7 @@
                 <div class="w-full p-10">
                     <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">Connexion à Youdemy</h2>
 
-                    <form action="/login" method="POST" class="space-y-6">
+                    <form action="" method="POST" class="space-y-6">
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-700">Adresse email</label>
                             <input type="email" id="email" name="email" required placeholder="Votre email"

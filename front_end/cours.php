@@ -176,7 +176,7 @@
 
         <!-- Cours 5 -->
         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
-            <img src="/api/placeholder/400/200" alt="Business" class="w-full h-48 object-cover">
+            <img src="../img/gestion d'entreprise.jpg" alt="Business" class="w-full h-48 object-cover">
             <div class="p-6">
                 <div class="flex items-center mb-2">
                     <span class="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">Business</span>
@@ -199,7 +199,7 @@
 
         <!-- Cours 6 -->
         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
-            <img src="/api/placeholder/400/200" alt="Data Science" class="w-full h-48 object-cover">
+            <img src="../img/Data Science.jpg" alt="Data Science" class="w-full h-48 object-cover">
             <div class="p-6">
                 <div class="flex items-center mb-2">
                     <span class="bg-red-100 text-red-600 text-xs px-2 py-1 rounded">Data Science</span>
@@ -222,7 +222,7 @@
 
         <!-- Cours 7 -->
         <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
-            <img src="/api/placeholder/400/200" alt="React" class="w-full h-48 object-cover">
+            <img src="../img/React.jpg" alt="React" class="w-full h-48 object-cover">
             <div class="p-6">
                 <div class="flex items-center mb-2">
                     <span class="bg-indigo-100 text-indigo-600 text-xs px-2 py-1 rounded">Développement</span>
