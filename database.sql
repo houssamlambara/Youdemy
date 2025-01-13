@@ -1,16 +1,22 @@
 CREATE DATABASE Youdemy;
 USE Youdemy;
 
-CREATE TABLE utilisateurs (
+CREATE TABLE roles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    role_name VARCHAR(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(255) NOT NULL,
     prenom VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     mot_de_passe VARCHAR(255) NOT NULL,
-    role ENUM('Admin', 'Etudiant', 'Enseignant') NOT NULL,
+    role INT NOT NULL, 
     statut ENUM('Actif', 'Suspendu'),
     statut_enseignant ENUM('En_attente', 'Valide', 'Refuse'),
-    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (role) REFERENCES roles(id)
 );
 
 CREATE TABLE cours (
@@ -21,7 +27,7 @@ CREATE TABLE cours (
     enseignant_id INT,
     categorie_id INT,
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (enseignant_id) REFERENCES utilisateurs(id) ON DELETE SET NULL,
+    FOREIGN KEY (enseignant_id) REFERENCES users(id) ON DELETE SET NULL,
     FOREIGN KEY (categorie_id) REFERENCES categories(id) ON DELETE SET NULL
 );
 
@@ -49,7 +55,7 @@ CREATE TABLE inscriptions (
     etudiant_id INT,
     cours_id INT,
     date_inscription TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (etudiant_id) REFERENCES utilisateurs(id) ON DELETE CASCADE,
+    FOREIGN KEY (etudiant_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (cours_id) REFERENCES cours(id) ON DELETE CASCADE
 );
 
@@ -64,7 +70,7 @@ CREATE TABLE validation_enseignants (
     enseignant_id INT PRIMARY KEY,
     statut_validation ENUM('En_attente', 'Valide', 'Refuse') DEFAULT 'en_attente',
     date_validation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (enseignant_id) REFERENCES utilisateurs(id) ON DELETE CASCADE
+    FOREIGN KEY (enseignant_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE logs_admin (
@@ -74,5 +80,9 @@ CREATE TABLE logs_admin (
     cible_type ENUM('Utilisateur', 'Cours', 'Categorie', 'Tag', 'Validation') NOT NULL,
     cible_id INT NOT NULL,
     date_action TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (admin_id) REFERENCES utilisateurs(id) ON DELETE CASCADE
+    FOREIGN KEY (admin_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+INSERT INTO roles (role_name) VALUES ('Admin');
+INSERT INTO roles (role_name) VALUES ('Etudiant');
+INSERT INTO roles (role_name) VALUES ('Enseignant');
