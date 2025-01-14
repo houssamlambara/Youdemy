@@ -142,7 +142,7 @@ public function save() {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($result) {
-            return new User($result['id'], $result['nom'], $result['prenom'], $result['email'], $result['password']);
+            return new User($result['id'], $result['nom'], $result['prenom'], $result['email'], $result['role'], $result['password']);
         }
 
         return null;
