@@ -1,3 +1,22 @@
+<?php
+include_once('../classes/class_categorie.php');
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_categorie'])) {
+    $nom = htmlspecialchars($_POST['nom']);
+
+    $categorie = new Categorie($nom);
+
+    if ($categorie->save()) {
+        header("Location: categorie.php");
+        exit();
+    } else {
+        echo "Erreur lors de l'ajout de la catégorie.";
+    }
+}
+
+$categories = Categorie::getAll();
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -57,7 +76,7 @@
                 <div class="flex justify-between items-center px-8 py-4">
                     <h1 class="text-2xl font-bold text-gray-800">Gestion des Catégories</h1>
                     <div class="flex items-center gap-4">
-                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-2">
+                        <button data-modal-toggle="addCategorieModal" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-2">
                             <i class="fas fa-plus"></i>
                             Ajouter une Catégorie
                         </button>
@@ -75,56 +94,54 @@
                 <table class="min-w-full bg-white shadow rounded-lg">
                     <thead>
                         <tr>
+                            <th class="px-6 py-3 text-left text-gray-600">ID</th>
                             <th class="px-6 py-3 text-left text-gray-600">Nom de la Catégorie</th>
-                            <th class="px-6 py-3 text-left text-gray-600">Nombre de Cours</th>
                             <th class="px-6 py-3 text-left text-gray-600">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Category 1 -->
-                        <tr class="border-b">
-                            <td class="px-6 py-3">Développement Web</td>
-                            <td class="px-6 py-3">82</td>
-                            <td class="px-6 py-3">
-                                <button class="text-indigo-600 hover:underline">
-                                    <i class="fas fa-edit"></i> Modifier
-                                </button>
-                                <button class="ml-4 text-red-600 hover:underline">
-                                    <i class="fas fa-trash-alt"></i> Supprimer
-                                </button>
-                            </td>
-                        </tr>
-                        <!-- Category 2 -->
-                        <tr class="border-b">
-                            <td class="px-6 py-3">Design</td>
-                            <td class="px-6 py-3">54</td>
-                            <td class="px-6 py-3">
-                                <button class="text-indigo-600 hover:underline">
-                                    <i class="fas fa-edit"></i> Modifier
-                                </button>
-                                <button class="ml-4 text-red-600 hover:underline">
-                                    <i class="fas fa-trash-alt"></i> Supprimer
-                                </button>
-                            </td>
-                        </tr>
-                        <!-- Category 3 -->
-                        <tr class="border-b">
-                            <td class="px-6 py-3">Marketing Digital</td>
-                            <td class="px-6 py-3">45</td>
-                            <td class="px-6 py-3">
-                                <button class="text-indigo-600 hover:underline">
-                                    <i class="fas fa-edit"></i> Modifier
-                                </button>
-                                <button class="ml-4 text-red-600 hover:underline">
-                                    <i class="fas fa-trash-alt"></i> Supprimer
-                                </button>
-                            </td>
-                        </tr>
+                        <?php foreach ($categories as $category): ?>
+                            <tr class="border-b">
+                                <td class="px-6 py-3"><?= htmlspecialchars($category['id']) ?></td>
+                                <td class="px-6 py-3"><?= $category['nom'] ?></td>
+                                <td class="px-6 py-3">
+                                    <button class="ml-4 text-red-600 hover:underline">
+                                        <i class="fas fa-trash-alt"></i> Supprimer
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </main>
         </div>
     </div>
+
+    <!-- Modal for adding a category -->
+    <div id="addCategorieModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden">
+        <div class="bg-white p-6 rounded-lg w-1/3">
+            <h3 class="text-xl font-semibold mb-4">Ajouter une nouvelle catégorie</h3>
+            <form method="POST">
+                <div class="mb-4">
+                    <label for="nom" class="block text-gray-600">Nom de la catégorie</label>
+                    <input type="text" name="nom" id="category_name" class="w-full px-4 py-2 border rounded-lg" required>
+                </div>
+                <button type="submit" name="add_categorie" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Ajouter</button>
+                <button type="button" class="ml-4 text-red-600 hover:underline" onclick="document.getElementById('addCategorieModal').classList.add('hidden')">Annuler</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('[data-modal-toggle="addCategorieModal"]').addEventListener('click', function() {
+            document.getElementById('addCategorieModal').classList.remove('hidden');
+        });
+
+        // Après l'envoi du formulaire, vous pouvez fermer le modal
+        document.querySelector('form').addEventListener('submit', function() {
+            document.getElementById('addCategorieModal').classList.add('hidden');
+        });
+    </script>
 </body>
 
 </html>
