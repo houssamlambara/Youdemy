@@ -39,16 +39,13 @@
                         <a href="../index.php" class="block py-2 px-3 text-indigo-600" aria-current="page">Accueil</a>
                     </li>
                     <li>
-                        <a href="./front_end/cours.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Cours</a>
-                    </li>
-                    <li>
-                        <a href="./front_end/categorie.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Catégories</a>
+                        <a href="./front_end/categorie.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Cours</a>
                     </li>
                     <li>
                         <a href="./front_end/programmes.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Programmes</a>
                     </li>
                     <li>
-                        <a href="./front_end/enseignant.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Enseignants</a>
+                        <a href="#" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">About Youdemy</a>
                     </li>
                 </ul>
             </div>
@@ -61,12 +58,14 @@
                 <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-white">Apprenez sans limites avec Youdemy</h1>
                 <p class="max-w-2xl mb-6 font-light text-gray-100 lg:mb-8 md:text-lg lg:text-xl">Développez vos compétences avec plus de 1000 cours en ligne créés par des experts du monde entier.</p>
                 <div class="space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
-                    <button class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-indigo-600 bg-white rounded-lg hover:bg-indigo-50 focus:ring-4 focus:ring-indigo-300">
+                    <a href="./login/signup.php" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-indigo-600 bg-white rounded-lg hover:bg-indigo-50 focus:ring-4 focus:ring-indigo-300">
                         Commencer gratuitement
-                    </button>
-                    <button class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white border border-white rounded-lg hover:bg-white/10 focus:ring-4 focus:ring-gray-100">
+                    </a>
+
+                    <a href="./front_end/categorie.php" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white border border-white rounded-lg hover:bg-white/10 focus:ring-4 focus:ring-gray-100">
                         Explorer les cours
-                    </button>
+                    </a>
+
                 </div>
             </div>
             <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
@@ -163,47 +162,48 @@
 </body>
 <!-- Footer Amélioré -->
 <footer class="bg-gradient-to-r from-gray-900 to-black text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-                <!-- Colonnes précédentes avec des améliorations visuelles subtiles -->
-                <div>
-                    <img src="https://via.placeholder.com/150x50?text=RoadRover" alt="RoadRover Logo" class="mb-4 mx-auto transform hover:scale-110 transition duration-300">
-                    <p class="text-sm text-gray-400">RoadRover - Votre partenaire de confiance pour la location de voitures de luxe.</p>
-                </div>
-
-                <div>
-                    <h4 class="font-bold mb-4 text-yellow-500">Liens Rapides</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#home" class="hover:text-yellow-400 transition duration-300">Accueil</a></li>
-                        <li><a href="#cars" class="hover:text-yellow-400 transition duration-300">Véhicules</a></li>
-                        <li><a href="#reservation" class="hover:text-yellow-400 transition duration-300">Réservation</a></li>
-                        <li><a href="#about" class="hover:text-yellow-400 transition duration-300">À Propos</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-bold mb-4 text-yellow-500">Contact</h4>
-                    <ul class="space-y-2">
-                        <li><i class="fas fa-phone mr-2 text-yellow-500"></i>+33 1 23 45 67 89</li>
-                        <li><i class="fas fa-envelope mr-2 text-yellow-500"></i>contact@roadrover.com</li>
-                        <li><i class="fas fa-map-marker-alt mr-2 text-yellow-500"></i>Paris, France</li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-bold mb-4 text-yellow-500">Suivez-nous</h4>
-                    <div class="flex space-x-4 justify-center">
-                        <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+            <!-- Colonnes précédentes avec des améliorations visuelles subtiles -->
+            <div>
+                <img src="https://via.placeholder.com/150x50?text=RoadRover" alt="RoadRover Logo" class="mb-4 mx-auto transform hover:scale-110 transition duration-300">
+                <p class="text-sm text-gray-400">RoadRover - Votre partenaire de confiance pour la location de voitures de luxe.</p>
             </div>
 
-            <div class="mt-8 pt-8 border-t border-gray-800 text-center">
-                <p class="text-sm text-gray-400">&copy; 2024 Youdemy. Tous droits réservés.</p>
+            <div>
+                <h4 class="font-bold mb-4 text-yellow-500">Liens Rapides</h4>
+                <ul class="space-y-2">
+                    <li><a href="#home" class="hover:text-yellow-400 transition duration-300">Accueil</a></li>
+                    <li><a href="#cars" class="hover:text-yellow-400 transition duration-300">Véhicules</a></li>
+                    <li><a href="#reservation" class="hover:text-yellow-400 transition duration-300">Réservation</a></li>
+                    <li><a href="#about" class="hover:text-yellow-400 transition duration-300">À Propos</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold mb-4 text-yellow-500">Contact</h4>
+                <ul class="space-y-2">
+                    <li><i class="fas fa-phone mr-2 text-yellow-500"></i>+33 1 23 45 67 89</li>
+                    <li><i class="fas fa-envelope mr-2 text-yellow-500"></i>contact@roadrover.com</li>
+                    <li><i class="fas fa-map-marker-alt mr-2 text-yellow-500"></i>Paris, France</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold mb-4 text-yellow-500">Suivez-nous</h4>
+                <div class="flex space-x-4 justify-center">
+                    <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-linkedin"></i></a>
+                </div>
             </div>
         </div>
-    </footer>
+
+        <div class="mt-8 pt-8 border-t border-gray-800 text-center">
+            <p class="text-sm text-gray-400">&copy; 2024 Youdemy. Tous droits réservés.</p>
+        </div>
+    </div>
+</footer>
+
 </html>
