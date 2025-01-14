@@ -22,7 +22,6 @@ CREATE TABLE users (
 CREATE TABLE categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(255) NOT NULL,
-    description TEXT,
     archiver BOOLEAN DEFAULT FALSE
 );
 
@@ -92,3 +91,13 @@ CREATE TABLE logs_admin (
 INSERT INTO roles (role_name) VALUES ('Admin');
 INSERT INTO roles (role_name) VALUES ('Etudiant');
 INSERT INTO roles (role_name) VALUES ('Enseignant');
+
+INSERT INTO cours (titre, description, image_url, enseignant_id, categorie_id, prix)
+VALUES
+('JavaScript Moderne', 'Maîtrisez JavaScript ES6+ et les concepts modernes.', '../img/JS.jpg', 1, 1, 49.95),
+('Marketing Digital Avancé', 'Stratégies de marketing digital efficaces.', '../img/Marketing digital.jpg', 2, 2, 59.95),
+('UX Design Complet', 'De débutant à expert en UX Design.', '../img/UI UX.jpg', 3, 2, 69.95),
+('Python pour Débutants', 'Apprenez Python de zéro.', '../img/Developpeur.jpg', 3, 2, 44.95),
+('Gestion d\'Entreprise', 'Stratégies avancées de gestion.', '../img/gestion d\'entreprise.jpg', 3, 1, 79.95),
+('Introduction à la Data Science', 'Analyse de données avec Python.', '../img/Data Science.jpg', 3, 1, 64.95),
+('React.js Professionnel', 'Développement d\'applications modernes.', '../img/React.jpg', 3, 1, 69.95);
