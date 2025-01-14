@@ -1,3 +1,39 @@
+<?php
+session_start();
+include_once "../classes/database.php";
+include_once "../classes/class_user.php";
+
+$error = '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+
+    if (empty($email) || empty($password)) {
+        $error = "Email et mot de passe sont requis.";
+    } else {
+        try {
+            $authenticatedUser = User::signin($email, $password);
+
+            $_SESSION['id'] = $authenticatedUser->getId();
+            $_SESSION['role'] = $authenticatedUser->getRole();
+
+            if ($authenticatedUser->getRole() == 2) { 
+                header("Location: ../front_end/admin.php");
+            } else {
+                header("Location: ../front_end/categorie.php");
+            }
+            exit();
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+        }
+    }
+}
+?>
+
+<?php if ($error): ?>
+    <div class="error"><?php echo $error; ?></div>
+<?php endif; ?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -12,7 +48,7 @@
 
 <body class="bg-gray-50">
     <!-- Navigation -->
-    <nav class="bg-white border-gray-200 shadow-sm fixed w-full top-0 z-50">
+    <!-- <nav class="bg-white border-gray-200 shadow-sm fixed w-full top-0 z-50">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a href="../index.php" class="flex items-center space-x-3">
                 <span class="self-center text-2xl font-bold text-indigo-600">Youdemy</span>
@@ -54,7 +90,7 @@
                 </ul>
             </div>
         </div>
-    </nav>
+    </nav> -->
 
     <!-- Main Content avec padding-top pour compenser la navbar fixe -->
     <main class="mt-8">
