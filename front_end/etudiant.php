@@ -11,8 +11,8 @@
 
 <body class="bg-gray-100">
     <div class="flex min-h-screen">
-        <!-- Sidebar -->
-        <aside class="w-64 bg-indigo-700 text-white min-h-screen">
+         <!-- Sidebar -->
+         <aside class="w-64 bg-indigo-700 text-white min-h-screen">
             <div class="p-6">
                 <h2 class="text-2xl font-bold">Youdemy</h2>
             </div>
@@ -22,7 +22,7 @@
                         <i class="fas fa-home w-6"></i>
                         <span>Tableau de bord</span>
                     </a>
-                    <a href="./cours.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
+                    <a href="./addcours.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
                         <i class="fas fa-book w-6"></i>
                         <span>Cours</span>
                     </a>
@@ -34,18 +34,21 @@
                         <i class="fas fa-chalkboard-teacher w-6"></i>
                         <span>Enseignant</span>
                     </a>
+                    <a href="./categorie.php" class="flex items-center p-3 bg-indigo-800 rounded-lg">
+                        <i class="fas fa-th-list w-6"></i>
+                        <span>Catégories</span>
+                    </a>
                     <a href="./statistique.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
                         <i class="fas fa-chart-line w-6"></i>
                         <span>Statistiques</span>
                     </a>
-                    <a href="#" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
-                        <i class="fas fa-cog w-6"></i>
-                        <span>Paramètres</span>
+                    <a href="../index.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
+                        <i class="fas fa-sign-out-alt w-6"></i>
+                        <span>Se déconnecter</span>
                     </a>
                 </div>
             </nav>
         </aside>
-
         <!-- Main Content -->
         <div class="flex-1">
             <!-- Top Navigation -->
