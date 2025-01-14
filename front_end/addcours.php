@@ -1,9 +1,47 @@
 <?php
-require_once '../classes/database.php';
+require_once('../classes/class_cours.php');
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
+
+    $titre = htmlspecialchars($_POST['titre']);
+    $description = htmlspecialchars($_POST['description']);
+    $categorie_id = htmlspecialchars($_POST['categorie_id']);
+    $prix = htmlspecialchars($_POST['prix']);
+    $image_url = '';
+
+    if (isset($_FILES['image_url']) && !empty($_FILES['image_url']['name'])) {
+        $dir = '../uploads/';
+        $path = basename($_FILES['image_url']['name']);
+        $finalPath = $dir . uniqid() . "_" . $path;
+        $allowedExtensions = ['png', 'jpg', 'jpeg', 'gif', 'svg'];
+        $extension = pathinfo($finalPath, PATHINFO_EXTENSION);
+
+        if (in_array(strtolower($extension), $allowedExtensions)) {
+            if (move_uploaded_file($_FILES['image_url']['tmp_name'], $finalPath)) {
+                $image_url = $finalPath;
+            } else {
+                echo "Erreur lors du téléchargement de l'image.";
+            }
+        } else {
+            echo "Extension non autorisée pour l'image.";
+        }
+
+        $cours = new Cours($titre, $description, $image_url, $categorie_id, $prix);
+
+        if ($cours->save()) {
+            echo "Le cours a été ajouté avec succès !";
+            header('Location: addcours.php');
+            exit();
+        } else {
+            echo "Une erreur s'est produite lors de l'ajout du cours.";
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,10 +49,11 @@ require_once '../classes/database.php';
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100">
     <div class="flex min-h-screen">
-       <!-- Sidebar -->
-       <aside class="w-64 bg-indigo-700 text-white min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-indigo-700 text-white min-h-screen">
             <div class="p-6">
                 <h2 class="text-2xl font-bold">Youdemy</h2>
             </div>
@@ -60,7 +99,7 @@ require_once '../classes/database.php';
                 <div class="flex justify-between items-center px-8 py-4">
                     <h1 class="text-2xl font-bold text-gray-800">Gestion des Cours</h1>
                     <div class="flex items-center gap-4">
-                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-2">
+                        <button data-modal-toggle="addCourseModal" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-2">
                             <i class="fas fa-plus"></i>
                             Nouveau Cours
                         </button>
@@ -78,13 +117,61 @@ require_once '../classes/database.php';
 
             <!-- Courses Content -->
             <main class="p-8">
+                <!-- Formulaire pour ajouter un cours -->
+                <!-- Courses Content -->
+                <main class="p-8">
+                    <!-- Formulaire pour ajouter un cours -->
+                    <div id="addCourseModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden">
+                        <div class="bg-white p-6 rounded-lg w-1/3">
+                            <h3 class="text-xl font-semibold mb-4">Ajouter un nouveau cours</h3>
+                            <form method="POST" action="" enctype="multipart/form-data">
+                                <div class="mb-4">
+                                    <label for="course_name" class="block text-gray-600">Nom du cours</label>
+                                    <input type="text" name="titre" id="course_name" class="w-full px-4 py-2 border rounded-lg" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="description" class="block text-gray-600">Description</label>
+                                    <textarea name="description" id="description" class="w-full px-4 py-2 border rounded-lg" required></textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="category" class="block text-gray-600">Catégorie</label>
+                                    <select name="categorie_id" id="category" class="w-full px-4 py-2 border rounded-lg">
+                                        <option value="1">Informatique</option>
+                                        <option value="2">Design</option>
+                                        <option value="3">Marketing</option>
+                                        <option value="4">UI/UX</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="price" class="block text-gray-600">Prix</label>
+                                    <input type="number" name="prix" id="prix" class="w-full px-4 py-2 border rounded-lg" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="status" class="block text-gray-600">Statut</label>
+                                    <select name="" id="status" class="w-full px-4 py-2 border rounded-lg">
+                                        <option value="Publié">Publié</option>
+                                        <option value="Brouillon">Brouillon</option>
+                                        <option value="En révision">En révision</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="image_url" class="block text-gray-600">Image</label>
+                                    <input type="file" name="image_url" id="image_url" class="w-full px-4 py-2 border rounded-lg">
+                                </div>
+                                <button type="submit" name="add_course" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Ajouter</button>
+                                <button type="button" class="ml-4 text-red-600 hover:underline" onclick="document.getElementById('addCourseModal').classList.add('hidden')">Annuler</button>
+                            </form>
+                        </div>
+                    </div>
+                </main>
+
                 <!-- Filters -->
                 <div class="bg-white rounded-lg shadow mb-6 p-6">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Rechercher</label>
                             <div class="relative">
-                                <input type="text" placeholder="Nom du cours..." 
+                                <input type="text" placeholder="Nom du cours..."
                                     class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                 <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
                             </div>
@@ -278,4 +365,11 @@ require_once '../classes/database.php';
         </div>
     </div>
 </body>
+<script>
+    document.querySelector('[data-modal-toggle="addCourseModal"]').addEventListener('click', function() {
+        document.getElementById('addCourseModal').classList.remove('hidden');
+    });
+</script>
+
+
 </html>
