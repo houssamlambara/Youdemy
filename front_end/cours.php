@@ -1,273 +1,470 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des Cours - Admin</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <title>Youdemy - Plateforme de Cours en Ligne</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100">
-    <div class="flex min-h-screen">
-       <!-- Sidebar -->
-       <aside class="w-64 bg-indigo-700 text-white min-h-screen">
-            <div class="p-6">
-                <h2 class="text-2xl font-bold">Youdemy</h2>
+
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white border-gray-200 shadow-sm fixed w-full z-50">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="../index.php" class="flex items-center space-x-3">
+                <span class="self-center text-2xl font-bold text-indigo-600">Youdemy</span>
+            </a>
+            <div class="flex md:order-2 space-x-3">
+                <a href="../login/signin.php" class="text-white bg-indigo-600 hover:bg-indigo-700 font-medium rounded-lg text-sm px-4 py-2">
+                    Connexion
+                </a>
+                <a href="../login/signup.php" class="text-indigo-600 bg-white hover:bg-indigo-50 hover:text-indigo-700 font-medium rounded-lg text-sm px-4 py-2 border border-indigo-600">
+                    S'inscrire
+                </a>
+                <button data-collapse-toggle="navbar-sticky" type="button"
+                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100"
+                    aria-controls="navbar-sticky" aria-expanded="false">
+                    <span class="sr-only">Menu</span>
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M1 1h15M1 7h15M1 13h15" />
+                    </svg>
+                </button>
             </div>
-            <nav class="mt-6">
-                <div class="px-4 space-y-2">
-                    <a href="./admin.php" class="flex items-center p-3 bg-indigo-800 rounded-lg">
-                        <i class="fas fa-home w-6"></i>
-                        <span>Tableau de bord</span>
-                    </a>
-                    <a href="./cours.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
-                        <i class="fas fa-book w-6"></i>
-                        <span>Cours</span>
-                    </a>
-                    <a href="./etudiant.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
-                        <i class="fas fa-users w-6"></i>
-                        <span>Étudiants</span>
-                    </a>
-                    <a href="./enseignant.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
-                        <i class="fas fa-chalkboard-teacher w-6"></i>
-                        <span>Enseignant</span>
-                    </a>
-                    <a href="./statistique.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
-                        <i class="fas fa-chart-line w-6"></i>
-                        <span>Statistiques</span>
-                    </a>
-                    <a href="#" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
-                        <i class="fas fa-cog w-6"></i>
-                        <span>Paramètres</span>
-                    </a>
-                </div>
-            </nav>
-        </aside>
+            <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+                <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 md:flex-row md:mt-0 md:border-0 md:bg-white">
+                    <li>
+                        <a href="../index.php" class="block py-2 px-3 text-indigo-600" aria-current="page">Accueil</a>
+                    </li>
+                    <li>
+                        <a href="./front_end/cours.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Cours</a>
+                    </li>
+                    <li>
+                        <a href="./front_end/programmes.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Programmes</a>
+                    </li>
+                    <li>
+                        <a href="./front_end/enseignant.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Enseignants</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
+    <!-- Filtres et Catalogue -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- En-tête et filtres -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 mt-12">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900">Catalogue des cours</h1>
+                <p class="mt-2 text-gray-600">Découvrez notre sélection de cours de qualité</p>
+            </div>
+            <div class="mt-4 md:mt-0 flex flex-wrap gap-2">
+                <select class="bg-white border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500">
+                    <option>Tous les niveaux</option>
+                    <option>Débutant</option>
+                    <option>Intermédiaire</option>
+                    <option>Avancé</option>
+                </select>
+                <select class="bg-white border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500">
+                    <option>Toutes les catégories</option>
+                    <option>Développement</option>
+                    <option>Business</option>
+                    <option>Design</option>
+                    <option>Marketing</option>
+                </select>
+            </div>
+        </div>
 
-        <!-- Main Content -->
-        <div class="flex-1">
-            <!-- Top Navigation -->
-            <header class="bg-white shadow">
-                <div class="flex justify-between items-center px-8 py-4">
-                    <h1 class="text-2xl font-bold text-gray-800">Gestion des Cours</h1>
-                    <div class="flex items-center gap-4">
-                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-2">
-                            <i class="fas fa-plus"></i>
-                            Nouveau Cours
-                        </button>
-                        <button class="relative text-gray-500 hover:text-gray-700">
-                            <i class="fas fa-bell text-xl"></i>
-                            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">3</span>
-                        </button>
-                        <div class="flex items-center gap-2">
-                            <img src="/api/placeholder/40/40" alt="Profile" class="w-10 h-10 rounded-full">
-                            <span class="font-medium">Admin</span>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Courses Content -->
-            <main class="p-8">
-                <!-- Filters -->
-                <div class="bg-white rounded-lg shadow mb-6 p-6">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Rechercher</label>
-                            <div class="relative">
-                                <input type="text" placeholder="Nom du cours..." 
-                                    class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+        <!-- Grille des cours -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Cours 1 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <?php foreach ($courses as $cours): ?>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                        <img src="../img/<?php echo htmlspecialchars($cours->image_url); ?>" alt="<?php echo htmlspecialchars($cours->titre); ?>" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-2">
+                                <span class="bg-indigo-100 text-indigo-600 text-xs px-2 py-1 rounded"><?php echo htmlspecialchars($cours->category); ?></span>
                             </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Catégorie</label>
-                            <select class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                <option>Toutes les catégories</option>
-                                <option>Développement Web</option>
-                                <option>Design</option>
-                                <option>Marketing</option>
-                                <option>Business</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Statut</label>
-                            <select class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                <option>Tous les statuts</option>
-                                <option>Publié</option>
-                                <option>Brouillon</option>
-                                <option>En révision</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Trier par</label>
-                            <select class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                <option>Plus récent</option>
-                                <option>Plus ancien</option>
-                                <option>Plus populaire</option>
-                                <option>Mieux noté</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Courses List -->
-                <div class="bg-white rounded-lg shadow">
-                    <div class="p-6 border-b flex justify-between items-center">
-                        <h2 class="text-xl font-bold">Liste des Cours</h2>
-                        <div class="flex gap-2">
-                            <button class="p-2 text-gray-500 hover:text-gray-700">
-                                <i class="fas fa-list"></i>
-                            </button>
-                            <button class="p-2 text-gray-500 hover:text-gray-700">
-                                <i class="fas fa-grid-2"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <table class="w-full">
-                            <thead>
-                                <tr class="text-left text-gray-500 border-b">
-                                    <th class="pb-4">Cours</th>
-                                    <th class="pb-4">Catégorie</th>
-                                    <th class="pb-4">Prix</th>
-                                    <th class="pb-4">Statut</th>
-                                    <th class="pb-4">Étudiants</th>
-                                    <th class="pb-4">Dernière mise à jour</th>
-                                    <th class="pb-4">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y">
-                                <tr>
-                                    <td class="py-4">
-                                        <div class="flex items-center gap-3">
-                                            <img src="/api/placeholder/48/48" alt="Course" class="w-12 h-12 rounded-lg object-cover">
-                                            <div>
-                                                <p class="font-medium">Les bases du développement web</p>
-                                                <p class="text-sm text-gray-500">Par Michel Dupont</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm">
-                                            Développement
-                                        </span>
-                                    </td>
-                                    <td>49.99 €</td>
-                                    <td>
-                                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">
-                                            Publié
-                                        </span>
-                                    </td>
-                                    <td>1,234</td>
-                                    <td>Il y a 2 jours</td>
-                                    <td>
-                                        <div class="flex gap-2">
-                                            <button class="p-2 text-blue-600 hover:text-blue-800">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="p-2 text-red-600 hover:text-red-800">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                            <button class="p-2 text-gray-600 hover:text-gray-800">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-4">
-                                        <div class="flex items-center gap-3">
-                                            <img src="/api/placeholder/48/48" alt="Course" class="w-12 h-12 rounded-lg object-cover">
-                                            <div>
-                                                <p class="font-medium">Design d'interface utilisateur</p>
-                                                <p class="text-sm text-gray-500">Par Sophie Martin</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">
-                                            Design
-                                        </span>
-                                    </td>
-                                    <td>39.99 €</td>
-                                    <td>
-                                        <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm">
-                                            En révision
-                                        </span>
-                                    </td>
-                                    <td>856</td>
-                                    <td>Il y a 5 jours</td>
-                                    <td>
-                                        <div class="flex gap-2">
-                                            <button class="p-2 text-blue-600 hover:text-blue-800">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="p-2 text-red-600 hover:text-red-800">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                            <button class="p-2 text-gray-600 hover:text-gray-800">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-4">
-                                        <div class="flex items-center gap-3">
-                                            <img src="/api/placeholder/48/48" alt="Course" class="w-12 h-12 rounded-lg object-cover">
-                                            <div>
-                                                <p class="font-medium">Marketing Digital Avancé</p>
-                                                <p class="text-sm text-gray-500">Par Jean Dubois</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm">
-                                            Marketing
-                                        </span>
-                                    </td>
-                                    <td>59.99 €</td>
-                                    <td>
-                                        <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
-                                            Brouillon
-                                        </span>
-                                    </td>
-                                    <td>0</td>
-                                    <td>Il y a 1 semaine</td>
-                                    <td>
-                                        <div class="flex gap-2">
-                                            <button class="p-2 text-blue-600 hover:text-blue-800">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="p-2 text-red-600 hover:text-red-800">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                            <button class="p-2 text-gray-600 hover:text-gray-800">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <!-- Pagination -->
-                        <div class="flex justify-between items-center mt-6">
-                            <p class="text-gray-500">Affichage de 1-10 sur 48 cours</p>
-                            <div class="flex gap-2">
-                                <button class="px-4 py-2 border rounded-lg hover:bg-gray-50">Précédent</button>
-                                <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">1</button>
-                                <button class="px-4 py-2 border rounded-lg hover:bg-gray-50">2</button>
-                                <button class="px-4 py-2 border rounded-lg hover:bg-gray-50">3</button>
-                                <button class="px-4 py-2 border rounded-lg hover:bg-gray-50">Suivant</button>
+                            <h3 class="text-xl font-bold mb-2"><?php echo htmlspecialchars($cours->titre); ?></h3>
+                            <p class="text-gray-600 mb-4"><?php echo htmlspecialchars($cours->description); ?></p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xl font-bold text-indigo-600"><?php echo number_format($cours->prix, 2, ',', ' ') . '€'; ?></span>
+                                <button class="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg">
+                                    Voir le cours
+                                </button>
                             </div>
                         </div>
                     </div>
+                <?php endforeach; ?>
+            </div>
+
+            <!-- Cours 2 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                <img src="../img/Marketing digital.jpg" alt="Marketing Digital" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center mb-2">
+                        <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded">Marketing</span>
+                        <span class="ml-2 text-sm text-gray-500">Intermédiaire</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Marketing Digital Avancé</h3>
+                    <p class="text-gray-600 mb-4">Stratégies de marketing digital efficaces</p>
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">★★★★☆</div>
+                        <span class="ml-2 text-sm text-gray-600">4.5 (856 avis)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl font-bold text-indigo-600">59.99€</span>
+                        <button class="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg">
+                            Voir le cours
+                        </button>
+                    </div>
                 </div>
-            </main>
+            </div>
+
+            <!-- Cours 3 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                <img src="../img/UI UX.jpg" alt="UX Design" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center mb-2">
+                        <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded">Design</span>
+                        <span class="ml-2 text-sm text-gray-500">Tous niveaux</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">UX Design Complet</h3>
+                    <p class="text-gray-600 mb-4">De débutant à expert en UX Design</p>
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">★★★★★</div>
+                        <span class="ml-2 text-sm text-gray-600">4.9 (2,100 avis)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl font-bold text-indigo-600">69.99€</span>
+                        <button class="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg">
+                            Voir le cours
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cours 4 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                <img src="../img/Developpeur.jpg" alt="Python" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center mb-2">
+                        <span class="bg-indigo-100 text-indigo-600 text-xs px-2 py-1 rounded">Développement</span>
+                        <span class="ml-2 text-sm text-gray-500">Débutant</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Python pour Débutants</h3>
+                    <p class="text-gray-600 mb-4">Apprenez Python de zéro</p>
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">★★★★★</div>
+                        <span class="ml-2 text-sm text-gray-600">4.7 (3,421 avis)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl font-bold text-indigo-600">44.99€</span>
+                        <button class="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg">
+                            Voir le cours
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cours 5 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                <img src="../img/gestion d'entreprise.jpg" alt="Business" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center mb-2">
+                        <span class="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">Business</span>
+                        <span class="ml-2 text-sm text-gray-500">Avancé</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Gestion d'Entreprise</h3>
+                    <p class="text-gray-600 mb-4">Stratégies avancées de gestion</p>
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">★★★★☆</div>
+                        <span class="ml-2 text-sm text-gray-600">4.6 (567 avis)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl font-bold text-indigo-600">79.99€</span>
+                        <button class="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg">
+                            Voir le cours
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cours 6 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                <img src="../img/Data Science.jpg" alt="Data Science" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center mb-2">
+                        <span class="bg-red-100 text-red-600 text-xs px-2 py-1 rounded">Data Science</span>
+                        <span class="ml-2 text-sm text-gray-500">Intermédiaire</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Introduction à la Data Science</h3>
+                    <p class="text-gray-600 mb-4">Analyse de données avec Python</p>
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">★★★★★</div>
+                        <span class="ml-2 text-sm text-gray-600">4.8 (789 avis)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl font-bold text-indigo-600">64.99€</span>
+                        <button class="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg">
+                            Voir le cours
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cours 7 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                <img src="../img/React.jpg" alt="React" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center mb-2">
+                        <span class="bg-indigo-100 text-indigo-600 text-xs px-2 py-1 rounded">Développement</span>
+                        <span class="ml-2 text-sm text-gray-500">Intermédiaire</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">React.js Professionnel</h3>
+                    <p class="text-gray-600 mb-4">Développement d'applications modernes</p>
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">★★★★★</div>
+                        <span class="ml-2 text-sm text-gray-600">4.9 (1,567 avis)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl font-bold text-indigo-600">69.99€</span>
+                        <button class="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg">
+                            Voir le cours
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Cours 2 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                <img src="../img/Marketing digital.jpg" alt="Marketing Digital" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center mb-2">
+                        <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded">Marketing</span>
+                        <span class="ml-2 text-sm text-gray-500">Intermédiaire</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Marketing Digital Avancé</h3>
+                    <p class="text-gray-600 mb-4">Stratégies de marketing digital efficaces</p>
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">★★★★☆</div>
+                        <span class="ml-2 text-sm text-gray-600">4.5 (856 avis)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl font-bold text-indigo-600">59.99€</span>
+                        <button class="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg">
+                            Voir le cours
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Cours 2 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                <img src="../img/Marketing digital.jpg" alt="Marketing Digital" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center mb-2">
+                        <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded">Marketing</span>
+                        <span class="ml-2 text-sm text-gray-500">Intermédiaire</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Marketing Digital Avancé</h3>
+                    <p class="text-gray-600 mb-4">Stratégies de marketing digital efficaces</p>
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">★★★★☆</div>
+                        <span class="ml-2 text-sm text-gray-600">4.5 (856 avis)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl font-bold text-indigo-600">59.99€</span>
+                        <button class="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg">
+                            Voir le cours
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Cours 2 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                <img src="../img/Marketing digital.jpg" alt="Marketing Digital" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center mb-2">
+                        <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded">Marketing</span>
+                        <span class="ml-2 text-sm text-gray-500">Intermédiaire</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Marketing Digital Avancé</h3>
+                    <p class="text-gray-600 mb-4">Stratégies de marketing digital efficaces</p>
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">★★★★☆</div>
+                        <span class="ml-2 text-sm text-gray-600">4.5 (856 avis)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl font-bold text-indigo-600">59.99€</span>
+                        <button class="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg">
+                            Voir le cours
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Cours 2 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                <img src="../img/Marketing digital.jpg" alt="Marketing Digital" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center mb-2">
+                        <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded">Marketing</span>
+                        <span class="ml-2 text-sm text-gray-500">Intermédiaire</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Marketing Digital Avancé</h3>
+                    <p class="text-gray-600 mb-4">Stratégies de marketing digital efficaces</p>
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">★★★★☆</div>
+                        <span class="ml-2 text-sm text-gray-600">4.5 (856 avis)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl font-bold text-indigo-600">59.99€</span>
+                        <button class="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg">
+                            Voir le cours
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Cours 2 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                <img src="../img/Marketing digital.jpg" alt="Marketing Digital" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center mb-2">
+                        <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded">Marketing</span>
+                        <span class="ml-2 text-sm text-gray-500">Intermédiaire</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Marketing Digital Avancé</h3>
+                    <p class="text-gray-600 mb-4">Stratégies de marketing digital efficaces</p>
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">★★★★☆</div>
+                        <span class="ml-2 text-sm text-gray-600">4.5 (856 avis)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl font-bold text-indigo-600">59.99€</span>
+                        <button class="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg">
+                            Voir le cours
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Cours 2 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                <img src="../img/Marketing digital.jpg" alt="Marketing Digital" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center mb-2">
+                        <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded">Marketing</span>
+                        <span class="ml-2 text-sm text-gray-500">Intermédiaire</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Marketing Digital Avancé</h3>
+                    <p class="text-gray-600 mb-4">Stratégies de marketing digital efficaces</p>
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">★★★★☆</div>
+                        <span class="ml-2 text-sm text-gray-600">4.5 (856 avis)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl font-bold text-indigo-600">59.99€</span>
+                        <button class="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg">
+                            Voir le cours
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Cours 2 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                <img src="../img/Marketing digital.jpg" alt="Marketing Digital" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center mb-2">
+                        <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded">Marketing</span>
+                        <span class="ml-2 text-sm text-gray-500">Intermédiaire</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Marketing Digital Avancé</h3>
+                    <p class="text-gray-600 mb-4">Stratégies de marketing digital efficaces</p>
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">★★★★☆</div>
+                        <span class="ml-2 text-sm text-gray-600">4.5 (856 avis)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl font-bold text-indigo-600">59.99€</span>
+                        <button class="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg">
+                            Voir le cours
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Cours 2 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                <img src="../img/Marketing digital.jpg" alt="Marketing Digital" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center mb-2">
+                        <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded">Marketing</span>
+                        <span class="ml-2 text-sm text-gray-500">Intermédiaire</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Marketing Digital Avancé</h3>
+                    <p class="text-gray-600 mb-4">Stratégies de marketing digital efficaces</p>
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">★★★★☆</div>
+                        <span class="ml-2 text-sm text-gray-600">4.5 (856 avis)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl font-bold text-indigo-600">59.99€</span>
+                        <button class="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg">
+                            Voir le cours
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</body>
+
+
+
+
+
+    <!-- Footer Amélioré -->
+    <footer class="bg-gradient-to-r from-gray-900 to-black text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+                <!-- Colonnes précédentes avec des améliorations visuelles subtiles -->
+                <div>
+                    <img src="https://via.placeholder.com/150x50?text=RoadRover" alt="RoadRover Logo" class="mb-4 mx-auto transform hover:scale-110 transition duration-300">
+                    <p class="text-sm text-gray-400">RoadRover - Votre partenaire de confiance pour la location de voitures de luxe.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4 text-yellow-500">Liens Rapides</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="hover:text-yellow-400 transition duration-300">Accueil</a></li>
+                        <li><a href="#cars" class="hover:text-yellow-400 transition duration-300">Véhicules</a></li>
+                        <li><a href="#reservation" class="hover:text-yellow-400 transition duration-300">Réservation</a></li>
+                        <li><a href="#about" class="hover:text-yellow-400 transition duration-300">À Propos</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4 text-yellow-500">Contact</h4>
+                    <ul class="space-y-2">
+                        <li><i class="fas fa-phone mr-2 text-yellow-500"></i>+33 1 23 45 67 89</li>
+                        <li><i class="fas fa-envelope mr-2 text-yellow-500"></i>contact@roadrover.com</li>
+                        <li><i class="fas fa-map-marker-alt mr-2 text-yellow-500"></i>Paris, France</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4 text-yellow-500">Suivez-nous</h4>
+                    <div class="flex space-x-4 justify-center">
+                        <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-8 border-t border-gray-800 text-center">
+                <p class="text-sm text-gray-400">&copy; 2024 Youdemy. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
 </html>

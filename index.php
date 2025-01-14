@@ -39,7 +39,7 @@
                         <a href="../index.php" class="block py-2 px-3 text-indigo-600" aria-current="page">Accueil</a>
                     </li>
                     <li>
-                        <a href="./front_end/categorie.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Cours</a>
+                        <a href="./front_end/cours.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Cours</a>
                     </li>
                     <li>
                         <a href="./front_end/programmes.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Programmes</a>

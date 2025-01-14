@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body class="bg-gray-50">
     <!-- Navigation -->
-    <!-- <nav class="bg-white border-gray-200 shadow-sm fixed w-full top-0 z-50">
+    <nav class="bg-white border-gray-200 shadow-sm fixed w-full top-0 z-50">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a href="../index.php" class="flex items-center space-x-3">
                 <span class="self-center text-2xl font-bold text-indigo-600">Youdemy</span>
@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </ul>
             </div>
         </div>
-    </nav> -->
+    </nav>
 
     <!-- Main Content avec padding-top pour compenser la navbar fixe -->
     <main class="mt-8">
