@@ -12,29 +12,41 @@ CREATE TABLE users (
     prenom VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     mot_de_passe VARCHAR(255) NOT NULL,
-    role INT NOT NULL, 
+    role INT (11) NOT NULL, 
     statut ENUM('Actif', 'Suspendu'),
     statut_enseignant ENUM('En_attente', 'Valide', 'Refuse'),
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (role) REFERENCES roles(id)
 );
 
+CREATE TABLE categories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(255) NOT NULL,
+    description TEXT,
+    archiver BOOLEAN DEFAULT FALSE
+);
+
 CREATE TABLE cours (
     id INT AUTO_INCREMENT PRIMARY KEY,
     titre VARCHAR(255) NOT NULL,
     description TEXT,
-    contenu TEXT, 
+    image_url VARCHAR(255),
     enseignant_id INT,
     categorie_id INT,
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (enseignant_id) REFERENCES users(id) ON DELETE SET NULL,
+    archiver BOOLEAN DEFAULT FALSE,     
+    prix DECIMAL(10, 2),    
+    FOREIGN KEY (enseignant_id) REFERENCES users(id) ON DELETE SET NULL, 
     FOREIGN KEY (categorie_id) REFERENCES categories(id) ON DELETE SET NULL
 );
 
-CREATE TABLE categories (
+CREATE TABLE contenu (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(255) NOT NULL,
-    description TEXT
+    id_cour INT, 
+    type ENUM('video', 'PDF') NOT NULL,
+    file_path VARCHAR(255),
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_cour) REFERENCES cours(id) ON DELETE CASCADE
 );
 
 CREATE TABLE tags (
@@ -59,12 +71,6 @@ CREATE TABLE inscriptions (
     FOREIGN KEY (cours_id) REFERENCES cours(id) ON DELETE CASCADE
 );
 
-CREATE TABLE statistiques_cours (
-    cours_id INT PRIMARY KEY,
-    nombre_etudiants INT DEFAULT 0,
-    nombre_cours INT DEFAULT 0,
-    FOREIGN KEY (cours_id) REFERENCES cours(id) ON DELETE CASCADE
-);
 
 CREATE TABLE validation_enseignants (
     enseignant_id INT PRIMARY KEY,
