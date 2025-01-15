@@ -11,8 +11,8 @@
 
 <body class="bg-gray-100">
     <div class="flex min-h-screen">
-         <!-- Sidebar -->
-         <aside class="w-64 bg-indigo-700 text-white min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-indigo-700 text-white min-h-screen">
             <div class="p-6">
                 <h2 class="text-2xl font-bold">Youdemy</h2>
             </div>
@@ -21,10 +21,6 @@
                     <a href="./admin.php" class="flex items-center p-3 bg-indigo-800 rounded-lg">
                         <i class="fas fa-home w-6"></i>
                         <span>Tableau de bord</span>
-                    </a>
-                    <a href="./addcours.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
-                        <i class="fas fa-book w-6"></i>
-                        <span>Cours</span>
                     </a>
                     <a href="./etudiant.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
                         <i class="fas fa-users w-6"></i>
@@ -165,6 +161,16 @@
                 </div>
 
                 <!-- Students List -->
+                <?php
+                require_once '../classes/database.php';
+                require_once '../classes/class_etudiant.php';
+
+                // Instancier la classe Student et récupérer tous les étudiants
+                $student = new Student();
+                $students = $student->getAllStudents();
+                ?>
+
+                <!-- Students List -->
                 <div class="bg-white rounded-lg shadow">
                     <div class="p-6 border-b">
                         <h2 class="text-xl font-bold">Liste des Étudiants</h2>
@@ -175,7 +181,6 @@
                                 <tr class="text-left text-gray-500 border-b">
                                     <th class="pb-4">Étudiant</th>
                                     <th class="pb-4">Email</th>
-                                    <th class="pb-4">Cours inscrits</th>
                                     <th class="pb-4">Progression</th>
                                     <th class="pb-4">Statut</th>
                                     <th class="pb-4">Dernière connexion</th>
@@ -183,205 +188,49 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y">
-                                <tr>
-                                    <td class="py-4">
-                                        <div class="flex items-center gap-3">
-                                            <img src="/api/placeholder/40/40" alt="Student" class="w-10 h-10 rounded-full">
-                                            <div>
-                                                <p class="font-medium">Thomas Martin</p>
-                                                <p class="text-sm text-gray-500">Inscrit le 12 Jan 2024</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>thomas.martin@email.com</td>
-                                    <td>4 cours</td>
-                                    <td>
-                                        <div class="flex items-center gap-2">
-                                            <div class="w-24 bg-gray-200 rounded-full h-2">
-                                                <div class="bg-green-500 rounded-full h-2" style="width: 75%"></div>
-                                            </div>
-                                            <span>75%</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">
-                                            Actif
-                                        </span>
-                                    </td>
-                                    <td>Il y a 2 heures</td>
-                                    <td>
-                                        <div class="flex gap-2">
-                                            <button class="p-2 text-blue-600 hover:text-blue-800">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="p-2 text-indigo-600 hover:text-indigo-800">
-                                                <i class="fas fa-envelope"></i>
-                                            </button>
-                                            <button class="p-2 text-gray-600 hover:text-gray-800">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-4">
-                                        <div class="flex items-center gap-3">
-                                            <img src="/api/placeholder/40/40" alt="Student" class="w-10 h-10 rounded-full">
-                                            <div>
-                                                <p class="font-medium">Marie Dubois</p>
-                                                <p class="text-sm text-gray-500">Inscrite le 5 Jan 2024</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>marie.dubois@email.com</td>
-                                    <td>6 cours</td>
-                                    <td>
-                                        <div class="flex items-center gap-2">
-                                            <div class="w-24 bg-gray-200 rounded-full h-2">
-                                                <div class="bg-green-500 rounded-full h-2" style="width: 90%"></div>
-                                            </div>
-                                            <span>90%</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">
-                                            Actif
-                                        </span>
-                                    </td>
-                                    <td>Il y a 1 jour</td>
-                                    <td>
-                                        <div class="flex gap-2">
-                                            <button class="p-2 text-blue-600 hover:text-blue-800">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="p-2 text-indigo-600 hover:text-indigo-800">
-                                                <i class="fas fa-envelope"></i>
-                                            </button>
-                                            <button class="p-2 text-gray-600 hover:text-gray-800">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-4">
-                                        <div class="flex items-center gap-3">
-                                            <img src="/api/placeholder/40/40" alt="Student" class="w-10 h-10 rounded-full">
-                                            <div>
-                                                <p class="font-medium">Paul Bernard</p>
-                                                <p class="text-sm text-gray-500">Inscrit le 28 Déc 2023</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>paul.bernard@email.com</td>
-                                    <td>2 cours</td>
-                                    <td>
-                                        <div class="flex items-center gap-2">
-                                            <div class="w-24 bg-gray-200 rounded-full h-2">
-                                                <div class="bg-yellow-500 rounded-full h-2" style="width: 45%"></div>
-                                            </div>
-                                            <span>45%</span>
-                                    </td>
-                                    <td>
-                                        <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm">
-                                            En pause
-                                        </span>
-                                    </td>
-                                    <td>Il y a 5 jours</td>
-                                    <td>
-                                        <div class="flex gap-2">
-                                            <button class="p-2 text-blue-600 hover:text-blue-800">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="p-2 text-indigo-600 hover:text-indigo-800">
-                                                <i class="fas fa-envelope"></i>
-                                            </button>
-                                            <button class="p-2 text-gray-600 hover:text-gray-800">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-4">
-                                        <div class="flex items-center gap-3">
-                                            <img src="/api/placeholder/40/40" alt="Student" class="w-10 h-10 rounded-full">
-                                            <div>
-                                                <p class="font-medium">Sophie Lefevre</p>
-                                                <p class="text-sm text-gray-500">Inscrite le 20 Nov 2023</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>sophie.lefevre@email.com</td>
-                                    <td>3 cours</td>
-                                    <td>
-                                        <div class="flex items-center gap-2">
-                                            <div class="w-24 bg-gray-200 rounded-full h-2">
-                                                <div class="bg-red-500 rounded-full h-2" style="width: 30%"></div>
-                                            </div>
-                                            <span>30%</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm">
-                                            Inactif
-                                        </span>
-                                    </td>
-                                    <td>Il y a 10 jours</td>
-                                    <td>
-                                        <div class="flex gap-2">
-                                            <button class="p-2 text-blue-600 hover:text-blue-800">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="p-2 text-indigo-600 hover:text-indigo-800">
-                                                <i class="fas fa-envelope"></i>
-                                            </button>
-                                            <button class="p-2 text-gray-600 hover:text-gray-800">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-4">
-                                        <div class="flex items-center gap-3">
-                                            <img src="/api/placeholder/40/40" alt="Student" class="w-10 h-10 rounded-full">
-                                            <div>
-                                                <p class="font-medium">Élodie Moreau</p>
-                                                <p class="text-sm text-gray-500">Inscrite le 14 Jan 2024</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>elodie.moreau@email.com</td>
-                                    <td>5 cours</td>
-                                    <td>
-                                        <div class="flex items-center gap-2">
-                                            <div class="w-24 bg-gray-200 rounded-full h-2">
-                                                <div class="bg-green-500 rounded-full h-2" style="width: 80%"></div>
-                                            </div>
-                                            <span>80%</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">
-                                            Actif
-                                        </span>
-                                    </td>
-                                    <td>Il y a 1 semaine</td>
-                                    <td>
-                                        <div class="flex gap-2">
-                                            <button class="p-2 text-blue-600 hover:text-blue-800">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="p-2 text-indigo-600 hover:text-indigo-800">
-                                                <i class="fas fa-envelope"></i>
-                                            </button>
-                                            <button class="p-2 text-gray-600 hover:text-gray-800">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                <?php if (count($students) > 0): ?>
+                                    <?php foreach ($students as $student): ?>
+                                        <tr>
+                                            <td class="py-4">
+                                                <div class="flex items-center gap-3">
+                                                    <img src="/api/placeholder/40/40" alt="Student" class="w-10 h-10 rounded-full">
+                                                    <div>
+                                                        <p class="font-medium"><?= htmlspecialchars($student['nom']); ?></p>
+                                                        <p class="text-sm text-gray-500">Inscrit le <?= htmlspecialchars($student['prenom']); ?></p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><?= htmlspecialchars($student['email']); ?></td>
+                                            <td><?= htmlspecialchars($student['role']); ?> cours</td>
+                                            <td>
+                                                <div class="flex items-center gap-2">
+                                                    <div class="w-24 bg-gray-200 rounded-full h-2">
+                                                        <div class="bg-green-500 rounded-full h-2" style="width: <?= $student['statut']; ?>%"></div>
+
+                                            </td>
+                                            <td>
+                                                <span class="px-3 py-1 <?= $student['statut'] == 'active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' ?> rounded-full text-sm">
+                                                    <?= ucfirst($student['statut']); ?>
+                                                </span>
+                                            </td>
+                                            <td><?= $student['date_creation']; ?></td>
+                                            <td>
+                                                <div class="flex gap-2">
+                                                    <button class="p-2 text-blue-600 hover:text-blue-800">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="p-2 text-indigo-600 hover:text-indigo-800">
+                                                        <i class="fas fa-envelope"></i>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="7" class="text-center py-4">Aucun étudiant trouvé.</td>
+                                    </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>

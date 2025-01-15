@@ -22,10 +22,6 @@
                         <i class="fas fa-home w-6"></i>
                         <span>Tableau de bord</span>
                     </a>
-                    <a href="./addcours.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
-                        <i class="fas fa-book w-6"></i>
-                        <span>Cours</span>
-                    </a>
                     <a href="./etudiant.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
                         <i class="fas fa-users w-6"></i>
                         <span>Étudiants</span>

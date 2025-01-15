@@ -107,8 +107,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label for="" class="block text-sm font-medium text-gray-700">Rôle</label>
                             <select id="role " name="role" required
                                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none transition duration-300 ease-in-out">
-                                <option value="1">Étudiant</option>
-                                <option value="2">Enseignant</option>
+                                <option value="2">Étudiant</option>
+                                <option value="3">Enseignant</option>
                             </select>
                         </div>
                         <div>
