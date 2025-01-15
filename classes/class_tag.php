@@ -159,7 +159,7 @@ class tag implements JsonSerializable
             $stmt->execute();
             $arry= $stmt->fetchAll(PDO::FETCH_ASSOC);
             foreach($arry as $tag){
-             $tags[]=new tag($tag['nom']);
+                $tags[] = new tag($tag['nom'], $tag['id']); 
             }  
             return $tags;
         } catch (PDOException $e) {

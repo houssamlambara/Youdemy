@@ -1,15 +1,30 @@
 <?php
 
 require_once('../classes/class_tag.php');
+require_once('../classes/class_delete.php');
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_tag'])) {
     $nom = htmlspecialchars($_POST['nom']);
     $newTag = new Tag($nom);
     if ($newTag->save()) {
         echo "Le tag a été ajouté avec succès !";
-        // header("Location: tag.php"); // Rediriger pour éviter la soumission multiple
-        // exit();
+        header("Location: tag.php"); 
+        exit();
     } else {
         echo "Une erreur est survenue lors de l'ajout du tag.";
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_tag'])) {
+    $tagId = (int)$_POST['delete_id'];
+
+    $delete = new Delete('tags', $tagId); 
+    if ($delete->execute()) {
+        echo "Le tag a été supprimé avec succès.";
+        header("Location: tag.php"); 
+        exit();
+    } else {
+        echo "Une erreur est survenue lors de la suppression du tag.";
     }
 }
 
@@ -21,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_tag'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des Catégories - Plateforme de Cours</title>
+    <title>Gestion des Tags - Plateforme de Cours</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -63,7 +78,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_tag'])) {
             </nav>
         </aside>
 
-
         <!-- Main Content -->
         <div class="flex-1">
             <!-- Top Navigation -->
@@ -96,15 +110,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_tag'])) {
                     </thead>
                     <tbody>
                         <?php
-                        $tags = tag::getAllTags();
+                        $tags = Tag::getAllTags(); 
                         foreach ($tags as $tag): ?>
                             <tr class="border-b">
-                                <td class="px-6 py-3"><?= htmlspecialchars($tag['id']) ?></td>
-                                <td class="px-6 py-3"><?= $tag['nom'] ?></td>
+                                <td class="px-6 py-3"><?= htmlspecialchars($tag->getId()) ?></td>
+                                <td class="px-6 py-3"><?= htmlspecialchars($tag->getNom()) ?></td>
                                 <td class="px-6 py-3">
-                                    <button class="ml-4 text-red-600 hover:underline">
-                                        <i class="fas fa-trash-alt"></i> Supprimer
-                                    </button>
+                                    <form action="" method="POST" style="display:inline;">
+                                        <input type="hidden" name="delete_id" value="<?= $tag->getId() ?>">
+                                        <button type="submit" name="delete_tag" class="ml-4 text-red-600 hover:underline">
+                                            <i class="fas fa-trash-alt"></i> Supprimer
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -134,14 +151,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_tag'])) {
             document.getElementById('addCategorieModal').classList.remove('hidden');
         });
 
-        // Après l'envoi du formulaire, vous pouvez fermer le modal
         document.querySelector('form').addEventListener('submit', function() {
             document.getElementById('addCategorieModal').classList.add('hidden');
         });
-      
-
-        
-    </script>
     </script>
 </body>
 
