@@ -72,7 +72,7 @@ class Cours
     public function pagination($page)
     {
         $db = Database::getInstance()->getConnection();
-        $parpage = 8;
+        $parpage = 6;
         $premier = ($page * $parpage) - $parpage;
 
         try {

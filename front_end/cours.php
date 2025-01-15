@@ -39,13 +39,13 @@
                         <a href="../index.php" class="block py-2 px-3 text-indigo-600" aria-current="page">Accueil</a>
                     </li>
                     <li>
-                        <a href="./front_end/cours.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Cours</a>
+                        <a href="#" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Cours</a>
                     </li>
                     <li>
-                        <a href="./front_end/programmes.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Programmes</a>
+                        <a href="./programmes.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Programmes</a>
                     </li>
                     <li>
-                        <a href="./front_end/enseignant.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Enseignants</a>
+                        <a href="./enseignant.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">About Youdemy</a>
                     </li>
                 </ul>
             </div>
@@ -82,6 +82,8 @@
             <?php
             require_once('../classes/class_cours.php');
             $cours = new Cours('', '', '', 0, 0);
+            $total = $cours->totalcours();
+            $nmbpage = ceil($total['total'] / 6);
             $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
             $courses = $cours->pagination($page);
             ?>
@@ -108,6 +110,22 @@
             <?php endforeach; ?>
         </div>
 
+    </div>
+    <!-- Pagination -->
+    <div class="w-full">
+        <div class="pagination">
+            <ul class="flex justify-center mb-12 space-x-4">
+                <?php
+
+                for ($i = 1; $i <= $nmbpage; $i++) {
+
+                    $activeClass = ($i == $page) ? 'class="active"' : '';
+                    echo "<li class='bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300'><a href='?page=$i' $activeClass>$i</a></li>";
+                }
+                ?>
+            </ul>
+        </div>
+    </div>
     </div>
 
     <!-- Footer Amélioré -->
