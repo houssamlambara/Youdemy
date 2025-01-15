@@ -18,25 +18,21 @@
             </div>
             <nav class="mt-6">
                 <div class="px-4 space-y-2">
-                    <a href="./admin.php" class="flex items-center p-3 bg-indigo-800 rounded-lg">
+                    <a href="./admin.php" class="flex items-center p-3 bg-indigo-800 rounded-lg hover:bg-indigo-900 transition-colors">
                         <i class="fas fa-home w-6"></i>
                         <span>Tableau de bord</span>
-                    </a>
-                    <a href="./addcours.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
-                        <i class="fas fa-book w-6"></i>
-                        <span>Cours</span>
-                    </a>
-                    <a href="./etudiant.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
-                        <i class="fas fa-users w-6"></i>
-                        <span>Étudiants</span>
                     </a>
                     <a href="./enseignant.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
                         <i class="fas fa-chalkboard-teacher w-6"></i>
                         <span>Enseignant</span>
                     </a>
-                    <a href="./categorie.php" class="flex items-center p-3 bg-indigo-800 rounded-lg">
+                    <a href="./categorie.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
                         <i class="fas fa-th-list w-6"></i>
-                        <span>Catégories</span>
+                        <span>Add Catégories</span>
+                    </a>
+                    <a href="./tag.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
+                        <i class="fas fa-tags w-6"></i>
+                        <span>Add Tags</span>
                     </a>
                     <a href="./statistique.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
                         <i class="fas fa-chart-line w-6"></i>

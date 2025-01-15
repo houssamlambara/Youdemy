@@ -1,4 +1,19 @@
+<?php
 
+require_once('../classes/class_tag.php');
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_tag'])) {
+    $nom = htmlspecialchars($_POST['nom']);
+    $newTag = new Tag($nom);
+    if ($newTag->save()) {
+        echo "Le tag a été ajouté avec succès !";
+        // header("Location: tag.php"); // Rediriger pour éviter la soumission multiple
+        // exit();
+    } else {
+        echo "Une erreur est survenue lors de l'ajout du tag.";
+    }
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -80,7 +95,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($tags as $tag): ?>
+                        <?php
+                        $tags = tag::getAllTags();
+                        foreach ($tags as $tag): ?>
                             <tr class="border-b">
                                 <td class="px-6 py-3"><?= htmlspecialchars($tag['id']) ?></td>
                                 <td class="px-6 py-3"><?= $tag['nom'] ?></td>
@@ -121,6 +138,10 @@
         document.querySelector('form').addEventListener('submit', function() {
             document.getElementById('addCategorieModal').classList.add('hidden');
         });
+      
+
+        
+    </script>
     </script>
 </body>
 

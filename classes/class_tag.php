@@ -112,7 +112,6 @@ class tag implements JsonSerializable
         ];
     }
 
-    // Getters
     public function getId()
     {
         return $this->id;
@@ -123,7 +122,6 @@ class tag implements JsonSerializable
         return $this->nom;
     }
 
-    // Pour récupérer uniquement le nom du tag
     public function getTag()
     {
         return $this->nom;
@@ -153,20 +151,19 @@ class tag implements JsonSerializable
 
     public static function getAllTags()
     {
+        $tags=[];
         $db = Database::getInstance()->getConnection();
         try {
             $req = "SELECT id, nom FROM tags";
             $stmt = $db->prepare($req);
             $stmt->execute();
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            // On crée des objets tag à partir des résultats
-            $tags = [];
-            foreach ($result as $row) {
-                $tags[] = new tag($row['nom'], $row['id']);
-            }
+            $arry= $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach($arry as $tag){
+             $tags[]=new tag($tag['nom']);
+            }  
             return $tags;
         } catch (PDOException $e) {
+
             echo "Erreur lors de la récupération des tags : " . $e->getMessage();
             return [];
         }
