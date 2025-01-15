@@ -1,20 +1,4 @@
-<?php
-include_once('../classes/class_tag.php');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_tag'])) {
-    $nom = htmlspecialchars($_POST['nom']);
-
-    $tag = new tag($nom);
-
-    if ($tag->save()) {
-        header("Location: tag.php");
-        exit();
-    } else {
-        echo "Erreur lors de l'ajout de la catégorie.";
-    }
-}
-$tags = tag::getAll();
-?>
 
 <!DOCTYPE html>
 <html lang="fr">

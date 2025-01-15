@@ -148,16 +148,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
                                     <input type="file" name="image_url" id="image_url" class="w-full px-4 py-2 border rounded-lg">
                                 </div>
 
-                                <!-- Ajout des tags -->
+                                <!-- Section pour les tags -->
                                 <div class="mb-4">
                                     <label for="tags" class="block text-gray-600">Tags</label>
-                                    <div class="flex flex-wrap gap-2 mt-2" id="tags-container">
-                                        <!-- Les tags ajoutés dynamiquement apparaîtront ici -->
-                                    </div>
-                                    <div class="flex items-center mt-2">
-                                        <input type="text" id="tag-input" class="w-full px-4 py-2 border rounded-lg" placeholder="Ajouter un tag" onkeyup="checkInput(event)">
-                                        <button type="button" id="add-tag-btn" class="ml-2 bg-indigo-600 text-white px-4 py-2 rounded-lg" onclick="addTag()">Ajouter</button>
-                                    </div>
+                                    <select name="tags[]" id="tags" class="w-full px-4 py-2 border rounded-lg" multiple>
+                                        <?php
+                                        // On récupère tous les tags existants depuis la base de données
+                                        $tags = tag::getAllTags();
+                                        foreach ($tags as $tag) {
+                                            echo "<option value='{$tag['id']}'>{$tag['nom']}</option>";
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
 
                                 <div class="flex justify-end mt-4">
@@ -167,6 +169,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
                             </form>
                         </div>
                     </div>
+
+
 
                 </main>
 

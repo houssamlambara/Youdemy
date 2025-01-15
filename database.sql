@@ -30,6 +30,7 @@ CREATE TABLE cours (
     titre VARCHAR(255) NOT NULL,
     description TEXT,
     image_url VARCHAR(255),
+    video_url VARCHAR(255),
     enseignant_id INT,
     categorie_id INT,
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
