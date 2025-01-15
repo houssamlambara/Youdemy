@@ -3,7 +3,6 @@ include_once('../classes/class_categorie.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_categorie'])) {
     $nom = htmlspecialchars($_POST['nom']);
-
     $categorie = new Categorie($nom);
 
     if ($categorie->save()) {
@@ -11,6 +10,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_categorie'])) {
         exit();
     } else {
         echo "Erreur lors de l'ajout de la catégorie.";
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cat'])) {
+    $categorieId = (int)$_POST['delete_id'];
+
+    if (Categorie::delete($categorieId)) {
+        echo "La catégorie a été supprimée avec succès.";
+        header("Location: categorie.php");
+        exit();
+    } else {
+        echo "Une erreur est survenue lors de la suppression de la catégorie.";
     }
 }
 
@@ -97,14 +108,19 @@ $categories = Categorie::getAll();
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($categories as $category): ?>
+                        <?php
+                        $categories = Categorie::getAllCategorie();
+                        foreach ($categories as $categorie): ?>
                             <tr class="border-b">
-                                <td class="px-6 py-3"><?= htmlspecialchars($category['id']) ?></td>
-                                <td class="px-6 py-3"><?= $category['nom'] ?></td>
+                                <td class="px-6 py-3"><?= htmlspecialchars($categorie->getId()) ?></td>
+                                <td class="px-6 py-3"><?= htmlspecialchars($categorie->getNom()) ?></td>
                                 <td class="px-6 py-3">
-                                    <button class="ml-4 text-red-600 hover:underline">
-                                        <i class="fas fa-trash-alt"></i> Supprimer
-                                    </button>
+                                    <form action="" method="POST" style="display:inline;">
+                                        <input type="hidden" name="delete_id" value="<?= $categorie->getId() ?>">
+                                        <button type="submit" name="delete_cat" class="ml-4 text-red-600 hover:underline">
+                                            <i class="fas fa-trash-alt"></i> Supprimer
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
