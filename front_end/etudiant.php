@@ -18,27 +18,19 @@
             </div>
             <nav class="mt-6">
                 <div class="px-4 space-y-2">
-                    <a href="./admin.php" class="flex items-center p-3 bg-indigo-800 rounded-lg">
-                        <i class="fas fa-home w-6"></i>
-                        <span>Tableau de bord</span>
+                    <a href="./enseignant_dashboard.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
+                        <i class="fas fa-book w-6"></i>
+                        <span>Cours</span>
                     </a>
                     <a href="./etudiant.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
                         <i class="fas fa-users w-6"></i>
                         <span>Étudiants</span>
                     </a>
-                    <a href="./enseignant.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
-                        <i class="fas fa-chalkboard-teacher w-6"></i>
-                        <span>Enseignant</span>
-                    </a>
-                    <a href="./categorie.php" class="flex items-center p-3 bg-indigo-800 rounded-lg">
-                        <i class="fas fa-th-list w-6"></i>
-                        <span>Catégories</span>
-                    </a>
-                    <a href="./statistique.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
+                    <a href="#" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
                         <i class="fas fa-chart-line w-6"></i>
                         <span>Statistiques</span>
                     </a>
-                    <a href="../index.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
+                    <a href="../login/signin.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
                         <i class="fas fa-sign-out-alt w-6"></i>
                         <span>Se déconnecter</span>
                     </a>

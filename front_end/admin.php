@@ -38,7 +38,7 @@
                         <i class="fas fa-chart-line w-6"></i>
                         <span>Statistiques</span>
                     </a>
-                    <a href="../index.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
+                    <a href="../login/signin.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
                         <i class="fas fa-sign-out-alt w-6"></i>
                         <span>Se déconnecter</span>
                     </a>
