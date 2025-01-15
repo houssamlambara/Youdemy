@@ -8,43 +8,68 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
     $description = htmlspecialchars($_POST['description']);
     $categorie_id = htmlspecialchars($_POST['categorie_id']);
     $prix = htmlspecialchars($_POST['prix']);
-    $video_url = ''; 
+    // $video_url = '';
+    $image_url = '';
 
-    if (isset($_FILES['video_url']) && !empty($_FILES['video_url']['name'])) {
+    // if (isset($_FILES['video_url']) && !empty($_FILES['video_url']['name'])) {
+    //     $dir = '../uploads/';
+    //     $path = basename($_FILES['video_url']['name']);
+    //     $finalPath = $dir . uniqid('video_', true) . "_" . $path;
+
+    //     $allowedExtensions = ['mp4', 'mov', 'avi', 'wmv', 'flv'];
+    //     $extension = pathinfo($finalPath, PATHINFO_EXTENSION);
+
+    //     if (in_array(strtolower($extension), $allowedExtensions)) {
+    //         if (move_uploaded_file($_FILES['video_url']['tmp_name'], $finalPath)) {
+    //             $video_url = $finalPath;
+    //         } else {
+    //             echo "Erreur lors du téléchargement de la vidéo.";
+    //             exit();
+    //         }
+    //     } else {
+    //         echo "Extension non autorisée pour la vidéo.";
+    //         exit();
+    //     }
+    // } else {
+    //     echo "Aucune vidéo téléchargée.";
+    //     exit();
+    // }
+
+    if (isset($_FILES['image_url']) && !empty($_FILES['image_url']['name'])) {
         $dir = '../uploads/';
-        $path = basename($_FILES['video_url']['name']);
-        $finalPath = $dir . uniqid('video_', true) . "_" . $path;
-
-        $allowedExtensions = ['mp4', 'mov', 'avi', 'wmv', 'flv'];
+        $path = basename($_FILES['image_url']['name']);
+        $finalPath = $dir . uniqid() . "_" . $path;
+        $allowedExtensions = ['png', 'jpg', 'jpeg', 'gif', 'svg'];
         $extension = pathinfo($finalPath, PATHINFO_EXTENSION);
 
         if (in_array(strtolower($extension), $allowedExtensions)) {
-            if (move_uploaded_file($_FILES['video_url']['tmp_name'], $finalPath)) {
-                $video_url = $finalPath;  
+            if (move_uploaded_file($_FILES['image_url']['tmp_name'], $finalPath)) {
+                $image_url = $finalPath;
             } else {
-                echo "Erreur lors du téléchargement de la vidéo.";
-                exit(); 
+                echo "Erreur lors du téléchargement de l'image.";
+                exit();
             }
         } else {
-            echo "Extension non autorisée pour la vidéo.";
-            exit();  
+            echo "Extension non autorisée pour l'image.";
+            exit();
         }
     } else {
-        echo "Aucune vidéo téléchargée.";
-        exit();  
+        echo "Aucune image téléchargée.";
+        exit();
     }
 
-    $cours = new Cours($titre, $description, $video_url, $categorie_id, $prix);
+    $cours = new Cours($titre, $description, $image_url, $categorie_id, $prix, $video_url);
 
     if ($cours->save()) {
         echo "Le cours a été ajouté avec succès !";
-        header('Location: enseignant_dashboard.php'); 
+        header('Location: enseignant_dashboard.php');
         exit();
     } else {
         echo "Une erreur s'est produite lors de l'ajout du cours.";
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -106,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
                         </button>
                         <div class="flex items-center gap-2">
                             <img src="/api/placeholder/40/40" alt="Profile" class="w-10 h-10 rounded-full">
-                            <span class="font-medium">Admin</span>
+                            <span class="font-medium">Enseignant</span>
                         </div>
                     </div>
                 </div>
@@ -158,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
 
                                 <div class="mb-4">
                                     <label for="image_url" class="block text-gray-600">Image</label>
-                                    <input type="file" name="video_url" id="video_url" class="w-full px-4 py-2 border rounded-lg">
+                                    <input type="file" name="image_url" id="image_url" class="w-full px-4 py-2 border rounded-lg">
                                     </div>
                                 <button type="submit" name="add_course" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Ajouter</button>
                                 <button type="button" class="ml-4 text-red-600 hover:underline" onclick="document.getElementById('addCourseModal').classList.add('hidden')">Annuler</button>
@@ -270,9 +295,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
                                                     <button class="p-2 text-blue-600 hover:text-blue-800">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
-                                                    <button class="p-2 text-red-600 hover:text-red-800">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
+                                                    <form action="./delete_cours.php" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce cours ?');">
+                                                        <input type="hidden" name="course_id" value="<?= $row['id']; ?>" />
+                                                        <button type="submit" class="p-2 text-red-600 hover:text-red-800">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </td>
                                         </tr>
