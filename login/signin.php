@@ -18,18 +18,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['id'] = $authenticatedUser->getId();
             $_SESSION['role'] = $authenticatedUser->getRole();
 
-            if ($authenticatedUser->getRole() == 2) { 
+            if ($authenticatedUser->getRole() === 1) { 
                 header("Location: ../front_end/admin.php");
+            } elseif ($authenticatedUser->getRole() === 2) { 
+                header("Location: ../front_end/cours.php");
+            } elseif ($authenticatedUser->getRole() === 3) { 
+                header("Location: ../front_end/enseignant_dashboard.php");
             } else {
-                header("Location: ../front_end/categorie.php");
+
+                header("Location: ./login/signin.php");
             }
-            exit();
+            exit(); 
         } catch (Exception $e) {
             $error = $e->getMessage();
         }
     }
 }
 ?>
+
+
 
 <?php if ($error): ?>
     <div class="error"><?php echo $error; ?></div>
