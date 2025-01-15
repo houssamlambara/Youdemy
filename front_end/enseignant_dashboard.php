@@ -8,34 +8,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
     $description = htmlspecialchars($_POST['description']);
     $categorie_id = htmlspecialchars($_POST['categorie_id']);
     $prix = htmlspecialchars($_POST['prix']);
-    $image_url = '';
+    $video_url = ''; 
 
-    if (isset($_FILES['image_url']) && !empty($_FILES['image_url']['name'])) {
+    if (isset($_FILES['video_url']) && !empty($_FILES['video_url']['name'])) {
         $dir = '../uploads/';
-        $path = basename($_FILES['image_url']['name']);
-        $finalPath = $dir . uniqid() . "_" . $path;
-        $allowedExtensions = ['png', 'jpg', 'jpeg', 'gif', 'svg'];
+        $path = basename($_FILES['video_url']['name']);
+        $finalPath = $dir . uniqid('video_', true) . "_" . $path;
+
+        $allowedExtensions = ['mp4', 'mov', 'avi', 'wmv', 'flv'];
         $extension = pathinfo($finalPath, PATHINFO_EXTENSION);
 
         if (in_array(strtolower($extension), $allowedExtensions)) {
-            if (move_uploaded_file($_FILES['image_url']['tmp_name'], $finalPath)) {
-                $image_url = $finalPath;
+            if (move_uploaded_file($_FILES['video_url']['tmp_name'], $finalPath)) {
+                $video_url = $finalPath;  
             } else {
-                echo "Erreur lors du téléchargement de l'image.";
+                echo "Erreur lors du téléchargement de la vidéo.";
+                exit(); 
             }
         } else {
-            echo "Extension non autorisée pour l'image.";
+            echo "Extension non autorisée pour la vidéo.";
+            exit();  
         }
+    } else {
+        echo "Aucune vidéo téléchargée.";
+        exit();  
+    }
 
-        $cours = new Cours($titre, $description, $image_url, $categorie_id, $prix);
+    $cours = new Cours($titre, $description, $video_url, $categorie_id, $prix);
 
-        if ($cours->save()) {
-            echo "Le cours a été ajouté avec succès !";
-            header('Location: addcours.php');
-            exit();
-        } else {
-            echo "Une erreur s'est produite lors de l'ajout du cours.";
-        }
+    if ($cours->save()) {
+        echo "Le cours a été ajouté avec succès !";
+        header('Location: enseignant_dashboard.php'); 
+        exit();
+    } else {
+        echo "Une erreur s'est produite lors de l'ajout du cours.";
     }
 }
 ?>
@@ -49,6 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
     <title>Gestion des Cours - Admin</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
 </head>
 
 <body class="bg-gray-100">
@@ -68,11 +76,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
                         <i class="fas fa-users w-6"></i>
                         <span>Étudiants</span>
                     </a>
-                    <a href="./statistique.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
+                    <a href="./statistique_enseignant.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
                         <i class="fas fa-chart-line w-6"></i>
                         <span>Statistiques</span>
                     </a>
-                    <a href="../index.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
+                    <a href="../login/signin.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
                         <i class="fas fa-sign-out-alt w-6"></i>
                         <span>Se déconnecter</span>
                     </a>
@@ -144,9 +152,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
                                     </select>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="image_url" class="block text-gray-600">Image</label>
-                                    <input type="file" name="image_url" id="image_url" class="w-full px-4 py-2 border rounded-lg">
+                                    <label for="status" class="block text-gray-600">Tag</label>
+                                    <input id='tags' name='tags' class="w-full px-4 py-2 border rounded-lg">
                                 </div>
+
+                                <div class="mb-4">
+                                    <label for="image_url" class="block text-gray-600">Image</label>
+                                    <input type="file" name="video_url" id="video_url" class="w-full px-4 py-2 border rounded-lg">
+                                    </div>
                                 <button type="submit" name="add_course" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Ajouter</button>
                                 <button type="button" class="ml-4 text-red-600 hover:underline" onclick="document.getElementById('addCourseModal').classList.add('hidden')">Annuler</button>
                             </form>
@@ -157,14 +170,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
                 <!-- Filters -->
                 <div class="bg-white rounded-lg shadow mb-6 p-6">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <!-- Rechercher -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Rechercher</label>
-                            <div class="relative">
+                            <div class="">
                                 <input type="text" placeholder="Nom du cours..."
                                     class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+
                             </div>
                         </div>
+
+                        <!-- Catégorie -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Catégorie</label>
                             <select class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
@@ -175,6 +191,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
                                 <option>Business</option>
                             </select>
                         </div>
+
+                        <!-- Statut -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Statut</label>
                             <select class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
@@ -184,6 +202,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
                                 <option>En révision</option>
                             </select>
                         </div>
+
+                        <!-- Trier par -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Trier par</label>
                             <select class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
@@ -196,14 +216,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
                     </div>
                 </div>
 
-                <!-- Courses List -->
+                <!-- Liste des Cours -->
                 <div class="bg-white rounded-lg shadow">
                     <div class="p-6 border-b flex justify-between items-center">
-                        <h2 class="text-xl font-bold">Liste des Cours</h2>
+                        <h2 class="text-xl font-bold text-gray-700">Liste des Cours</h2>
                     </div>
 
                     <div class="p-6">
-                        <!-- Tableau -->
+                        <!-- Tableau des cours -->
                         <table class="w-full table-auto border-collapse">
                             <thead class="bg-gray-100">
                                 <tr class="text-left text-gray-500 border-b">
@@ -260,7 +280,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
                                     endforeach;
                                     ?>
                                     <tr>
-                                        <td colspan="6" class="text-center py-4">Aucun cours trouvé.</td>
+                                        <td colspan="6" class="text-center py-4 text-gray-500">Aucun cours trouvé.</td>
                                     </tr>
                                 <?php endif; ?>
                             </tbody>
@@ -285,6 +305,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
                     document.querySelector('[data-modal-toggle="addCourseModal"]').addEventListener('click', function() {
                         document.getElementById('addCourseModal').classList.remove('hidden');
                     });
+
+                    var input = document.querySelector('#tags ')
+
+                    fetch('./JStag.php')
+                        .then(response => response.json())
+                        .then(tags => {
+                            new Tagify(input, {
+                                whitelist: tags,
+                                userInput: false
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Erreur lors de la récupération des tags :', error);
+                        });
                 </script>
 
 </html>
