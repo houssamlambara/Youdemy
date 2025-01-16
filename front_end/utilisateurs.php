@@ -1,3 +1,11 @@
+<?php
+require_once '../classes/class_edite.php';
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $id = $_POST['student_id'];
+    $edit = new Edite($id);
+    $edit->execute();
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -154,7 +162,6 @@
                 </div>
 
                 <!-- Teachers List -->
-                <!-- Teachers List -->
                 <?php
                 require_once '../classes/database.php';
                 require_once '../classes/class_utilisateurs.php';
@@ -178,14 +185,25 @@
                                                     <img src="../img/ayoub.jpg" alt="Teacher" class="w-16 h-16 rounded-full">
                                                     <div>
                                                         <h3 class="font-bold text-lg"><?= htmlspecialchars($enseignant['nom']) ?></h3>
+                                                        <h3 class="font-bold text-lg"><?= htmlspecialchars($enseignant['prenom']) ?></h3>
                                                         <div class="flex items-center mt-1">
-                                                            <i class="fas fa-star text-yellow-400"></i>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">
-                                                    Actif
+                                                <!-- Affichage dynamique du statut -->
+                                                <span class="px-3 py-1 <?= $enseignant['statut'] == 'Suspendu' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700' ?> rounded-full text-sm">
+                                                    <?= htmlspecialchars($enseignant['statut']) ?>
                                                 </span>
+
+                                                <div class="flex gap-2">
+                                                    <!-- Bouton pour changer le statut -->
+                                                    <form action="" method="POST">
+                                                        <input type="hidden" name="student_id" value="<?= $enseignant['id']; ?>">
+                                                        <button type="submit" name="change_status" class="p-2 text-yellow-600 hover:text-yellow-800">
+                                                            <i class="fas fa-sync-alt"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </div>
                                             <div class="mt-6 space-y-2">
                                                 <div class="flex justify-between text-sm">
@@ -201,14 +219,6 @@
                                                     <span class="font-medium">92%</span>
                                                 </div>
                                             </div>
-                                            <!-- <div class="mt-6 flex gap-2">
-                                                <button class="flex-1 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
-                                                    Voir le profil
-                                                </button>
-                                                <button class="p-2 text-gray-600 hover:text-gray-800 border rounded-lg">
-                                                    <i class="fas fa-envelope"></i>
-                                                </button>
-                                            </div> -->
                                         </div>
                                     </div>
                                 <?php endforeach; ?>

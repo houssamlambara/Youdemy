@@ -1,10 +1,10 @@
 <?php
-require_once '../classes/class_edite.php';
-  if($_SERVER['REQUEST_METHOD']=='POST'){
-    $id=$_POST['student_id'];
-   $edit=new Edite($id);
-   $edit->execute();
-  }
+// require_once '../classes/class_edite.php';
+//   if($_SERVER['REQUEST_METHOD']=='POST'){
+//     $id=$_POST['student_id'];
+//    $edit=new Edite($id);
+//    $edit->execute();
+//   }
 ?>
 
 <!DOCTYPE html>
@@ -138,8 +138,7 @@ require_once '../classes/class_edite.php';
                                     <th class="pb-4">Cours Inscrit</th>
                                     <th class="pb-4">Statut</th>
                                     <th class="pb-4">Dernière connexion</th>
-                                    <th class="pb-4">Action</th>
-                                    <!-- <th class="pb-4">Actions</th> -->
+                                     <!-- <th class="pb-4">Actions</th> -->
                                 </tr>
                             </thead>
                             <tbody class="divide-y">
@@ -158,30 +157,13 @@ require_once '../classes/class_edite.php';
                                             <td><?= htmlspecialchars($student['email']); ?></td>
                                             <td><?= htmlspecialchars($student['role']); ?> cours</td>
                                             <td>
-                                                <span class="px-3 py-1 <?= $student['statut'] == 'active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' ?> rounded-full text-sm">
-                                                    <?= ucfirst($student['statut']); ?>
+                                            <span class="px-3 py-1 <?= $student['statut'] == 'Suspendu' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700' ?> rounded-full text-sm">
+                                                    <?= htmlspecialchars($student['statut']) ?>
                                                 </span>
 
                                             </td>
                                             <td><?= $student['date_creation']; ?></td>
                                             <td>
-                                                <div class="flex gap-2">
-                                                    <!-- Bouton pour changer le statut -->
-                                                    <form action="" method="POST">
-                                                        <input type="hidden" name="student_id" value="<?= $student['id']; ?>">
-                                                        <button type="submit" name="change_status" class="p-2 text-yellow-600 hover:text-yellow-800">
-                                                            <i class="fas fa-sync-alt"></i>
-                                                        </button>
-                                                    </form>
-
-                                                    <!-- Bouton pour supprimer l'étudiant -->
-                                                    <form action="" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet étudiant ?');">
-                                                        <input type="hidden" name="delete_id" value="<?= $student['id']; ?>">
-                                                        <button type="submit" name="delete_student" class="p-2 text-red-600 hover:text-red-800">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
 
                                             </td>
                                         </tr>

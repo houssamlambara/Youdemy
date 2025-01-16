@@ -65,7 +65,7 @@
                     <div class="flex items-center gap-4">
                         <div class="flex items-center gap-2">
                             <img src="../img/houssam.jpg" alt="Profile" class="w-10 h-10 rounded-full">
-                            <span class="font-medium">Admin</span>
+                            <span class="font-medium">Moul Chi</span>
                         </div>
                     </div>
                 </div>
