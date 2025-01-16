@@ -1,42 +1,35 @@
 <?php
-
+require_once('database.php');
 class Edite
 {
-    private $table;
     private $id;
-    private $data;
 
-    public function __construct($table, $id, $data)
+    public function __construct($id)
     {
-        $this->table = $table;
         $this->id = $id;
-        $this->data = $data;
     }
 
     public function execute()
     {
         try {
             $db = Database::getInstance()->getConnection();
+            
+            $stmt = $db->prepare("SELECT statut FROM users WHERE id = ?");
+            $stmt->execute([$this->id]);
+            $user = $stmt->fetch();
 
-            $set = '';
-            foreach ($this->data as $key => $value) {
-                $set .= "$key = :$key, ";
-            }
-            $set = rtrim($set, ', '); 
+            if ($user) {
+                $newStatus = ($user['statut'] == 'Suspendu') ? 'Actif' : 'Suspendu';
 
-            $sql = "UPDATE " . $this->table . " SET " . $set . " WHERE id = :id";
-            $stmt = $db->prepare($sql);
-
-            foreach ($this->data as $key => $value) {
-                $stmt->bindParam(":$key", $this->data[$key]);
-            }
-            $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
-
-            if ($stmt->execute()) {
+                $stmt = $db->prepare("UPDATE users SET statut = ? WHERE id = ?");
+                $stmt->execute([$newStatus, $this->id]);
+                
                 return true;
             } else {
-                throw new Exception("Erreur lors de la mise à jour de l'enregistrement.");
+                echo "Utilisateur non trouvé.";
+                return false;
             }
+
         } catch (PDOException $e) {
             echo "Erreur PDO : " . $e->getMessage();
             return false;
