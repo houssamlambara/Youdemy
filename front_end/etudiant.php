@@ -44,17 +44,14 @@
                 <div class="flex justify-between items-center px-8 py-4">
                     <h1 class="text-2xl font-bold text-gray-800">Gestion des Étudiants</h1>
                     <div class="flex items-center gap-4">
-                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-2">
-                            <i class="fas fa-plus"></i>
-                            Ajouter un Étudiant
-                        </button>
+                       
                         <button class="relative text-gray-500 hover:text-gray-700">
                             <i class="fas fa-bell text-xl"></i>
                             <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">3</span>
                         </button>
                         <div class="flex items-center gap-2">
                             <img src="/api/placeholder/40/40" alt="Profile" class="w-10 h-10 rounded-full">
-                            <span class="font-medium">Admin</span>
+                            <span class="font-medium">Enseignant</span>
                         </div>
                     </div>
                 </div>
@@ -111,7 +108,7 @@
                 </div>
 
                 <!-- Filters -->
-                <div class="bg-white rounded-lg shadow mb-6 p-6">
+                <!-- <div class="bg-white rounded-lg shadow mb-6 p-6">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Rechercher</label>
@@ -140,16 +137,15 @@
                             </select>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Students List -->
                 <?php
                 require_once '../classes/database.php';
                 require_once '../classes/class_etudiant.php';
 
-                // Instancier la classe Student et récupérer tous les étudiants ayant le rôle 2
                 $student = new Student();
-                $students = $student->getAllStudents();  // Récupère uniquement les étudiants (rôle 2)
+                $students = $student->getAllStudents(); 
                 ?>
 
                 <!-- Liste des Étudiants -->

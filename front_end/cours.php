@@ -53,29 +53,40 @@
     </nav>
 
     <!-- Filtres et Catalogue -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <!-- En-tête et filtres -->
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 mt-12">
-            <div>
-                <h1 class="text-3xl font-bold text-gray-900">Catalogue des cours</h1>
-                <p class="mt-2 text-gray-600">Découvrez notre sélection de cours de qualité</p>
-            </div>
-            <div class="mt-4 md:mt-0 flex flex-wrap gap-2">
-                <select class="bg-white border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500">
-                    <option>Tous les niveaux</option>
-                    <option>Débutant</option>
-                    <option>Intermédiaire</option>
-                    <option>Avancé</option>
-                </select>
-                <select class="bg-white border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500">
-                    <option>Toutes les catégories</option>
-                    <option>Développement</option>
-                    <option>Business</option>
-                    <option>Design</option>
-                    <option>Marketing</option>
-                </select>
-            </div>
+
+    <div class="container mx-auto px-4 py-16">
+        <h1 class="text-4xl font-bold text-center text-blue-700 mt-12 mb-12">Nos Cours</h1>
+        <!-- Barre de recherche -->
+        <div class="max-w-2xl mx-auto mb-8">
+            <form action="" method="GET" class="relative">
+                <input type="text" name="search" placeholder="Rechercher un cours par mots-clés, tage.."
+                    class="w-full px-4 py-3 pl-12 pr-10 text-gray-700 bg-white border border-gray-300 rounded-full focus:outline-none focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition duration-300"
+                    value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i class="fas fa-search text-gray-400"></i>
+                </div>
+                <button type="submit" class="absolute inset-y-0 right-0 px-4 text-gray-600 hover:text-yellow-500 focus:outline-none">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
         </div>
+
+        <!-- Filtres de Catégorie -->
+        <div class="flex justify-center mb-12 space-x-4">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                onclick="filterCars('all')">Tous</button>
+            <button class="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300"
+                onclick="filterCars('Sport')">Informatique</button>
+            <button class="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300"
+                onclick="filterCars('SUV')">Design</button>
+            <button class="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300"
+                onclick="filterCars('Electric')">Marketing</button>
+            <button class="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300"
+                onclick="filterCars('Electric')">UI/UX</button>
+
+        </div>
+
+
 
         <!-- Grille des cours -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
