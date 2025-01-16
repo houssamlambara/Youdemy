@@ -87,17 +87,17 @@ class Cours
             return [];
         }
     }
-    public static function deleteCourse($courseId)
-    {
-        $db = Database::getInstance()->getConnection();
-        try {
-            $stmt = $db->prepare("DELETE FROM cours WHERE id = :id");
-            $stmt->bindParam(':id', $courseId, PDO::PARAM_INT);
+    // public static function deleteCours($coursId)
+    // {
+    //     $db = Database::getInstance()->getConnection();
+    //     try {
+    //         $stmt = $db->prepare("DELETE FROM cours WHERE id = :id");
+    //         $stmt->bindParam(':id', $coursId, PDO::PARAM_INT);
 
-            return $stmt->execute();
-        } catch (PDOException $e) {
-            echo "Erreur lors de la suppression du cours : " . $e->getMessage();
-            return false;
-        }
-    }
+    //         return $stmt->execute();
+    //     } catch (PDOException $e) {
+    //         echo "Erreur lors de la suppression du cours : " . $e->getMessage();
+    //         return false;
+    //     }
+    // }
 }
