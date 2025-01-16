@@ -1,6 +1,7 @@
 <?php
 require_once('../classes/class_cours.php');
 require_once('../classes/database.php');
+require_once('../classes/class_delete.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
 
@@ -66,6 +67,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
         exit();
     } else {
         echo "Une erreur s'est produite lors de l'ajout du cours.";
+    }
+}
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
+    $coursId = (int)$_POST['delete_id'];
+
+    $delete = new Delete('cours', $coursId); 
+    if ($delete->execute()) {
+        echo "Le tag a été supprimé avec succès.";
+        header("Location: enseignant_dashboard.php"); 
+        exit();
+    } else {
+        echo "Une erreur est survenue lors de la suppression du cours.";
     }
 }
 ?>
@@ -195,15 +208,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
                 <!-- Filters -->
                 <div class="bg-white rounded-lg shadow mb-6 p-6">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <!-- Rechercher -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Rechercher</label>
-                            <div class="">
-                                <input type="text" placeholder="Nom du cours..."
-                                    class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-
-                            </div>
-                        </div>
 
                         <!-- Catégorie -->
                         <div>
@@ -226,18 +230,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
                                 <option>Brouillon</option>
                                 <option>En révision</option>
                             </select>
-                        </div>
-
-                        <!-- Trier par -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Trier par</label>
-                            <select class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                <option>Plus récent</option>
-                                <option>Plus ancien</option>
-                                <option>Plus populaire</option>
-                                <option>Mieux noté</option>
-                            </select>
-                        </div>
+                        </div>                  
                     </div>
                 </div>
 
@@ -295,9 +288,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
                                                     <button class="p-2 text-blue-600 hover:text-blue-800">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
-                                                    <form action="./delete_cours.php" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce cours ?');">
-                                                        <input type="hidden" name="course_id" value="<?= $row['id']; ?>" />
-                                                        <button type="submit" class="p-2 text-red-600 hover:text-red-800">
+                                                    <form action="" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce cours ?');">
+                                                        <input type="hidden" name="delete_id" value="<?= $row['id']; ?>" />
+                                                        <button type="submit" name="delete_cours" class="p-2 text-red-600 hover:text-red-800">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                     </form>
