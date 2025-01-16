@@ -1,3 +1,12 @@
+<?php
+require_once '../classes/class_edite.php';
+  if($_SERVER['REQUEST_METHOD']=='POST'){
+    $id=$_POST['student_id'];
+   $edit=new Edite($id);
+   $edit->execute();
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -105,37 +114,6 @@
                     </div>
                 </div>
 
-                <!-- Filters -->
-                <!-- <div class="bg-white rounded-lg shadow mb-6 p-6">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Rechercher</label>
-                            <div class="relative">
-                                <input type="text" placeholder="Nom ou email..."
-                                    class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Statut</label>
-                            <select class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                <option>Tous les statuts</option>
-                                <option>Actif</option>
-                                <option>Inactif</option>
-                                <option>En pause</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Date d'inscription</label>
-                            <select class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                <option>Toutes les dates</option>
-                                <option>Cette semaine</option>
-                                <option>Ce mois</option>
-                                <option>Cette année</option>
-                            </select>
-                        </div>
-                    </div>
-                </div> -->
 
                 <!-- Students List -->
                 <?php
@@ -160,6 +138,7 @@
                                     <th class="pb-4">Cours Inscrit</th>
                                     <th class="pb-4">Statut</th>
                                     <th class="pb-4">Dernière connexion</th>
+                                    <th class="pb-4">Action</th>
                                     <!-- <th class="pb-4">Actions</th> -->
                                 </tr>
                             </thead>
@@ -186,14 +165,24 @@
                                             </td>
                                             <td><?= $student['date_creation']; ?></td>
                                             <td>
-                                                <!-- <div class="flex gap-2">
-                                                    <button class="p-2 text-blue-600 hover:text-blue-800">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                    <button class="p-2 text-indigo-600 hover:text-indigo-800">
-                                                        <i class="fas fa-envelope"></i>
-                                                    </button>
-                                                </div> -->
+                                                <div class="flex gap-2">
+                                                    <!-- Bouton pour changer le statut -->
+                                                    <form action="" method="POST">
+                                                        <input type="hidden" name="student_id" value="<?= $student['id']; ?>">
+                                                        <button type="submit" name="change_status" class="p-2 text-yellow-600 hover:text-yellow-800">
+                                                            <i class="fas fa-sync-alt"></i>
+                                                        </button>
+                                                    </form>
+
+                                                    <!-- Bouton pour supprimer l'étudiant -->
+                                                    <form action="" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet étudiant ?');">
+                                                        <input type="hidden" name="delete_id" value="<?= $student['id']; ?>">
+                                                        <button type="submit" name="delete_student" class="p-2 text-red-600 hover:text-red-800">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
