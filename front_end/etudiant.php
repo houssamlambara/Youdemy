@@ -44,10 +44,8 @@
                 <div class="flex justify-between items-center px-8 py-4">
                     <h1 class="text-2xl font-bold text-gray-800">Gestion des Étudiants</h1>
                     <div class="flex items-center gap-4">
-                       
+
                         <button class="relative text-gray-500 hover:text-gray-700">
-                            <i class="fas fa-bell text-xl"></i>
-                            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">3</span>
                         </button>
                         <div class="flex items-center gap-2">
                             <img src="/api/placeholder/40/40" alt="Profile" class="w-10 h-10 rounded-full">
@@ -145,7 +143,7 @@
                 require_once '../classes/class_etudiant.php';
 
                 $student = new Student();
-                $students = $student->getAllStudents(); 
+                $students = $student->getAllStudents();
                 ?>
 
                 <!-- Liste des Étudiants -->
@@ -184,6 +182,7 @@
                                                 <span class="px-3 py-1 <?= $student['statut'] == 'active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' ?> rounded-full text-sm">
                                                     <?= ucfirst($student['statut']); ?>
                                                 </span>
+
                                             </td>
                                             <td><?= $student['date_creation']; ?></td>
                                             <td>

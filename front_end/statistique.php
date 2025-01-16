@@ -23,9 +23,9 @@
                         <i class="fas fa-home w-6"></i>
                         <span>Tableau de bord</span>
                     </a>
-                    <a href="./enseignant.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
+                    <a href="./utilisateurs.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
                         <i class="fas fa-chalkboard-teacher w-6"></i>
-                        <span>Enseignant</span>
+                        <span>Utilisateurs</span>
                     </a>
                     <a href="./categorie.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
                         <i class="fas fa-th-list w-6"></i>
