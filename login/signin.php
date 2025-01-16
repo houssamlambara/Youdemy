@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['role'] = $authenticatedUser->getRole();
 
             if ($authenticatedUser->getRole() === 1) { 
-                header("Location: ../front_end/admin.php");
+                header("Location: ../front_end/utilisateurs.php");
             } elseif ($authenticatedUser->getRole() === 2) { 
                 header("Location: ../front_end/cours.php");
             } elseif ($authenticatedUser->getRole() === 3) { 

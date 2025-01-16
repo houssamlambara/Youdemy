@@ -150,8 +150,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
                 </div>
             </header>
 
-
-            <!-- Formulaire pour ajouter un cours -->
             <!-- Formulaire pour ajouter un cours -->
             <main class="">
                 <div id="addCourseModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden">
@@ -205,34 +203,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
                 </div>
             </main>
 
-
-            <!-- Filters -->
-            <!-- <div class="bg-white rounded-lg shadow mb-6 p-6">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Catégorie</label>
-                            <select class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                <option>Toutes les catégories</option>
-                                <option>Développement Web</option>
-                                <option>Design</option>
-                                <option>Marketing</option>
-                                <option>Business</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Statut</label>
-                            <select class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                <option>Tous les statuts</option>
-                                <option>Publié</option>
-                                <option>Brouillon</option>
-                                <option>En révision</option>
-                            </select>
-                        </div>                  
-                    </div>
-                </div> -->
-
             <!-- Liste des Cours -->
             <div class="bg-white rounded-lg shadow">
                 <div class="p-6 border-b flex justify-between items-center mt-12">
@@ -247,7 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
                                 <th class="py-4 px-6">Cours</th>
                                 <th class="py-4 px-6">Catégorie</th>
                                 <th class="py-4 px-6">Prix</th>
-                                <th class="py-4 px-6">Étudiants</th>
+                                <th class="py-4 px-6">Tag</th>
                                 <th class="py-4 px-6">Dernière mise à jour</th>
                                 <th class="py-4 px-6">Actions</th>
                             </tr>
@@ -278,15 +248,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
                                             <span class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm">
                                                 <?= htmlspecialchars($row['nom']); ?>
                                             </span>
-                                        </td>
+                                        </td>   
                                         <td class="py-4 px-6"><?= number_format($row['prix'], 2, ',', ' ') . ' €'; ?> </td>
                                         <td class="py-4 px-6"></td>
                                         <td class="py-4 px-6"><?= date('d-m-Y', strtotime($row['date_creation'])); ?> </td>
                                         <td class="py-4 px-6">
                                             <div class="flex gap-2">
-                                                <button class="p-2 text-blue-600 hover:text-blue-800">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
+                                                <form action="" method="GET">
+                                                    <input type="hidden" name="id" value="<?= $row['id']; ?>" />
+                                                    <button type="submit" class="p-2 text-blue-600 hover:text-blue-800">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                </form>
+
                                                 <form action="" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce cours ?');">
                                                     <input type="hidden" name="delete_id" value="<?= $row['id']; ?>" />
                                                     <button type="submit" name="delete_cours" class="p-2 text-red-600 hover:text-red-800">

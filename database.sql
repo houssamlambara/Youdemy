@@ -101,7 +101,7 @@ VALUES
 ('Python pour Débutants', 'Apprenez Python de zéro.', '../img/Developpeur.jpg', 3, 2, 44.95),
 ('Gestion d\'Entreprise', 'Stratégies avancées de gestion.', '../img/gestion d\'entreprise.jpg', 3, 1, 79.95),
 ('Introduction à la Data Science', 'Analyse de données avec Python.', '../img/Data Science.jpg', 3, 1, 64.95),
--- ('React.js Professionnel', 'Développement d\'applications modernes.', '../img/React.jpg', 3, 1, 69.95);
+('React.js Professionnel', 'Développement dapplications modernes.', '../img/React.jpg', 3, 1, 69.95);
 
 CREATE VIEW vue_cours AS
 SELECT c.*, cat.nom

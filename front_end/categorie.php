@@ -48,10 +48,10 @@ $categories = Categorie::getAll();
             </div>
             <nav class="mt-6">
                 <div class="px-4 space-y-2">
-                    <a href="./admin.php" class="flex items-center p-3 bg-indigo-800 rounded-lg hover:bg-indigo-900 transition-colors">
+                    <!-- <a href="./admin.php" class="flex items-center p-3 bg-indigo-800 rounded-lg hover:bg-indigo-900 transition-colors">
                         <i class="fas fa-home w-6"></i>
                         <span>Tableau de bord</span>
-                    </a>
+                    </a> -->
                     <a href="./utilisateurs.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
                         <i class="fas fa-chalkboard-teacher w-6"></i>
                         <span>Utilisateurs</span>
