@@ -39,6 +39,7 @@ class Student {
         $stmt->execute();
         return $stmt->fetchColumn();
     }
+    
 }
 
 ?>

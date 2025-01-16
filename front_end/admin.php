@@ -63,12 +63,8 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-4">
-                        <button class="relative text-gray-500 hover:text-gray-700">
-                            <i class="fas fa-bell text-xl"></i>
-                            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">3</span>
-                        </button>
                         <div class="flex items-center gap-2">
-                            <img src="/api/placeholder/40/40" alt="Profile" class="w-10 h-10 rounded-full">
+                            <img src="../img/houssam.jpg" alt="Profile" class="w-10 h-10 rounded-full">
                             <span class="font-medium">Admin</span>
                         </div>
                     </div>

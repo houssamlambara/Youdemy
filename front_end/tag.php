@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_tag'])) {
                             Ajouter un Tag
                         </button>
                         <div class="flex items-center gap-2">
-                            <img src="/api/placeholder/40/40" alt="Profile" class="w-10 h-10 rounded-full">
+                            <img src="../img/houssam.jpg" alt="Profile" class="w-10 h-10 rounded-full">
                             <span class="font-medium">Admin</span>
                         </div>
                     </div>
