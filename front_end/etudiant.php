@@ -139,16 +139,6 @@
                                 <option>Cette année</option>
                             </select>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Progression</label>
-                            <select class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                <option>Toutes</option>
-                                <option>0-25%</option>
-                                <option>26-50%</option>
-                                <option>51-75%</option>
-                                <option>76-100%</option>
-                            </select>
-                        </div>
                     </div>
                 </div>
 
@@ -157,12 +147,12 @@
                 require_once '../classes/database.php';
                 require_once '../classes/class_etudiant.php';
 
-                // Instancier la classe Student et récupérer tous les étudiants
+                // Instancier la classe Student et récupérer tous les étudiants ayant le rôle 2
                 $student = new Student();
-                $students = $student->getAllStudents();
+                $students = $student->getAllStudents();  // Récupère uniquement les étudiants (rôle 2)
                 ?>
 
-                <!-- Students List -->
+                <!-- Liste des Étudiants -->
                 <div class="bg-white rounded-lg shadow">
                     <div class="p-6 border-b">
                         <h2 class="text-xl font-bold">Liste des Étudiants</h2>
@@ -173,10 +163,10 @@
                                 <tr class="text-left text-gray-500 border-b">
                                     <th class="pb-4">Étudiant</th>
                                     <th class="pb-4">Email</th>
-                                    <th class="pb-4">Progression</th>
+                                    <th class="pb-4">Cours Inscrit</th>
                                     <th class="pb-4">Statut</th>
                                     <th class="pb-4">Dernière connexion</th>
-                                    <th class="pb-4">Actions</th>
+                                    <!-- <th class="pb-4">Actions</th> -->
                                 </tr>
                             </thead>
                             <tbody class="divide-y">
@@ -185,21 +175,15 @@
                                         <tr>
                                             <td class="py-4">
                                                 <div class="flex items-center gap-3">
-                                                    <img src="/api/placeholder/40/40" alt="Student" class="w-10 h-10 rounded-full">
+                                                    <!-- <img src="/api/placeholder/40/40" alt="Student" class="w-10 h-10 rounded-full"> -->
                                                     <div>
-                                                        <p class="font-medium"><?= htmlspecialchars($student['nom']); ?></p>
-                                                        <p class="text-sm text-gray-500">Inscrit le <?= htmlspecialchars($student['prenom']); ?></p>
+                                                        <p class="font-medium inline"><?= htmlspecialchars($student['nom']); ?></p>
+                                                        <p class="font-medium inline"><?= htmlspecialchars($student['prenom']); ?></p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td><?= htmlspecialchars($student['email']); ?></td>
                                             <td><?= htmlspecialchars($student['role']); ?> cours</td>
-                                            <td>
-                                                <div class="flex items-center gap-2">
-                                                    <div class="w-24 bg-gray-200 rounded-full h-2">
-                                                        <div class="bg-green-500 rounded-full h-2" style="width: <?= $student['statut']; ?>%"></div>
-
-                                            </td>
                                             <td>
                                                 <span class="px-3 py-1 <?= $student['statut'] == 'active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' ?> rounded-full text-sm">
                                                     <?= ucfirst($student['statut']); ?>
@@ -207,20 +191,20 @@
                                             </td>
                                             <td><?= $student['date_creation']; ?></td>
                                             <td>
-                                                <div class="flex gap-2">
+                                                <!-- <div class="flex gap-2">
                                                     <button class="p-2 text-blue-600 hover:text-blue-800">
                                                         <i class="fas fa-eye"></i>
                                                     </button>
                                                     <button class="p-2 text-indigo-600 hover:text-indigo-800">
                                                         <i class="fas fa-envelope"></i>
-
-                                                </div>
+                                                    </button>
+                                                </div> -->
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>
                                     <tr>
-                                        <td colspan="7" class="text-center py-4">Aucun étudiant trouvé.</td>
+                                        <td colspan="6" class="text-center py-4">Aucun étudiant trouvé.</td>
                                     </tr>
                                 <?php endif; ?>
                             </tbody>
