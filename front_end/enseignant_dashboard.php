@@ -178,12 +178,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
                                 <input type="number" name="prix" id="prix" class="w-full px-4 py-2 border rounded-lg" required>
                             </div>
                             <div class="mb-4">
-                                <label for="status" class="block text-gray-600">Statut</label>
+                                <!-- <label for="status" class="block text-gray-600">Statut</label>
                                 <select name="" id="status" class="w-full px-4 py-2 border rounded-lg">
                                     <option value="Publié">Publié</option>
                                     <option value="Brouillon">Brouillon</option>
                                     <option value="En révision">En révision</option>
-                                </select>
+                                </select> -->
                             </div>
                             <div class="mb-4">
                                 <label for="status" class="block text-gray-600">Tag</label>

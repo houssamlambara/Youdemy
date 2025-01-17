@@ -12,7 +12,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
        if ($email && $password) {
         User::signup($nom, $prenom, $email, $password, $role);
-        
+        header("Location: ../front_end/cours.php");
+
         echo "User created successfully.";
     } else {
         echo "Email and password are required.";
@@ -65,10 +66,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <a href="#" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Cours</a>
                     </li>
                     <li>
-                        <a href="./front_end/categorie.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Catégories</a>
+                        <a href="./front_end/categorie.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Programme</a>
                     </li>
                     <li>
-                        <a href="#" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Enseignants</a>
+                        <a href="#" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">About Youdemy</a>
                     </li>
                 </ul>
             </div>
