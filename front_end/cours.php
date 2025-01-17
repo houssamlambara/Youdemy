@@ -111,9 +111,10 @@
                         <p class="text-gray-600 mb-4"><?php echo htmlspecialchars($Cours['description']); ?></p>
                         <div class="flex items-center justify-between">
                             <span class="text-xl font-bold text-indigo-600"><?php echo number_format($Cours['prix'], 2, ',', ' ') . '€'; ?></span>
-                            <button class="text-white bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-lg">
-                                Voir le cours
-                            </button>
+                            <a href="./details.php" class="text-white bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-lg">
+                                Detail de cours
+                            </a>
+
                         </div>
                     </div>
                 </div>
