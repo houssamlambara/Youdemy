@@ -13,8 +13,7 @@ CREATE TABLE users (
     email VARCHAR(255) UNIQUE NOT NULL,
     mot_de_passe VARCHAR(255) NOT NULL,
     role INT (11) NOT NULL, 
-    statut ENUM('Actif', 'Suspendu') DEFAULT 'Actif',
-    statut_enseignant ENUM('En_attente', 'Valide', 'Refuse'),
+    statut ENUM('Actif','En_attente','Suspendu'),
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (role) REFERENCES roles(id)
 );

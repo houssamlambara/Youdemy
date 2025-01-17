@@ -1,47 +1,3 @@
-<?php
-session_start();
-include_once "../classes/database.php";
-include_once "../classes/class_user.php";
-
-$error = '';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-
-    if (empty($email) || empty($password)) {
-        $error = "Email et mot de passe sont requis.";
-    } else {
-        try {
-            $authenticatedUser = User::signin($email, $password);
-
-            $_SESSION['id'] = $authenticatedUser->getId();
-            $_SESSION['role'] = $authenticatedUser->getRole();
-
-            if ($authenticatedUser->getRole() === 1) { 
-                header("Location: ../front_end/utilisateurs.php");
-            } elseif ($authenticatedUser->getRole() === 2) { 
-                header("Location: ../front_end/cours.php");
-            } elseif ($authenticatedUser->getRole() === 3) { 
-                header("Location: ../front_end/enseignant_dashboard.php");
-            } else {
-
-                header("Location: ./login/signin.php");
-            }
-            exit(); 
-        } catch (Exception $e) {
-            $error = $e->getMessage();
-        }
-    }
-}
-?>
-
-
-
-<?php if ($error): ?>
-    <div class="error"><?php echo $error; ?></div>
-<?php endif; ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -53,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-gray-50 mt-[5%]">
     <!-- Navigation -->
     <nav class="bg-white border-gray-200 shadow-sm fixed w-full top-0 z-50">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -96,8 +52,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </nav>
 
+    <?php
+    session_start();
+    include_once "../classes/database.php";
+    include_once "../classes/class_user.php";
+
+    $error = '';
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $email = $_POST["email"];
+        $password = $_POST["password"];
+
+        // Vérifier si les champs sont vides
+        if (empty($email) || empty($password)) {
+            $error = "Email et mot de passe sont requis.";
+        } else {
+            try {
+                // Tenter de se connecter avec l'email et le mot de passe
+                $authenticatedUser = User::signin($email, $password);
+
+                // Si la connexion est réussie, stocker les informations dans la session
+                $_SESSION['id'] = $authenticatedUser->getId();
+                $_SESSION['role'] = $authenticatedUser->getRole();
+
+                // Rediriger l'utilisateur selon son rôle
+                if ($authenticatedUser->getRole() === 1) {
+                    header("Location: ../front_end/utilisateurs.php");
+                } elseif ($authenticatedUser->getRole() === 2) {
+                    header("Location: ../front_end/cours.php");
+                } elseif ($authenticatedUser->getRole() === 3) {
+                    header("Location: ../front_end/enseignant_dashboard.php");
+                } else {
+                    header("Location: ./login/signin.php");
+                }
+                exit(); // Terminer l'exécution du script après la redirection
+            } catch (Exception $e) {
+                // En cas d'erreur (compte en attente, suspendu ou mot de passe incorrect), afficher le message
+                $error = $e->getMessage();
+            }
+        }
+    }
+    ?>
+
+    <!-- Message d'erreur sous la navbar -->
+    <?php if ($error): ?>
+        <div class="bg-red-600 text-white text-center py-4 z-50">
+            <?php echo $error; ?>
+        </div>
+    <?php endif; ?>
+
     <!-- Main Content avec padding-top pour compenser la navbar fixe -->
-    <main class="mt-8">
+    <main class=""> <!-- Ajout de mt-16 pour compenser la navbar fixe -->
         <div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-100 to-indigo-200">
             <div class="max-w-4xl w-full bg-white rounded-lg shadow-lg flex overflow-hidden my-12">
                 <!-- Partie Image - Maintenant en premier -->
@@ -150,51 +155,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </main>
-
-    <!-- Footer Amélioré -->
-
-    <footer class="bg-gradient-to-r from-gray-900 to-black text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-                <div>
-                    <img src="https://via.placeholder.com/150x50?text=RoadRover" alt="RoadRover Logo" class="mb-4 mx-auto transform hover:scale-110 transition duration-300">
-                    <p class="text-sm text-gray-400">RoadRover - Votre partenaire de confiance pour la location de voitures de luxe.</p>
-                </div>
-
-                <div>
-                    <h4 class="font-bold mb-4 text-yellow-500">Liens Rapides</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#home" class="hover:text-yellow-400 transition duration-300">Accueil</a></li>
-                        <li><a href="#cars" class="hover:text-yellow-400 transition duration-300">Véhicules</a></li>
-                        <li><a href="#reservation" class="hover:text-yellow-400 transition duration-300">Réservation</a></li>
-                        <li><a href="#about" class="hover:text-yellow-400 transition duration-300">À Propos</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-bold mb-4 text-yellow-500">Contact</h4>
-                    <ul class="space-y-2">
-                        <li><i class="fas fa-phone mr-2 text-yellow-500"></i>+33 1 23 45 67 89</li>
-                        <li><i class="fas fa-envelope mr-2 text-yellow-500"></i>contact@roadrover.com</li>
-                        <li><i class="fas fa-map-marker-alt mr-2 text-yellow-500"></i>Paris, France</li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-bold mb-4 text-yellow-500">Suivez-nous</h4>
-                    <div class="flex space-x-4 justify-center">
-                        <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-8 pt-8 border-t border-gray-800 text-center">
-                <p class="text-sm text-gray-400">&copy; 2024 Youdemy. Tous droits réservés.</p>
-            </div>
-        </div>
-    </footer>
+</body>
 
 </html>
+
+<!-- Footer Amélioré -->
+
+<footer class="bg-gradient-to-r from-gray-900 to-black text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+            <div>
+                <img src="https://via.placeholder.com/150x50?text=RoadRover" alt="RoadRover Logo" class="mb-4 mx-auto transform hover:scale-110 transition duration-300">
+                <p class="text-sm text-gray-400">RoadRover - Votre partenaire de confiance pour la location de voitures de luxe.</p>
+            </div>
+
+            <div>
+                <h4 class="font-bold mb-4 text-yellow-500">Liens Rapides</h4>
+                <ul class="space-y-2">
+                    <li><a href="#home" class="hover:text-yellow-400 transition duration-300">Accueil</a></li>
+                    <li><a href="#cars" class="hover:text-yellow-400 transition duration-300">Véhicules</a></li>
+                    <li><a href="#reservation" class="hover:text-yellow-400 transition duration-300">Réservation</a></li>
+                    <li><a href="#about" class="hover:text-yellow-400 transition duration-300">À Propos</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold mb-4 text-yellow-500">Contact</h4>
+                <ul class="space-y-2">
+                    <li><i class="fas fa-phone mr-2 text-yellow-500"></i>+33 1 23 45 67 89</li>
+                    <li><i class="fas fa-envelope mr-2 text-yellow-500"></i>contact@roadrover.com</li>
+                    <li><i class="fas fa-map-marker-alt mr-2 text-yellow-500"></i>Paris, France</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold mb-4 text-yellow-500">Suivez-nous</h4>
+                <div class="flex space-x-4 justify-center">
+                    <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 pt-8 border-t border-gray-800 text-center">
+            <p class="text-sm text-gray-400">&copy; 2024 Youdemy. Tous droits réservés.</p>
+        </div>
+    </div>
+</footer>

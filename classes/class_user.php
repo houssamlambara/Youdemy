@@ -9,15 +9,17 @@ class User
     private $prenom;
     private $email;
     private $role;
+    private $statut;
     private $passwordHash;
 
-    public function __construct($id, $nom, $prenom, $email, $role, $passwordHash = null)
+    public function __construct($id, $nom, $prenom, $email, $role, $passwordHash = null, $statut = 'En_attente')
     {
         $this->id = $id;
         $this->nom = $nom;
         $this->prenom = $prenom;
         $this->email = $email;
         $this->role  = $role;
+        $this->statut = $statut;
         $this->passwordHash = $passwordHash;
     }
 
@@ -47,6 +49,17 @@ class User
     {
         return $this->role;
     }
+    // Getter pour le statut
+    public function getStatut()
+    {
+        return $this->statut;
+    }
+
+    // Setter pour le statut
+    public function setStatut($statut)
+    {
+        $this->statut = $statut;
+    }
 
 
     // Password hashing method
@@ -62,12 +75,13 @@ class User
         try {
             if ($this->id) {
                 // Update user
-                $stmt = $db->prepare("UPDATE users SET nom = :nom, prenom = :prenom, email = :email, role = :role WHERE id = :id");
+                $stmt = $db->prepare("UPDATE users SET nom = :nom, prenom = :prenom, email = :email, role = :role, statut = :statut WHERE id = :id");
                 $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
                 $stmt->bindParam(':nom', $this->nom, PDO::PARAM_STR);
                 $stmt->bindParam(':prenom', $this->prenom, PDO::PARAM_STR);
                 $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
                 $stmt->bindParam(':role', $this->role, PDO::PARAM_INT); // Enlevez l'espace après :role
+                $stmt->bindParam(':statut', $this->statut, PDO::PARAM_STR); // Inclure le statut dans la mise à jour
                 $stmt->execute();
             } else {
                 // Hash the password before inserting
@@ -76,12 +90,13 @@ class User
                 }
 
                 // Insert new user
-                $stmt = $db->prepare("INSERT INTO users (nom, prenom, email, password, role) VALUES (:nom, :prenom, :email, :password, :role)");
+                $stmt = $db->prepare("INSERT INTO users (nom, prenom, email, password, role,statut) VALUES (:nom, :prenom, :email, :password, :role, :statut)");
                 $stmt->bindParam(':nom', $this->nom, PDO::PARAM_STR);
                 $stmt->bindParam(':prenom', $this->prenom, PDO::PARAM_STR);
                 $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
                 $stmt->bindParam(':role', $this->role, PDO::PARAM_INT); // Enlevez l'espace après :role
                 $stmt->bindParam(':password', $this->passwordHash, PDO::PARAM_STR);
+                $stmt->bindParam(':statut', $this->statut, PDO::PARAM_STR); // Insertion du statut
                 $stmt->execute();
                 $this->id = $db->lastInsertId(); // Set the new user ID
             }
@@ -94,7 +109,13 @@ class User
             throw new Exception("An error occurred while saving the user. SQL error: " . $e->getMessage());
         }
     }
-
+    public function validerEnseignant()
+    {
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("UPDATE users SET statut = 'Actif' WHERE id = :id");
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
 
     // Search user by name
     public function searchUserByName($name)
@@ -163,53 +184,72 @@ class User
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($result) {
-            return new User($result['id'], $result['nom'], $result['prenom'], $result['email'], $result['role'], $result['password']);
+            return new User($result['id'], $result['nom'], $result['prenom'], $result['email'], $result['role'], $result['password'], $result['statut']);
         }
 
         return null;
     }
 
-    // Method to register a new user (signup)
+
     public static function signup($nom, $prenom, $email, $password, $role)
     {
-        // Validate email format
+        // Valider le format de l'email
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new Exception("Invalid email format");
+            throw new Exception("Format de l'email invalide");
         }
 
-        // Validate password length
+        // Valider la longueur du mot de passe
         if (strlen($password) < 3) {
-            throw new Exception("Password must be at least 3 characters long");
+            throw new Exception("Le mot de passe doit comporter au moins 3 caractères");
         }
 
-        // Sanitize name fields
+        // Assainir les champs de nom
         $nom = htmlspecialchars($nom);
         $prenom = htmlspecialchars($prenom);
 
-        // Check if email already exists
+        // Vérifier si l'email existe déjà
         if (self::findByEmail($email)) {
-            throw new Exception("Email is already registered");
+            throw new Exception("Cet email est déjà enregistré");
         }
 
-        // Create a new user object
-        $user = new User(null, $nom, $prenom, $email, $role);
-        $user->setPasswordHash($password); // Hash the password
+        // Définir le statut en attente pour les enseignants
+        $statut = ($role == 3) ? 'En_attente' : 'Actif'; // Supposons que le rôle d'enseignant est 3
+
+        // Créer un nouvel objet utilisateur
+        $user = new User(null, $nom, $prenom, $email, $role, null, $statut);
+        $user->setPasswordHash($password); // Hacher le mot de passe
+
+        // Sauvegarder l'utilisateur
         return $user->save();
     }
 
-
-    // Method to login (signin)
     public static function signin($email, $password)
     {
+        // Recherche l'utilisateur par email
         $user = self::findByEmail($email);
 
-        // Check if user exists and password is correct
-        if (!$user || !password_verify($password, $user->passwordHash)) {
-            throw new Exception("Invalid email or password");
+        // Si l'utilisateur n'existe pas
+        if (!$user) {
+            throw new Exception("Email ou mot de passe invalide");
         }
 
-        return $user; // Successful login
+        // Vérification du mot de passe
+        if (!password_verify($password, $user->passwordHash)) {
+            throw new Exception("Email ou mot de passe invalide");
+        }
+
+        // Vérification du statut de l'utilisateur
+        if ($user->getStatut() === 'En_attente') {
+            throw new Exception("Votre compte est en attente de validation par un administrateur.");
+        } elseif ($user->getStatut() === 'Suspendu') {
+            throw new Exception("Votre compte est suspendu. Veuillez contacter l'administrateur.");
+        }
+
+        // Si l'utilisateur est actif, retourner l'utilisateur pour la connexion
+        return $user;
     }
+
+
 
     // Method to change the user's password
     public function changePassword($newPassword)
@@ -232,5 +272,3 @@ class User
         $stmt->execute();
     }
 }
-
-?>
