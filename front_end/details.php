@@ -1,3 +1,24 @@
+<?php
+require_once '../classes/class_cours.php';
+
+$coursdetail = null; // Initialisation à null
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if (isset($_GET['cours_id']) && !empty($_GET['cours_id'])) {
+        $cours = new Cours(NULL, NULL, NULL, NULL, NULL);
+
+        $cours_id = intval(trim($_GET['cours_id']));
+        $coursdetail = $cours->getCoursById($cours_id);
+
+        if ($coursdetail === null) {
+            $errorMessage = "Cours non trouvé.";
+        }
+    } else {
+        $errorMessage = "ID de cours manquant.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -5,11 +26,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Youdemy - Plateforme de Cours en Ligne</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet">
 </head>
 
 <body class="bg-gray-50">
+
+    <!-- Message de succès -->
+    <div class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg" id="success-message">
+        Message de succès ici
+    </div>
+
     <!-- Navigation -->
     <nav class="bg-white border-gray-200 shadow-sm fixed w-full z-50">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -39,7 +67,7 @@
                         <a href="../index.php" class="block py-2 px-3 text-indigo-600" aria-current="page">Accueil</a>
                     </li>
                     <li>
-                        <a href="#" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Cours</a>
+                        <a href="./cours.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Cours</a>
                     </li>
                     <li>
                         <a href="./programmes.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Programmes</a>
@@ -52,102 +80,88 @@
         </div>
     </nav>
 
-    <!-- Filtres et Catalogue -->
+    <!-- Contenu principal -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-16">
+            <!-- Détails du cours -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <img src="<?= htmlspecialchars($coursdetail->getImageUrl()) ?>" alt="Image du Cours" class="w-full h-74 object-cover">
+                <div class="p-8">
+                        <?php if ($coursdetail): ?>
+                            <div class="flex items-center justify-between mb-6">
+                                <h1 class="text-3xl font-bold text-gray-800"><?= htmlspecialchars($coursdetail->getTitre()) ?></h1>
+                                <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold">12 semaines</span>
+                            </div>
 
-    <div class="container mx-auto px-4 py-16">
-        <h1 class="text-4xl font-bold text-center text-blue-700 mt-12 mb-12">Nos Cours</h1>
-        <!-- Barre de recherche -->
-        <div class="max-w-2xl mx-auto mb-8">
-            <form action="" method="GET" class="relative">
-                <input type="text" name="search" placeholder="Rechercher un cours par mots-clés, tage.."
-                    class="w-full px-4 py-3 pl-12 pr-10 text-gray-700 bg-white border border-gray-300 rounded-full focus:outline-none focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition duration-300"
-                    value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <i class="fas fa-search text-gray-400"></i>
+                            <!-- <div class="flex items-center mb-6">
+                                <img src="../img/ayoub.jpg" alt="Instructeur" class="w-12 h-12 rounded-full">
+                                <div class="ml-4">
+                                    <h3 class="text-lg font-semibold">Ayoub Chel7</h3>
+                                    <p class="text-gray-600">Instructeur principal</p>
+                                </div>
+                            </div> -->
+
+                            <div class="prose max-w-none">
+                                <p class="text-gray-600 leading-relaxed"><?= htmlspecialchars($coursdetail->getDescription()) ?></p>
+                            </div>
+
+                            <div class="mt-8">
+                                <h2 class="text-2xl font-semibold mb-4">Ce que vous apprendrez</h2>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                        <span>Point clé 1</span>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                        <span>Point clé 2</span>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                        <span>Point clé 3</span>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php else: ?>
+                            <p class="text-red-500">Cours non trouvé ou non disponible.</p>
+                        <?php endif; ?>
+                    </div>
                 </div>
-                <button type="submit" class="absolute inset-y-0 right-0 px-4 text-gray-600 hover:text-yellow-500 focus:outline-none">
-                    <i class="fas fa-arrow-right"></i>
-                </button>
-            </form>
-        </div>
 
-        <!-- Filtres de Catégorie -->
-        <div class="flex justify-center mb-12 space-x-4">
-            <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-                onclick="filterCars('all')">Tous</button>
-            <button class="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300"
-                onclick="filterCars('Sport')">Informatique</button>
-            <button class="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300"
-                onclick="filterCars('SUV')">Design</button>
-            <button class="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300"
-                onclick="filterCars('Electric')">Marketing</button>
-            <button class="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300"
-                onclick="filterCars('Electric')">UI/UX</button>
+            </div>
 
-        </div>
+            <!-- Formulaire d'inscription -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-4">
 
+                    <form method="POST" class="space-y-4">
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-all">S'inscrire maintenant</button>
+                    </form>
 
-        <!-- Grille des cours -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <?php
-            require_once('../classes/class_cours.php');
-            $cours = new Cours('', '', '', 0, 0);
-            $total = $cours->totalcours();
-            $nmbpage = ceil($total['total'] / 6);
-            $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-            $courses = $cours->pagination($page);
-            ?>
-
-            <?php foreach ($courses as $Cours): ?>
-                <?php
-                if (empty($Cours['titre']) || empty($Cours['image_url']) || empty($Cours['prix'])) {
-                    continue;
-                }
-                ?>
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105 p-6">
-                    <img src="../img/<?php echo htmlspecialchars($Cours['image_url']); ?>" alt="<?php echo htmlspecialchars($Cours['titre']); ?>" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-4"><?php echo htmlspecialchars($Cours['titre']); ?></h3>
-                        <p class="text-gray-600 mb-4"><?php echo htmlspecialchars($Cours['description']); ?></p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-xl font-bold text-indigo-600"><?php echo number_format($Cours['prix'], 2, ',', ' ') . '€'; ?></span>
-                            <form action="./details.php" method="POST">
-                                <input type="hidden" name="cours_id" value="<?php echo $Cours['id']; ?>">
-                                <button type="submit" class="text-white bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-lg">
-                                    <a href="./details.php?cours_id=<?= $Cours['id'] ?>" class="text-white bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-lg">
-                                        Détail de cours
-                                    </a>
-                                </button>
-                            </form>
+                    <div class="mt-6 space-y-4">
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-undo-alt mr-3"></i>
+                            <span>30 jours satisfait ou remboursé</span>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-infinity mr-3"></i>
+                            <span>Accès à vie au contenu</span>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-certificate mr-3"></i>
+                            <span>Certificat à la fin du cours</span>
                         </div>
                     </div>
                 </div>
-            <?php endforeach; ?>
-        </div>
-
-    </div>
-    <!-- Pagination -->
-    <div class="w-full">
-        <div class="pagination">
-            <ul class="flex justify-center mb-12 space-x-4">
-                <?php
-
-                for ($i = 1; $i <= $nmbpage; $i++) {
-
-                    $activeClass = ($i == $page) ? 'class="active"' : '';
-                    echo "<li class='bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300'><a href='?page=$i' $activeClass>$i</a></li>";
-                }
-                ?>
-            </ul>
+            </div>
         </div>
     </div>
-    </div>
 
-    <!-- Footer Amélioré -->
+    <!-- Footer -->
     <footer class="bg-gradient-to-r from-gray-900 to-black text-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-                <!-- Colonnes précédentes avec des améliorations visuelles subtiles -->
                 <div>
                     <img src="https://via.placeholder.com/150x50?text=RoadRover" alt="RoadRover Logo" class="mb-4 mx-auto transform hover:scale-110 transition duration-300">
                     <p class="text-sm text-gray-400">RoadRover - Votre partenaire de confiance pour la location de voitures de luxe.</p>
@@ -188,5 +202,19 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Animation du message de succès
+        const successMessage = document.getElementById('success-message');
+        if (successMessage) {
+            setTimeout(() => {
+                successMessage.style.opacity = '0';
+                successMessage.style.transition = 'opacity 0.5s ease-out';
+                setTimeout(() => successMessage.remove(), 500);
+            }, 3000);
+        }
+    </script>
+
+</body>
 
 </html>

@@ -3,7 +3,6 @@ require_once('database.php');
 
 class Cours
 {
-    // private $db;
     private $titre;
     private $description;
     private $image_url;
@@ -17,6 +16,60 @@ class Cours
         $this->description = $description;
         $this->image_url = $image_url;
         $this->categorie_id = $categorie_id;
+        $this->prix = $prix;
+    }
+    // Getter et Setter pour $titre
+    public function getTitre()
+    {
+        return $this->titre;
+    }
+
+    public function setTitre($titre)
+    {
+        $this->titre = $titre;
+    }
+
+    // Getter et Setter pour $description
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    // Getter et Setter pour $image_url
+    public function getImageUrl()
+    {
+        return $this->image_url;
+    }
+
+    public function setImageUrl($image_url)
+    {
+        $this->image_url = $image_url;
+    }
+
+    // Getter et Setter pour $categorie_id
+    public function getCategorieId()
+    {
+        return $this->categorie_id;
+    }
+
+    public function setCategorieId($categorie_id)
+    {
+        $this->categorie_id = $categorie_id;
+    }
+
+    // Getter et Setter pour $prix
+    public function getPrix()
+    {
+        return $this->prix;
+    }
+
+    public function setPrix($prix)
+    {
         $this->prix = $prix;
     }
 
@@ -87,6 +140,27 @@ class Cours
             return [];
         }
     }
+    
+    public function getCoursById($id)
+{
+    $id = intval($id);  // On s'assure que l'ID est un entier
+    $db = Database::getInstance()->getConnection();
+    $query = "SELECT * FROM cours WHERE id = :id"; // Requête SQL
+    $stmt = $db->prepare($query);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($result) {
+        return new Cours($result['titre'], $result['description'], $result['image_url'], $result['categorie_id'], $result['prix']);
+    } else {
+        return null;  // Aucun cours trouvé
+    }
+}
+
+
+
     // public static function deleteCours($coursId)
     // {
     //     $db = Database::getInstance()->getConnection();
