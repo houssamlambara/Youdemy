@@ -191,9 +191,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                     </div>
                                                 </div>
                                                 <!-- Affichage dynamique du statut -->
-                                                <span class="px-3 py-1 <?= $enseignant['statut'] == 'Suspendu' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700' ?> rounded-full text-sm">
+                                                <span class="px-3 py-1 <?= $enseignant['statut'] == 'Suspendu' ? 'bg-red-100 text-red-700' : ($enseignant['statut'] == 'Actif' ? 'bg-green-100 text-green-700' : ($enseignant['statut'] == 'En attente' ? 'bg-blue-300 text-blue-700' :'bg-gray-100 text-gray-700')) ?> rounded-full text-sm">
                                                     <?= htmlspecialchars($enseignant['statut']) ?>
                                                 </span>
+
+
 
                                                 <div class="flex gap-2">
                                                     <!-- Bouton pour changer le statut -->
