@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
        if ($email && $password) {
         User::signup($nom, $prenom, $email, $password, $role);
-        header("Location: ../front_end/cours.php");
+        header("Location: ../login/signin.php");
 
         echo "User created successfully.";
     } else {
@@ -20,7 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -33,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-gray-50 mt-[5%]">
     <!-- Navigation -->
     <nav class="bg-white border-gray-200 shadow-sm fixed w-full top-0 z-50">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -63,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <a href="../index.php" class="block py-2 px-3 text-indigo-600" aria-current="page">Accueil</a>
                     </li>
                     <li>
-                        <a href="#" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Cours</a>
+                        <a href="../front_end/cours.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Cours</a>
                     </li>
                     <li>
                         <a href="./front_end/categorie.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Programme</a>
