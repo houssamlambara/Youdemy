@@ -25,7 +25,7 @@ include_once('database.php');
 //         ];
 //     }
 
- 
+
 //     public function getId()
 //     {
 //         return $this->id;
@@ -104,7 +104,7 @@ class tag implements JsonSerializable
         return $this->id . " " . $this->nom;
     }
 
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         return [
             'id' => $this->id,
@@ -151,16 +151,16 @@ class tag implements JsonSerializable
 
     public static function getAllTags()
     {
-        $tags=[];
+        $tags = [];
         $db = Database::getInstance()->getConnection();
         try {
             $req = "SELECT id, nom FROM tags";
             $stmt = $db->prepare($req);
             $stmt->execute();
-            $arry= $stmt->fetchAll(PDO::FETCH_ASSOC);
-            foreach($arry as $tag){
-                $tags[] = new tag($tag['nom'], $tag['id']); 
-            }  
+            $arry = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($arry as $tag) {
+                $tags[] = new tag($tag['nom'], $tag['id']);
+            }
             return $tags;
         } catch (PDOException $e) {
 
@@ -174,6 +174,30 @@ class tag implements JsonSerializable
         $tags = self::getAllTags();
         return $tags;
     }
+    public static function saveMultiple($noms)
+    {
+        try {
+            $db = Database::getInstance()->getConnection();
+
+            $stmt = $db->prepare("INSERT INTO tags (nom) VALUES (:nom)");
+
+            $db->beginTransaction();
+
+            foreach ($noms as $nom) {
+                $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
+                $stmt->execute();
+            }
+
+            $db->commit();
+
+            return true;
+        } catch (PDOException $e) {
+            $db->rollBack(); 
+            echo "Erreur lors de l'ajout des tags : " . $e->getMessage();
+            return false;
+        }
+    }
+
 
     public static function delete($id)
     {
@@ -187,6 +211,3 @@ class tag implements JsonSerializable
         }
     }
 }
-
-
-
