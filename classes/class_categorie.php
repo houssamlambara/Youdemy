@@ -75,12 +75,17 @@ class Categorie
     {
         try {
             $db = Database::getInstance()->getConnection();
-            $stmt = $db->query("SELECT * FROM categories");
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt = $db->query("SELECT id, nom FROM categories");
+            $categories = [];
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $categories[] = new Categorie($row['nom'], $row['id']); // Create Categorie objects
+            }
+            return $categories;
         } catch (PDOException $e) {
             throw new Exception("Erreur lors de la récupération des catégories : " . $e->getMessage());
         }
     }
+
 
     public static function delete($id)
     {

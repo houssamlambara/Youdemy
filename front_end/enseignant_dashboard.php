@@ -151,57 +151,68 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
             </header>
 
             <!-- Formulaire pour ajouter un cours -->
-            <main class="">
-                <div id="addCourseModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden">
-                    <div class="bg-white p-6 rounded-lg w-2/3 max-w-lg h-auto max-h-[85vh] overflow-y-auto">
-                        <h3 class="text-xl font-semibold mb-4">Ajouter un nouveau cours</h3>
-                        <form method="POST" action="" enctype="multipart/form-data">
-                            <div class="mb-4">
-                                <label for="course_name" class="block text-gray-600">Nom du cours</label>
-                                <input type="text" name="titre" id="course_name" class="w-full px-4 py-2 border rounded-lg" required>
-                            </div>
-                            <div class="mb-4">
-                                <label for="description" class="block text-gray-600">Description</label>
-                                <textarea name="description" id="description" class="w-full px-4 py-2 border rounded-lg" required></textarea>
-                            </div>
-                            <div class="mb-4">
-                                <label for="category" class="block text-gray-600">Catégorie</label>
-                                <select name="categorie_id" id="category" class="w-full px-4 py-2 border rounded-lg">
-                                    <option value="1">Informatique</option>
-                                    <option value="2">Design</option>
-                                    <option value="3">Marketing</option>
-                                    <option value="4">UI/UX</option>
-                                </select>
-                            </div>
-                            <div class="mb-4">
-                                <label for="price" class="block text-gray-600">Prix</label>
-                                <input type="number" name="prix" id="prix" class="w-full px-4 py-2 border rounded-lg" required>
-                            </div>
-                            <div class="mb-4">
-                                <!-- <label for="status" class="block text-gray-600">Statut</label>
-                                <select name="" id="status" class="w-full px-4 py-2 border rounded-lg">
-                                    <option value="Publié">Publié</option>
-                                    <option value="Brouillon">Brouillon</option>
-                                    <option value="En révision">En révision</option>
-                                </select> -->
-                            </div>
-                            <div class="mb-4">
-                                <label for="status" class="block text-gray-600">Tag</label>
-                                <input id='tags' name='tags' class="w-full px-4 py-2 border rounded-lg">
-                            </div>
+            <?php
+            // Inclure la classe Category et récupérer les catégories
+            include('../classes/class_categorie.php');
 
-                            <div class="mb-4">
-                                <label for="image_url" class="block text-gray-600">Image</label>
-                                <input type="file" name="image_url" id="image_url" class="w-full px-4 py-2 border rounded-lg">
-                            </div>
-                            <div class="flex">
-                                <button type="submit" name="add_course" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Ajouter</button>
-                                <button type="button" class="ml-4 text-red-600 hover:underline" onclick="document.getElementById('addCourseModal').classList.add('hidden')">Annuler</button>
-                            </div>
-                        </form>
+            $categoryModel = new Categorie(""); 
+            $categories = $categoryModel->getAll();
+
+            // Vérifier que $categories contient des données
+            if (empty($categories)) {
+                echo "Aucune catégorie disponible.";
+            } else {
+                // Afficher le formulaire après avoir récupéré les catégories
+            ?>
+                <main>
+                    <div id="addCourseModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden">
+                        <div class="bg-white p-6 rounded-lg w-2/3 max-w-lg h-auto max-h-[85vh] overflow-y-auto">
+                            <h3 class="text-xl font-semibold mb-4">Ajouter un nouveau cours</h3>
+                            <form method="POST" action="" enctype="multipart/form-data">
+                                <div class="mb-4">
+                                    <label for="course_name" class="block text-gray-600">Nom du cours</label>
+                                    <input type="text" name="titre" id="course_name" class="w-full px-4 py-2 border rounded-lg" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="description" class="block text-gray-600">Description</label>
+                                    <textarea name="description" id="description" class="w-full px-4 py-2 border rounded-lg" required></textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="categorie" class="block text-gray-600">Catégorie</label>
+                                    <select name="categorie_id" id="category" class="w-full px-4 py-2 border rounded-lg">
+                                        <?php foreach ($categories as $categorie): ?>
+                                            <option value="<?php echo $categorie->getId(); ?>">
+                                                <?php echo htmlspecialchars($categorie->getNom()); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="price" class="block text-gray-600">Prix</label>
+                                    <input type="number" name="prix" id="prix" class="w-full px-4 py-2 border rounded-lg" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="tags" class="block text-gray-600">Tag</label>
+                                    <input id="tags" name="tags" class="w-full px-4 py-2 border rounded-lg">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="image_url" class="block text-gray-600">Image</label>
+                                    <input type="file" name="image_url" id="image_url" class="w-full px-4 py-2 border rounded-lg">
+                                </div>
+                                <div class="flex">
+                                    <button type="submit" name="add_course" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Ajouter</button>
+                                    <button type="button" class="ml-4 text-red-600 hover:underline" onclick="document.getElementById('addCourseModal').classList.add('hidden')">Annuler</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            </main>
+                </main>
+            <?php
+            }
+            ?>
+
 
             <!-- Liste des Cours -->
             <div class="bg-white rounded-lg shadow">
@@ -248,7 +259,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
                                             <span class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm">
                                                 <?= htmlspecialchars($row['nom']); ?>
                                             </span>
-                                        </td>   
+                                        </td>
                                         <td class="py-4 px-6"><?= number_format($row['prix'], 2, ',', ' ') . ' €'; ?> </td>
                                         <td class="py-4 px-6"></td>
                                         <td class="py-4 px-6"><?= date('d-m-Y', strtotime($row['date_creation'])); ?> </td>
