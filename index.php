@@ -45,7 +45,7 @@
                         <a href="./front_end/programmes.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Programmes</a>
                     </li>
                     <li>
-                        <a href="#" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">About Youdemy</a>
+                        <a href="./front_end/about.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">About Youdemy</a>
                     </li>
                 </ul>
             </div>

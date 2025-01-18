@@ -209,8 +209,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                             </div>
                                             <div class="mt-6 space-y-2">
                                                 <div class="flex justify-between text-sm">
-                                                    <span class="text-gray-500">Cours actifs</span>
-                                                    <span class="font-medium">8</span>
+                                                    <span class="text-gray-500">Statut</span>
+                                                    <span class="font-medium">Etudiant</span>
                                                 </div>
                                                 <div class="flex justify-between text-sm">
                                                     <span class="text-gray-500">Étudiants total</span>

@@ -140,24 +140,24 @@ class Cours
             return [];
         }
     }
-    
+
     public function getCoursById($id)
-{
-    $id = intval($id);  // On s'assure que l'ID est un entier
-    $db = Database::getInstance()->getConnection();
-    $query = "SELECT * FROM cours WHERE id = :id"; // Requête SQL
-    $stmt = $db->prepare($query);
-    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-    $stmt->execute();
+    {
+        $id = intval($id);  // On s'assure que l'ID est un entier
+        $db = Database::getInstance()->getConnection();
+        $query = "SELECT * FROM cours WHERE id = :id"; // Requête SQL
+        $stmt = $db->prepare($query);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
 
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($result) {
-        return new Cours($result['titre'], $result['description'], $result['image_url'], $result['categorie_id'], $result['prix']);
-    } else {
-        return null;  // Aucun cours trouvé
+        if ($result) {
+            return new Cours($result['titre'], $result['description'], $result['image_url'], $result['categorie_id'], $result['prix']);
+        } else {
+            return null;  // Aucun cours trouvé
+        }
     }
-}
 
 
 
