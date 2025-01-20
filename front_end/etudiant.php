@@ -1,3 +1,6 @@
+<?php 
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -110,7 +113,7 @@
                 require_once '../classes/database.php';
                 require_once '../classes/class_etudiant.php';
 
-                $student = new Student();
+                $student = new Student($_SESSION['id_user'], null, $_SESSION['username'], $_SESSION['email'], $_SESSION['role']);
                 $students = $student->getAllStudents();
                 ?>
 

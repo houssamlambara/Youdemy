@@ -207,6 +207,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
                 </main>
             <?php
             }
+
+            // ediiiite
             ?>
 
             <?php
@@ -220,7 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
                         <div id="editCourseModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
                             <div class="bg-white p-6 rounded-lg w-2/3 max-w-lg h-auto max-h-[85vh] overflow-y-auto">
                                 <h3 class="text-xl font-semibold mb-4">Éditer le cours</h3>
-                                <form method="POST" action="" enctype="multipart/form-data">
+                                <form method="POST" action="./edite_cours.php" enctype="multipart/form-data">
                                     <input type="hidden" name="id" value="<?= $cours->getId(); ?>">
 
                                     <div class="mb-4">
@@ -258,7 +260,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
                                     </div>
 
                                     <div class="flex">
-                                        <button action type="submit" name="update_cours" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Mettre à jour</button>
+                                        <button action="./edite_cours.php" type="submit" name="update_cours" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Mettre à jour</button>
                                         <button type="button" class="ml-4 text-red-600 hover:underline" onclick="document.getElementById('editCourseModal').classList.add('hidden')">Annuler</button>
                                     </div>
                                 </form>
@@ -325,7 +327,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
                                             <div class="flex gap-2">
                                                 <form action="" method="GET">
                                                     <input type="hidden" name="id" value="<?= $row['id']; ?>" />
-                                                    <button type="submit" class="p-2 text-blue-600 hover:text-blue-800">
+                                                    <button type="submit" name="update" class="p-2 text-blue-600 hover:text-blue-800">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
                                                 </form>

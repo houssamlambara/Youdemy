@@ -1,6 +1,6 @@
 <?php
 require_once '../classes/class_cours.php';
-
+session_start();
 $coursdetail = null; // Initialisation à null
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -94,13 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                                 <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold">12 semaines</span>
                             </div>
 
-                            <!-- <div class="flex items-center mb-6">
-                                <img src="../img/ayoub.jpg" alt="Instructeur" class="w-12 h-12 rounded-full">
-                                <div class="ml-4">
-                                    <h3 class="text-lg font-semibold">Ayoub Chel7</h3>
-                                    <p class="text-gray-600">Instructeur principal</p>
-                                </div>
-                            </div> -->
+                           
 
                             <div class="prose max-w-none">
                                 <p class="text-gray-600 leading-relaxed"><?= htmlspecialchars($coursdetail->getDescription()) ?></p>
@@ -135,8 +129,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             <div class="lg:col-span-1">
                 <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-4">
 
-                    <form method="POST" class="space-y-4">
-                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-all">S'inscrire maintenant</button>
+                    <form  action="edite_cours.php" method="POST" class="space-y-4">
+                        <input type="hidden" name="cours_id" value="<?= htmlspecialchars($coursdetail->getId()) ?>">
+                        <input type="hidden" name="etudiant_id" value="<?= $_SESSION['id_user']?>">
+                        <button name="inscrire" type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-all">S'inscrire maintenant</button>
                     </form>
 
                     <div class="mt-6 space-y-4">

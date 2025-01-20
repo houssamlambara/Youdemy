@@ -116,15 +116,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_tag'])) {
                                 <td class="px-6 py-3"><?= htmlspecialchars($tag->getId()) ?></td>
                                 <td class="px-6 py-3"><?= htmlspecialchars($tag->getNom()) ?></td>
                                 <td class="px-6 py-3">
+                                    <!-- Formulaire pour supprimer un tag -->
                                     <form action="" method="POST" style="display:inline;">
                                         <input type="hidden" name="delete_id" value="<?= $tag->getId() ?>">
                                         <button type="submit" name="delete_tag" class="ml-4 text-red-600 hover:underline">
                                             <i class="fas fa-trash-alt"></i> Supprimer
                                         </button>
                                     </form>
+
+                                    <!-- Formulaire pour éditer un tag -->
+                                    <form action="edit_tag.php" method="GET" style="display:inline;">
+                                        <input type="hidden" name="edit_id" value="<?= $tag->getId() ?>">
+                                        
+                                        <button type="submit" class="ml-4 text-blue-600 hover:underline">
+                                            <i class="fas fa-edit"></i> Éditer
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
+
                     </tbody>
                 </table>
             </main>
