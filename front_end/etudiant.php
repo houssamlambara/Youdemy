@@ -1,19 +1,10 @@
-<?php
-// require_once '../classes/class_edite.php';
-//   if($_SERVER['REQUEST_METHOD']=='POST'){
-//     $id=$_POST['student_id'];
-//    $edit=new Edite($id);
-//    $edit->execute();
-//   }
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des Étudiants - Admin</title>
+    <title>Gestion des Étudiants - Enseignant</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -67,7 +58,7 @@
             <!-- Students Content -->
             <main class="p-8">
                 <!-- Quick Stats -->
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                <!-- <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
                     <div class="bg-white rounded-lg shadow p-6">
                         <div class="flex items-center justify-between">
                             <div>
@@ -112,8 +103,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
+                </div> -->
 
                 <!-- Students List -->
                 <?php
@@ -127,7 +117,7 @@
                 <!-- Liste des Étudiants -->
                 <div class="bg-white rounded-lg shadow">
                     <div class="p-6 border-b">
-                        <h2 class="text-xl font-bold">Liste des Étudiants</h2>
+                        <h2 class="flex justify-center text-2xl font-bold">Liste des Étudiants</h2>
                     </div>
                     <div class="p-6">
                         <table class="w-full">

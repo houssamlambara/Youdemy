@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
                 <!-- Filters -->
-                <div class="bg-white rounded-lg shadow mb-6 p-6">
+                <!-- <div class="bg-white rounded-lg shadow mb-6 p-6">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Rechercher</label>
@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </select>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Teachers List -->
                 <?php
