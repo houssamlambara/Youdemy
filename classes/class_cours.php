@@ -175,17 +175,17 @@ class Cours
         }
     }
 
-    public function update()
+    public function update($newtitre,$newdescription,$newprix,$newcategorie_id)
     {
         try {
             $db = Database::getInstance()->getConnection();
-            $stmt = $db->prepare("UPDATE cours SET titre = :titre, description = :description, image_url = :image_url, categorie_id = :categorie_id, prix = :prix WHERE id = :id");
+            $stmt = $db->prepare("UPDATE cours SET titre = :titre, description = :description, prix = :prix, categorie_id = :categorie_id  WHERE id = :id");
 
-            $stmt->bindParam(':titre', $this->titre, PDO::PARAM_STR);
-            $stmt->bindParam(':description', $this->description, PDO::PARAM_STR);
-            $stmt->bindParam(':image_url', $this->image_url, PDO::PARAM_STR);
-            $stmt->bindParam(':categorie_id', $this->categorie_id, PDO::PARAM_INT);
-            $stmt->bindParam(':prix', $this->prix, PDO::PARAM_STR);
+            $stmt->bindParam(':titre', $newtitre, PDO::PARAM_STR);
+            $stmt->bindParam(':description', $newdescription, PDO::PARAM_STR);
+            // $stmt->bindParam(':image_url', $this->image_url, PDO::PARAM_STR);
+            $stmt->bindParam(':categorie_id', $newcategorie_id, PDO::PARAM_INT);
+            $stmt->bindParam(':prix', $newprix, PDO::PARAM_STR);
             $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);  // ID utilisé pour la mise à jour
 
             // Log SQL pour vérifier la requête
