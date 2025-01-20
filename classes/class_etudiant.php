@@ -1,5 +1,7 @@
 <?php
-class Student {
+require_once('class_user.php');
+
+class Student extends User {
 
     public function getAllStudents() {
         $db = Database::getInstance()->getConnection();
@@ -39,6 +41,27 @@ class Student {
         $stmt->execute();
         return $stmt->fetchColumn();
     }
+
+    public function getcoursStudent(){
+        $db = Database::getInstance()->getConnection();
+        
+        // Requête SQL avec un ? pour le paramètre
+        $sql = "SELECT * FROM cours
+                INNER JOIN inscriptions ON cours.id = inscriptions.cours_id
+                INNER JOIN users ON inscriptions.etudiant_id = users.id
+                WHERE users.id = ?";  
+    
+        $stmt = $db->prepare($sql);
+        
+      
+        // $stmt->bindParam($this->getId(), PDO::PARAM_INT);  
+    
+
+        $stmt->execute([$this->getId(),]);
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
     
 }
 
