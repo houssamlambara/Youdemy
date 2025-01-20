@@ -3,11 +3,13 @@ require_once('database.php');
 
 class Cours
 {
+    private $id;  // Ajout de l'attribut `$id`
     private $titre;
     private $description;
     private $image_url;
     private $categorie_id;
     private $prix;
+
 
     public function __construct($titre, $description, $image_url, $categorie_id, $prix)
     {
@@ -19,6 +21,14 @@ class Cours
         $this->prix = $prix;
     }
     // Getter et Setter pour $titre
+    public function getId()
+    {
+        return $this->id;
+    }
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
     public function getTitre()
     {
         return $this->titre;
@@ -143,9 +153,8 @@ class Cours
 
     public function getCoursById($id)
     {
-        $id = intval($id);  // On s'assure que l'ID est un entier
         $db = Database::getInstance()->getConnection();
-        $query = "SELECT * FROM cours WHERE id = :id"; // Requête SQL
+        $query = "SELECT * FROM cours WHERE id = :id"; 
         $stmt = $db->prepare($query);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -153,25 +162,42 @@ class Cours
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($result) {
-            return new Cours($result['titre'], $result['description'], $result['image_url'], $result['categorie_id'], $result['prix']);
+            // Retourner un objet Cours
+            $this->id = $result['id'];
+            $this->titre = $result['titre'];
+            $this->description = $result['description'];
+            $this->image_url = $result['image_url'];
+            $this->categorie_id = $result['categorie_id'];
+            $this->prix = $result['prix'];
+            return $this;  // Retourne l'instance de l'objet
         } else {
             return null;  // Aucun cours trouvé
         }
     }
 
+    public function update()
+    {
+        try {
+            $db = Database::getInstance()->getConnection();
+            $stmt = $db->prepare("UPDATE cours SET titre = :titre, description = :description, image_url = :image_url, categorie_id = :categorie_id, prix = :prix WHERE id = :id");
 
+            $stmt->bindParam(':titre', $this->titre, PDO::PARAM_STR);
+            $stmt->bindParam(':description', $this->description, PDO::PARAM_STR);
+            $stmt->bindParam(':image_url', $this->image_url, PDO::PARAM_STR);
+            $stmt->bindParam(':categorie_id', $this->categorie_id, PDO::PARAM_INT);
+            $stmt->bindParam(':prix', $this->prix, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);  // ID utilisé pour la mise à jour
 
-    // public static function deleteCours($coursId)
-    // {
-    //     $db = Database::getInstance()->getConnection();
-    //     try {
-    //         $stmt = $db->prepare("DELETE FROM cours WHERE id = :id");
-    //         $stmt->bindParam(':id', $coursId, PDO::PARAM_INT);
-
-    //         return $stmt->execute();
-    //     } catch (PDOException $e) {
-    //         echo "Erreur lors de la suppression du cours : " . $e->getMessage();
-    //         return false;
-    //     }
-    // }
+            // Log SQL pour vérifier la requête
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                echo "Échec de la mise à jour du cours.";
+                return false;
+            }
+        } catch (PDOException $e) {
+            echo "Erreur lors de la mise à jour du cours : " . $e->getMessage();
+            return false;
+        }
+    }
 }
