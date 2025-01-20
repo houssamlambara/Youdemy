@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
             // Inclure la classe Category et récupérer les catégories
             include('../classes/class_categorie.php');
 
-            $categoryModel = new Categorie(""); 
+            $categoryModel = new Categorie("");
             $categories = $categoryModel->getAll();
 
             // Vérifier que $categories contient des données
@@ -206,6 +206,68 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
                     </div>
                 </main>
             <?php
+            }
+            ?>
+
+            <?php
+            if (isset($_GET['id'])) {
+                $id = intval($_GET['id']);
+                $cours = new Cours('', '', '', '', '');
+                $cours = $cours->getCoursById($id);
+
+                if ($cours): ?>
+                    <main>
+                        <div id="editCourseModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
+                            <div class="bg-white p-6 rounded-lg w-2/3 max-w-lg h-auto max-h-[85vh] overflow-y-auto">
+                                <h3 class="text-xl font-semibold mb-4">Éditer le cours</h3>
+                                <form method="POST" action="" enctype="multipart/form-data">
+                                    <input type="hidden" name="id" value="<?= $cours->getId(); ?>">
+
+                                    <div class="mb-4">
+                                        <label for="course_name" class="block text-gray-600">Nom du cours</label>
+                                        <input type="text" name="titre" id="course_name" class="w-full px-4 py-2 border rounded-lg" value="<?= htmlspecialchars($cours->getTitre()); ?>" required>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="description" class="block text-gray-600">Description</label>
+                                        <textarea name="description" id="description" class="w-full px-4 py-2 border rounded-lg" required><?= htmlspecialchars($cours->getDescription()); ?></textarea>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="categorie" class="block text-gray-600">Catégorie</label>
+                                        <select name="categorie_id" id="category" class="w-full px-4 py-2 border rounded-lg">
+                                            <?php foreach ($categories as $categorie): ?>
+                                                <option value="<?= $categorie->getId(); ?>" <?= $categorie->getId() == $cours->getCategorieId() ? 'selected' : ''; ?>>
+                                                    <?= htmlspecialchars($categorie->getNom()); ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="price" class="block text-gray-600">Prix</label>
+                                        <input type="number" name="prix" id="prix" class="w-full px-4 py-2 border rounded-lg" value="<?= htmlspecialchars($cours->getPrix()); ?>" required>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="image_url" class="block text-gray-600">Image</label>
+                                        <input type="file" name="image_url" id="image_url" class="w-full px-4 py-2 border rounded-lg">
+                                        <?php if ($cours->getImageUrl()): ?>
+                                            <p class="text-sm text-gray-500 mt-2">Image actuelle : <?= $cours->getImageUrl(); ?></p>
+                                        <?php endif; ?>
+                                    </div>
+
+                                    <div class="flex">
+                                        <button action type="submit" name="update_cours" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Mettre à jour</button>
+                                        <button type="button" class="ml-4 text-red-600 hover:underline" onclick="document.getElementById('editCourseModal').classList.add('hidden')">Annuler</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </main>
+                <?php else: ?>
+                    <p>Le cours demandé n'a pas été trouvé.</p>
+            <?php endif;
             }
             ?>
 
@@ -280,24 +342,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
                                 <?php
                                 endforeach;
                                 ?>
-                                <tr>
-                                    <td colspan="6" class="text-center py-4 text-gray-500">Aucun cours trouvé.</td>
-                                </tr>
                             <?php endif; ?>
                         </tbody>
                     </table>
-
-                    <!-- Pagination -->
-                    <div class="flex justify-between items-center mt-6">
-                        <p class="text-gray-500">Affichage de 1-10 sur 48 cours</p>
-                        <div class="flex gap-2">
-                            <button class="px-4 py-2 border rounded-lg hover:bg-gray-50">Précédent</button>
-                            <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">1</button>
-                            <button class="px-4 py-2 border rounded-lg hover:bg-gray-50">2</button>
-                            <button class="px-4 py-2 border rounded-lg hover:bg-gray-50">3</button>
-                            <button class="px-4 py-2 border rounded-lg hover:bg-gray-50">Suivant</button>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -306,6 +353,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
                 document.querySelector('[data-modal-toggle="addCourseModal"]').addEventListener('click', function() {
                     document.getElementById('addCourseModal').classList.remove('hidden');
                 });
+
 
                 var input = document.querySelector('#tags ')
 
