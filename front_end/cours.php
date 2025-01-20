@@ -72,7 +72,7 @@
         </div>
 
         <!-- Filtres de Catégorie -->
-        <div class="flex justify-center mb-12 space-x-4">
+        <!-- <div class="flex justify-center mb-12 space-x-4">
             <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
                 onclick="filterCars('all')">Tous</button>
             <button class="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300"
@@ -83,8 +83,7 @@
                 onclick="filterCars('Electric')">Marketing</button>
             <button class="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300"
                 onclick="filterCars('Electric')">UI/UX</button>
-
-        </div>
+        </div> -->
 
 
         <!-- Grille des cours -->
