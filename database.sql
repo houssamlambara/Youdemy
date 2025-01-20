@@ -39,6 +39,14 @@ CREATE TABLE cours (
     FOREIGN KEY (categorie_id) REFERENCES categories(id) ON DELETE SET NULL
 );
 
+
+SELECT * from cours
+INNER join inscriptions
+ON cours.id = inscriptions.cours_id
+INNER join users
+ON inscriptions.etudiant_id = users.id
+WHERE users.id = 1;
+
 CREATE TABLE contenu (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_cour INT, 
