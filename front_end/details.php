@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             <div class="lg:col-span-1">
                 <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-4">
 
-                    <form  action="edite_cours.php" method="POST" class="space-y-4">
+                    <form  action="./mycours.php" method="POST" class="space-y-4">
                         <input type="hidden" name="cours_id" value="<?= htmlspecialchars($coursdetail->getId()) ?>">
                         <input type="hidden" name="etudiant_id" value="<?= $_SESSION['id_user']?>">
                         <button name="inscrire" type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-all">S'inscrire maintenant</button>

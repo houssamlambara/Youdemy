@@ -1,6 +1,9 @@
 <?php 
 require_once('../classes/class_etudiant.php');
 session_start();
+// if(!isset($_SESSION['id_user']) || $_SESSION['role']!=3){
+//     header('location: ./signin.php');
+// }
 
 $etudiant= new Student($_SESSION['id_user'],null,$_SESSION['username'],$_SESSION['email'],$_SESSION['role']);
 $cours=$etudiant->getcoursStudent();
@@ -42,13 +45,6 @@ $cours=$etudiant->getcoursStudent();
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="flex justify-between items-center mb-8">
             <h1 class="text-3xl font-bold text-gray-900">Mes Cours</h1>
-            <div class="flex space-x-4">
-                <select class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    <option>Tous les cours</option>
-                    <option>En cours</option>
-                    <option>Complétés</option>
-                </select>
-            </div>
         </div>
 
         <!-- Course Grid -->
