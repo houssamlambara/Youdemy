@@ -53,14 +53,22 @@ class Student extends User {
     
         $stmt = $db->prepare($sql);
         
-      
-        // $stmt->bindParam($this->getId(), PDO::PARAM_INT);  
-    
-
-        $stmt->execute([$this->getId(),]);
+       $stmt->execute([$this->getId(),]);
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    // public function getMesCous(){
+    //     $db = Database::getInstance()->getConnection();
+    //     $sql = "SELECT * FROM cours
+    //             INNER JOIN inscriptions ON cours.id = inscriptions.cours_id
+    //             INNER JOIN users ON inscriptions.etudiant_id = users.id
+    //             WHERE users.id = :id";
+    //     $stmt = $db->prepare($sql);
+    //     $stmt->bindParam(':id', $this->getId(), PDO::PARAM_INT);
+    //     $stmt->execute();
+    //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // }
     
     
 }
