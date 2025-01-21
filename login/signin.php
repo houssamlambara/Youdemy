@@ -36,16 +36,16 @@
             <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
                 <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 md:flex-row md:mt-0 md:border-0 md:bg-white">
                     <li>
-                        <a href="../index.php" class="block py-2 px-3 text-indigo-600" aria-current="page">Accueil</a>
+                        <a href="../index.php" class="block py-2 px-3 text-indigo-600" aria-current="page" id="accueil">Accueil</a>
                     </li>
                     <li>
-                        <a href="../front_end/cours.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Cours</a>
+                        <a href="../front_end/cours.php" class="block py-2 px-3 text-black hover:text-indigo-600" id="cours">Cours</a>
                     </li>
                     <li>
-                        <a href="../front_end/programmes.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Programmes</a>
+                        <a href="../front_end/programmes.php" class="block py-2 px-3 text-black hover:text-indigo-600" id="programmes">Programmes</a>
                     </li>
                     <li>
-                        <a href="#" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">About Youdemy</a>
+                        <a href="../front_end/about.php" class="block py-2 px-3 text-black hover:text-indigo-600" id="about">About Youdemy</a>
                     </li>
                 </ul>
             </div>
@@ -159,48 +159,66 @@
 
 </html>
 
-<!-- Footer Amélioré -->
-
-<footer class="bg-gradient-to-r from-gray-900 to-black text-white py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+<!-- Footer -->
+<footer class="bg-gradient-to-r from-indigo-600 to-blue-500 text-white py-12">
+    <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left">
+            <!-- Logo et description -->
             <div>
-                <img src="https://via.placeholder.com/150x50?text=RoadRover" alt="RoadRover Logo" class="mb-4 mx-auto transform hover:scale-110 transition duration-300">
-                <p class="text-sm text-gray-400">RoadRover - Votre partenaire de confiance pour la location de voitures de luxe.</p>
+                <a href="#" class="flex items-center justify-center md:justify-start">
+                    <span class="self-center text-2xl font-bold text-white">Youdemy</span>
+                </a>
+                <p class="mt-4 text-sm text-gray-100">
+                    Youdemy est votre plateforme d'apprentissage en ligne pour maîtriser les compétences du futur.
+                </p>
             </div>
 
+            <!-- Liens rapides -->
             <div>
-                <h4 class="font-bold mb-4 text-yellow-500">Liens Rapides</h4>
+                <h4 class="text-lg font-bold mb-4">Liens Rapides</h4>
                 <ul class="space-y-2">
-                    <li><a href="#home" class="hover:text-yellow-400 transition duration-300">Accueil</a></li>
-                    <li><a href="#cars" class="hover:text-yellow-400 transition duration-300">Véhicules</a></li>
-                    <li><a href="#reservation" class="hover:text-yellow-400 transition duration-300">Réservation</a></li>
-                    <li><a href="#about" class="hover:text-yellow-400 transition duration-300">À Propos</a></li>
+                    <li><a href="../index.php" class="text-gray-100 hover:text-indigo-200 transition duration-300">Accueil</a></li>
+                    <li><a href="./front_end/cours.php" class="text-gray-100 hover:text-indigo-200 transition duration-300">Cours</a></li>
+                    <li><a href="./front_end/programmes.php" class="text-gray-100 hover:text-indigo-200 transition duration-300">Programmes</a></li>
+                    <li><a href="./front_end/about.php" class="text-gray-100 hover:text-indigo-200 transition duration-300">À Propos</a></li>
                 </ul>
             </div>
 
+            <!-- Contact -->
             <div>
-                <h4 class="font-bold mb-4 text-yellow-500">Contact</h4>
+                <h4 class="text-lg font-bold mb-4">Contact</h4>
                 <ul class="space-y-2">
-                    <li><i class="fas fa-phone mr-2 text-yellow-500"></i>+33 1 23 45 67 89</li>
-                    <li><i class="fas fa-envelope mr-2 text-yellow-500"></i>contact@roadrover.com</li>
-                    <li><i class="fas fa-map-marker-alt mr-2 text-yellow-500"></i>Paris, France</li>
+                    <li class="text-gray-100"><i class="fas fa-phone mr-2"></i>+33 1 23 45 67 89</li>
+                    <li class="text-gray-100"><i class="fas fa-envelope mr-2"></i>contact@youdemy.com</li>
+                    <li class="text-gray-100"><i class="fas fa-map-marker-alt mr-2"></i>Paris, France</li>
                 </ul>
             </div>
 
+            <!-- Réseaux sociaux -->
             <div>
-                <h4 class="font-bold mb-4 text-yellow-500">Suivez-nous</h4>
-                <div class="flex space-x-4 justify-center">
-                    <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-2xl hover:text-yellow-400 transform hover:scale-125 transition duration-300"><i class="fab fa-linkedin"></i></a>
+                <h4 class="text-lg font-bold mb-4">Suivez-nous</h4>
+                <div class="flex space-x-4 justify-center md:justify-start">
+                    <a href="#" class="text-gray-100 hover:text-indigo-200 transition duration-300">
+                        <i class="fab fa-facebook text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-100 hover:text-indigo-200 transition duration-300">
+                        <i class="fab fa-twitter text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-100 hover:text-indigo-200 transition duration-300">
+                        <i class="fab fa-instagram text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-100 hover:text-indigo-200 transition duration-300">
+                        <i class="fab fa-linkedin text-2xl"></i>
+                    </a>
                 </div>
             </div>
         </div>
 
-        <div class="mt-8 pt-8 border-t border-gray-800 text-center">
-            <p class="text-sm text-gray-400">&copy; 2024 Youdemy. Tous droits réservés.</p>
+        <!-- Copyright -->
+        <div class="mt-8 pt-8 border-t border-gray-300/20 text-center">
+            <p class="text-sm text-gray-100">
+                &copy; 2024 Youdemy. Tous droits réservés.
+            </p>
         </div>
     </div>
 </footer>

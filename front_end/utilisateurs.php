@@ -166,8 +166,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 require_once '../classes/database.php';
                 require_once '../classes/class_utilisateurs.php';
 
-                $student = new Student();
-                $students = $student->getAllUtilisateurs();
+                // $student = new Student($_SESSION['id'],$_SESSION['nom'], $_SESSION['prenom'], $_SESSION['email'], $_SESSION['role']);
+                $students=Student::getAllUtilisateurs();
                 ?>
                 <div class="bg-white rounded-lg shadow">
                     <div class="p-6 border-b">

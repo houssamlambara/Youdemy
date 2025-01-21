@@ -271,4 +271,11 @@ class User
         $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
         $stmt->execute();
     }
+    public function logout()
+    {
+        session_start();
+        session_destroy();
+        header('Location: ../index.php');
+        exit();
+    }
 }

@@ -3,7 +3,7 @@ require_once('../classes/database.php');
 require_once('../classes/class_cours.php');
 require_once('../classes/class_inscription.php');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' &&  isset($_POST['update'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' &&  isset($_POST['update_cours'])) {
     // Récupérer les données envoyées
     $id = intval($_POST['id']);
     $titre = htmlspecialchars($_POST['titre']);
@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' &&  isset($_POST['update'])) {
     $cours->setId($id);
     if($cours->update($titre,$description,$prix,$categorie_id)){
         header('Location: enseignant_dashboard.php');
+        exit();
     } else{
         die("Erreur lors de la mise à jour du cours");
     }

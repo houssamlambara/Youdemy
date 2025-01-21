@@ -75,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     <li>
                         <a href="./enseignant.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">About Youdemy</a>
                     </li>
+                       
                 </ul>
             </div>
         </div>
@@ -93,8 +94,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                                 <h1 class="text-3xl font-bold text-gray-800"><?= htmlspecialchars($coursdetail->getTitre()) ?></h1>
                                 <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold">12 semaines</span>
                             </div>
-
-                           
 
                             <div class="prose max-w-none">
                                 <p class="text-gray-600 leading-relaxed"><?= htmlspecialchars($coursdetail->getDescription()) ?></p>
@@ -131,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
                     <form  action="./mycours.php" method="POST" class="space-y-4">
                         <input type="hidden" name="cours_id" value="<?= htmlspecialchars($coursdetail->getId()) ?>">
-                        <input type="hidden" name="etudiant_id" value="<?= $_SESSION['id_user']?>">
+                        <input type="hidden" name="etudiant_id" value="<?= $_SESSION['id']?>">
                         <button name="inscrire" type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-all">S'inscrire maintenant</button>
                     </form>
 

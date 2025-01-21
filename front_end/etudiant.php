@@ -113,7 +113,7 @@ session_start();
                 require_once '../classes/database.php';
                 require_once '../classes/class_etudiant.php';
 
-                $student = new Student($_SESSION['id_user'], null, $_SESSION['username'], $_SESSION['email'], $_SESSION['role']);
+                $student = new Student($_SESSION['id'], null, null, null, $_SESSION['role']);
                 $students = $student->getAllStudents();
                 ?>
 

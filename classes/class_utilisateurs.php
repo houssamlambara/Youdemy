@@ -1,7 +1,7 @@
 <?php
 class Student {
 
-    public function getAllUtilisateurs() {
+    public static function getAllUtilisateurs() {
         $db = Database::getInstance()->getConnection();
         
         $stmt = $db->prepare("SELECT * FROM users WHERE role IN (:role1, :role2)");
