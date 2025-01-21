@@ -1,7 +1,9 @@
 <?php
-require_once('../classes/class_cours.php');
+
 require_once('../classes/database.php');
 require_once('../classes/class_delete.php');
+require_once('../classes/class_vedio.php');
+require_once('../classes/class_contenu.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
 
@@ -11,30 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
     $prix = htmlspecialchars($_POST['prix']);
     // $video_url = '';
     $image_url = '';
-
-    // if (isset($_FILES['video_url']) && !empty($_FILES['video_url']['name'])) {
-    //     $dir = '../uploads/';
-    //     $path = basename($_FILES['video_url']['name']);
-    //     $finalPath = $dir . uniqid('video_', true) . "_" . $path;
-
-    //     $allowedExtensions = ['mp4', 'mov', 'avi', 'wmv', 'flv'];
-    //     $extension = pathinfo($finalPath, PATHINFO_EXTENSION);
-
-    //     if (in_array(strtolower($extension), $allowedExtensions)) {
-    //         if (move_uploaded_file($_FILES['video_url']['tmp_name'], $finalPath)) {
-    //             $video_url = $finalPath;
-    //         } else {
-    //             echo "Erreur lors du téléchargement de la vidéo.";
-    //             exit();
-    //         }
-    //     } else {
-    //         echo "Extension non autorisée pour la vidéo.";
-    //         exit();
-    //     }
-    // } else {
-    //     echo "Aucune vidéo téléchargée.";
-    //     exit();
-    // }
 
     if (isset($_FILES['image_url']) && !empty($_FILES['image_url']['name'])) {
         $dir = '../uploads/';
@@ -58,16 +36,53 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
         echo "Aucune image téléchargée.";
         exit();
     }
-
-    $cours = new Cours($titre, $description, $image_url, $categorie_id, $prix);
-
-    if ($cours->save()) {
-        echo "Le cours a été ajouté avec succès !";
-        header('Location: enseignant_dashboard.php');
-        exit();
-    } else {
-        echo "Une erreur s'est produite lors de l'ajout du cours.";
+    if($_POST['type']=='video'){
+        $video_url = '';
+        if (isset($_FILES['video_file']) && !empty($_FILES['video_file']['name'])) {
+            $dir = '../uploads/';
+            $path = basename($_FILES['video_file']['name']);
+            $finalPath = $dir . uniqid() . "_" . $path;
+            $allowedExtensions = ['mp4', 'avi', 'mov', 'wmv', 'flv'];
+            $extension = pathinfo($finalPath, PATHINFO_EXTENSION);
+    
+            if (in_array(strtolower($extension), $allowedExtensions)) {
+                if (move_uploaded_file($_FILES['video_file']['tmp_name'], $finalPath)) {
+                    $video_url = $finalPath;
+                } else {
+                    echo "Erreur lors du téléchargement de la vidéo.";
+                    exit();
+                }
+            } else {
+                echo "Extension non autorisée pour la vidéo.";
+                exit();
+            }
+        } else {
+            echo "Aucune vidéo téléchargée.";
+            exit();
+        }
+        $cours = new VideoCours($titre, $description, $image_url, $categorie_id, $prix, $video_url);
+        if ($cours->save()) {
+            echo "Le cours a été ajouté avec succès !";
+            header('Location: enseignant_dashboard.php');
+            exit();
+        } else {
+            echo "Une erreur s'est produite lors de l'ajout du cours.";
+        }
+    }else{
+        $contenu_texte = htmlspecialchars($_POST['contenu_texte']);
+        $cours = new contenu($titre, $description, $image_url, $categorie_id, $prix, $contenu_texte);
+        if ($cours->save()) {
+            echo "Le cours a été ajouté avec succès !";
+            header('Location: enseignant_dashboard.php');
+            exit();
+        } else {
+            echo "Une erreur s'est produite lors de l'ajout du cours.";
+        }
     }
+
+    // $cours = new Cours($titre, $description, $image_url, $categorie_id, $prix);
+
+   
 }
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
     $coursId = (int)$_POST['delete_id'];
@@ -182,8 +197,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
                                             </option>
                                         <?php endforeach; ?>
                                     </select>
-
-                                    </select>
                                 </div>
                                 <div class="mb-4">
                                     <label for="price" class="block text-gray-600">Prix</label>
@@ -197,6 +210,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
                                     <label for="image_url" class="block text-gray-600">Image</label>
                                     <input type="file" name="image_url" id="image_url" class="w-full px-4 py-2 border rounded-lg">
                                 </div>
+                                <div class="mb-4">
+                                    <label for="type" class="block text-gray-600">Type de contenu</label>
+                                    <select name="type" id="type" class="w-full px-4 py-2 border rounded-lg" onchange="toggleContentField()">
+                                        <option value="video">Vidéo</option>
+                                        <option value="texte">Contenu texte</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4" id="videoField" style="display: none;">
+                                    <label for="video_file" class="block text-gray-600">Fichier vidéo</label>
+                                    <input type="file" name="video_file" id="video_file" class="w-full px-4 py-2 border rounded-lg">
+                                </div>
+                                <div class="mb-4" id="texteField" style="display: none;">
+                                    <label for="contenu_texte" class="block text-gray-600">Contenu texte</label>
+                                    <textarea name="contenu_texte" id="contenu_texte" class="w-full px-4 py-2 border rounded-lg"></textarea>
+                                </div>
                                 <div class="flex">
                                     <button type="submit" name="add_course" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Ajouter</button>
                                     <button type="button" class="ml-4 text-red-600 hover:underline" onclick="document.getElementById('addCourseModal').classList.add('hidden')">Annuler</button>
@@ -205,10 +233,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
                         </div>
                     </div>
                 </main>
+
+                <script>
+                    function toggleContentField() {
+                        const typeSelect = document.getElementById('type');
+                        const videoField = document.getElementById('videoField');
+                        const texteField = document.getElementById('texteField');
+
+                        if (typeSelect.value === 'video') {
+                            videoField.style.display = 'block';
+                            texteField.style.display = 'none';
+                        } else if (typeSelect.value === 'texte') {
+                            videoField.style.display = 'none';
+                            texteField.style.display = 'block';
+                        }
+                    }
+
+                    // Appeler la fonction au chargement de la page pour afficher le champ correct en fonction de la sélection par défaut
+                    document.addEventListener('DOMContentLoaded', function() {
+                        toggleContentField();
+                    });
+                </script>
             <?php
             }
-
-            // ediiiite
             ?>
 
             <?php
