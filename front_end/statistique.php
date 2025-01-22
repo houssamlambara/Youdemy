@@ -1,3 +1,6 @@
+<?php 
+require_once('../classes/class_enseignant.php');
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -19,10 +22,6 @@
             </div>
             <nav class="mt-6">
                 <div class="px-4 space-y-2">
-                    <!-- <a href="./admin.php" class="flex items-center p-3 bg-indigo-800 rounded-lg hover:bg-indigo-900 transition-colors">
-                        <i class="fas fa-home w-6"></i>
-                        <span>Tableau de bord</span>
-                    </a> -->
                     <a href="./utilisateurs.php" class="flex items-center p-3 hover:bg-indigo-800 rounded-lg transition-colors">
                         <i class="fas fa-chalkboard-teacher w-6"></i>
                         <span>Utilisateurs</span>
@@ -111,30 +110,19 @@
                     <div class="bg-white rounded-lg shadow p-6">
                         <h3 class="text-lg font-semibold text-gray-700 mb-4">Top 3 Enseignants</h3>
                         <div class="space-y-4">
+                            <?php 
+                            $prof=enseignant::gettopEncient();
+                            foreach($prof as $p){
+                            ?>
                             <div class="flex items-center gap-3">
                                 <span class="text-xl font-bold text-indigo-600">1</span>
                                 <img src="/api/placeholder/40/40" alt="Teacher" class="w-10 h-10 rounded-full">
                                 <div>
-                                    <p class="font-semibold">Sophie Martin</p>
+                                    <p class="font-semibold"><?= $p['nom']?></p>
                                     <p class="text-sm text-gray-500">12 cours - 2,845 étudiants</p>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-3">
-                                <span class="text-xl font-bold text-indigo-600">2</span>
-                                <img src="/api/placeholder/40/40" alt="Teacher" class="w-10 h-10 rounded-full">
-                                <div>
-                                    <p class="font-semibold">Jean Dupuis</p>
-                                    <p class="text-sm text-gray-500">8 cours - 2,156 étudiants</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <span class="text-xl font-bold text-indigo-600">3</span>
-                                <img src="/api/placeholder/40/40" alt="Teacher" class="w-10 h-10 rounded-full">
-                                <div>
-                                    <p class="font-semibold">Marie Lambert</p>
-                                    <p class="text-sm text-gray-500">6 cours - 1,923 étudiants</p>
-                                </div>
-                            </div>
+                           <?php } ?>
                         </div>
                     </div>
                 </div>
