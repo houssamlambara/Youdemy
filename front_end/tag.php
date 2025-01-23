@@ -116,7 +116,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_tag'])) {
                                 <td class="px-6 py-3"><?= htmlspecialchars($tag->getId()) ?></td>
                                 <td class="px-6 py-3"><?= htmlspecialchars($tag->getNom()) ?></td>
                                 <td class="px-6 py-3">
-                                    <!-- Formulaire pour supprimer un tag -->
                                     <form action="" method="POST" style="display:inline;">
                                         <input type="hidden" name="delete_id" value="<?= $tag->getId() ?>">
                                         <button type="submit" name="delete_tag" class="ml-4 text-red-600 hover:underline">
@@ -124,7 +123,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_tag'])) {
                                         </button>
                                     </form>
 
-                                    <!-- Formulaire pour éditer un tag -->
                                     <form action="edit_tag.php" method="GET" style="display:inline;">
                                         <input type="hidden" name="edit_id" value="<?= $tag->getId() ?>">
                                         
@@ -143,10 +141,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_tag'])) {
     </div>
 
     <!-- Modal for adding a category -->
-    <!-- Modal for adding a category -->
     <div id="addCategorieModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden">
         <div class="bg-white p-6 rounded-lg w-1/3 relative">
-            <!-- Bouton X pour fermer le modal -->
             <button id="closeModalButton" class="absolute top-2 right-2 text-red-600 hover:text-red-600">
                 <i class="fas fa-times"></i>
             </button>
@@ -184,12 +180,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_tag'])) {
             const tagList = document.getElementById('tagList');
             const resetButton = document.getElementById('resetButton');
             const tagsHiddenInput = document.getElementById('tags');
-            const closeModalButton = document.getElementById('closeModalButton'); // bouton pour fermer le modal
-            const addCategorieModal = document.getElementById('addCategorieModal'); // modal
+            const closeModalButton = document.getElementById('closeModalButton');
+            const addCategorieModal = document.getElementById('addCategorieModal'); 
 
-            let tags = []; // tableau pour stocker les tags ajoutés
+            let tags = []; 
 
-            // Ajouter un tag
             addTagButton.addEventListener('click', () => {
                 const tagText = tagInput.value.trim();
                 if (tagText && !tags.includes(tagText)) {
@@ -202,21 +197,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_tag'])) {
                     const removeButton = tagElement.querySelector('button');
                     removeButton.addEventListener('click', () => {
                         tagList.removeChild(tagElement);
-                        tags = tags.filter(tag => tag !== tagText); // supprimer le tag du tableau
+                        tags = tags.filter(tag => tag !== tagText); 
                         updateTagCount();
                         tagsHiddenInput.value = tags.join(',');
                     });
                     tagList.appendChild(tagElement);
-                    tags.push(tagText); // ajouter le tag au tableau
+                    tags.push(tagText); 
                     tagInput.value = '';
-                    tagsHiddenInput.value = tags.join(','); // mettre à jour l'input caché
+                    tagsHiddenInput.value = tags.join(','); 
                     updateTagCount();
                 } else {
-                    tagInput.value = ''; // si le tag est déjà dans le tableau ou est vide, réinitialiser l'input
+                    tagInput.value = ''; 
                 }
             });
 
-            // Ajouter un tag lorsqu'on appuie sur Entrée
             tagInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
@@ -224,30 +218,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_tag'])) {
                 }
             });
 
-            // Réinitialiser la liste de tags
             resetButton.addEventListener('click', () => {
                 tagList.innerHTML = '';
-                tags = []; // réinitialiser le tableau des tags
+                tags = []; 
                 updateTagCount();
-                tagsHiddenInput.value = ''; // réinitialiser l'input caché
+                tagsHiddenInput.value = ''; 
             });
 
-            // Fermer le modal en cliquant sur le bouton "X"
             closeModalButton.addEventListener('click', () => {
                 addCategorieModal.classList.add('hidden');
             });
 
-            // Fermer le modal en cliquant à l'extérieur de la boîte du modal
             addCategorieModal.addEventListener('click', (event) => {
                 if (event.target === addCategorieModal) {
                     addCategorieModal.classList.add('hidden');
                 }
             });
 
-            // Mettre à jour le nombre de tags affiché
             function updateTagCount() {
                 const tagCount = tagList.children.length;
-                // Pour afficher le nombre de tags en bas ou ailleurs dans le modal si nécessaire
                 console.log(`${tagCount} tag(s)`);
             }
         });

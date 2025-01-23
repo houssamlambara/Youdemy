@@ -63,19 +63,15 @@
         $email = $_POST["email"];
         $password = $_POST["password"];
 
-        // Vérifier si les champs sont vides
         if (empty($email) || empty($password)) {
             $error = "Email et mot de passe sont requis.";
         } else {
             try {
-                // Tenter de se connecter avec l'email et le mot de passe
                 $authenticatedUser = User::signin($email, $password);
 
-                // Si la connexion est réussie, stocker les informations dans la session
                 $_SESSION['id'] = $authenticatedUser->getId();
                 $_SESSION['role'] = $authenticatedUser->getRole();
 
-                // Rediriger l'utilisateur selon son rôle
                 if ($authenticatedUser->getRole() === 1) {
                     header("Location: ../front_end/utilisateurs.php");
                 } elseif ($authenticatedUser->getRole() === 2) {
@@ -85,33 +81,29 @@
                 } else {
                     header("Location: ./login/signin.php");
                 }
-                exit(); // Terminer l'exécution du script après la redirection
+                exit(); 
             } catch (Exception $e) {
-                // En cas d'erreur (compte en attente, suspendu ou mot de passe incorrect), afficher le message
                 $error = $e->getMessage();
             }
         }
     }
     ?>
 
-    <!-- Message d'erreur sous la navbar -->
     <?php if ($error): ?>
         <div class="bg-red-600 text-white text-center py-4 z-50">
             <?php echo $error; ?>
         </div>
     <?php endif; ?>
 
-    <!-- Main Content avec padding-top pour compenser la navbar fixe -->
-    <main class=""> <!-- Ajout de mt-16 pour compenser la navbar fixe -->
+    <!-- Main Content -->
+    <main class=""> 
         <div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-100 to-indigo-200">
             <div class="max-w-4xl w-full bg-white rounded-lg shadow-lg flex overflow-hidden my-12">
-                <!-- Partie Image - Maintenant en premier -->
                 <div class="w-full bg-indigo-600 hidden md:block">
                     <img src="../img/Developpeur.jpg" alt="Illustration de connexion"
-                        class="object-cover w-full h-full rounded-l-lg"> <!-- Changed to rounded-l-lg -->
+                        class="object-cover w-full h-full rounded-l-lg"> 
                 </div>
 
-                <!-- Partie Formulaire -->
                 <div class="w-full p-10">
                     <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">Connexion à Youdemy</h2>
 

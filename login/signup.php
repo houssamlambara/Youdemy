@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </nav>
 
-    <!-- Main Content avec padding-top pour compenser la navbar fixe -->
+    <!-- Main Content -->
     <main class="mt-16">
         <div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-100 to-indigo-200">
             <div class="max-w-3xl w-full bg-white rounded-lg shadow-lg flex overflow-hidden my-8">

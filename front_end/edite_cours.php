@@ -4,7 +4,6 @@ require_once('../classes/class_cours.php');
 require_once('../classes/class_inscription.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' &&  isset($_POST['update_cours'])) {
-    // Récupérer les données envoyées
     $id = intval($_POST['id']);
     $titre = htmlspecialchars($_POST['titre']);
     $description = htmlspecialchars($_POST['description']);

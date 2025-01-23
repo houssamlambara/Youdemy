@@ -197,7 +197,6 @@ require_once('../classes/class_enseignant.php');
     </div>
 
     <script>
-        // Initialize Categories Chart
         const ctx = document.getElementById('categoriesChart').getContext('2d');
         new Chart(ctx, {
             type: 'doughnut',

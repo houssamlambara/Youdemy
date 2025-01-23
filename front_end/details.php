@@ -1,7 +1,7 @@
 <?php
 require_once '../classes/class_cours.php';
 session_start();
-$coursdetail = null; // Initialisation à null
+$coursdetail = null; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (isset($_GET['cours_id']) && !empty($_GET['cours_id'])) {

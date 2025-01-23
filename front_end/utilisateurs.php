@@ -167,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 require_once '../classes/class_utilisateurs.php';
 
                 // $student = new Student($_SESSION['id'],$_SESSION['nom'], $_SESSION['prenom'], $_SESSION['email'], $_SESSION['role']);
-                $students=Student::getAllUtilisateurs();
+                $students = Student::getAllUtilisateurs();
                 ?>
                 <div class="bg-white rounded-lg shadow">
                     <div class="p-6 border-b">
@@ -175,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                     <div class="p-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <!-- Boucle pour afficher chaque enseignant -->
+
                             <?php if (count($students) > 0): ?>
                                 <?php foreach ($students as $enseignant): ?>
                                     <div class="bg-white border rounded-lg overflow-hidden">
@@ -190,15 +190,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!-- Affichage dynamique du statut -->
-                                                <span class="px-3 py-1 <?= $enseignant['statut'] == 'Suspendu' ? 'bg-red-100 text-red-700' : ($enseignant['statut'] == 'Actif' ? 'bg-green-100 text-green-700' : ($enseignant['statut'] == 'En attente' ? 'bg-blue-300 text-blue-700' :'bg-gray-100 text-gray-700')) ?> rounded-full text-sm">
+                                                <span class="px-3 py-1 <?= $enseignant['statut'] == 'Suspendu' ? 'bg-red-100 text-red-700' : ($enseignant['statut'] == 'Actif' ? 'bg-green-100 text-green-700' : ($enseignant['statut'] == 'En attente' ? 'bg-blue-300 text-blue-700' : 'bg-gray-100 text-gray-700')) ?> rounded-full text-sm">
                                                     <?= htmlspecialchars($enseignant['statut']) ?>
                                                 </span>
 
 
 
                                                 <div class="flex gap-2">
-                                                    <!-- Bouton pour changer le statut -->
                                                     <form action="" method="POST">
                                                         <input type="hidden" name="student_id" value="<?= $enseignant['id']; ?>">
                                                         <button type="submit" name="change_status" class="p-2 text-yellow-600 hover:text-yellow-800">

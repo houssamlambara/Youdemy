@@ -163,17 +163,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
 
             <!-- Formulaire pour ajouter un cours -->
             <?php
-            // Inclure la classe Category et récupérer les catégories
             include('../classes/class_categorie.php');
 
             $categoryModel = new Categorie("");
             $categories = $categoryModel->getAll();
 
-            // Vérifier que $categories contient des données
             if (empty($categories)) {
                 echo "Aucune catégorie disponible.";
             } else {
-                // Afficher le formulaire après avoir récupéré les catégories
             ?>
                 <main>
                     <div id="addCourseModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center hidden">
@@ -249,7 +246,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_cours'])) {
                         }
                     }
 
-                    // Appeler la fonction au chargement de la page pour afficher le champ correct en fonction de la sélection par défaut
                     document.addEventListener('DOMContentLoaded', function() {
                         toggleContentField();
                     });
