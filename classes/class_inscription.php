@@ -19,11 +19,9 @@ class Inscription {
             $query = "INSERT INTO " . $this->table . " (etudiant_id, cours_id) VALUES (?, ?)";
             $stmt = $conn->prepare($query);
     
-            // Liaison des valeurs à leurs paramètres respectifs
             $stmt->bindValue(1, $this->etudiant_id, PDO::PARAM_STR);
             $stmt->bindValue(2, $this->cours_id, PDO::PARAM_INT);
     
-            // Exécuter la requête
             if ($stmt->execute()) {
                 return true;
             }

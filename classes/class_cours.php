@@ -3,7 +3,7 @@ require_once('database.php');
 
 class Cours
 {
-    protected $id;  // Ajout de l'attribut `$id`
+    protected $id;  
     protected $titre;
     protected $description;
     protected $image_url;
@@ -20,7 +20,6 @@ class Cours
         $this->categorie_id = $categorie_id;
         $this->prix = $prix;
     }
-    // Getter et Setter pour $titre
     public function getId()
     {
         return $this->id;
@@ -39,7 +38,6 @@ class Cours
         $this->titre = $titre;
     }
 
-    // Getter et Setter pour $description
     public function getDescription()
     {
         return $this->description;
@@ -50,7 +48,6 @@ class Cours
         $this->description = $description;
     }
 
-    // Getter et Setter pour $image_url
     public function getImageUrl()
     {
         return $this->image_url;
@@ -61,7 +58,6 @@ class Cours
         $this->image_url = $image_url;
     }
 
-    // Getter et Setter pour $categorie_id
     public function getCategorieId()
     {
         return $this->categorie_id;
@@ -72,7 +68,6 @@ class Cours
         $this->categorie_id = $categorie_id;
     }
 
-    // Getter et Setter pour $prix
     public function getPrix()
     {
         return $this->prix;
@@ -162,16 +157,15 @@ class Cours
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($result) {
-            // Retourner un objet Cours
             $this->id = $result['id'];
             $this->titre = $result['titre'];
             $this->description = $result['description'];
             $this->image_url = $result['image_url'];
             $this->categorie_id = $result['categorie_id'];
             $this->prix = $result['prix'];
-            return $this;  // Retourne l'instance de l'objet
+            return $this; 
         } else {
-            return null;  // Aucun cours trouvé
+            return null;  
         }
     }
 
@@ -186,9 +180,8 @@ class Cours
             // $stmt->bindParam(':image_url', $this->image_url, PDO::PARAM_STR);
             $stmt->bindParam(':categorie_id', $newcategorie_id, PDO::PARAM_INT);
             $stmt->bindParam(':prix', $newprix, PDO::PARAM_STR);
-            $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);  // ID utilisé pour la mise à jour
+            $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);  
 
-            // Log SQL pour vérifier la requête
             if ($stmt->execute()) {
                 return true;
             } else {

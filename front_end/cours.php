@@ -1,5 +1,5 @@
-<?php 
- session_start();
+<?php
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -19,10 +19,10 @@
             <a href="../index.php" class="flex items-center space-x-3">
                 <span class="self-center text-2xl font-bold text-indigo-600">Youdemy</span>
             </a>
-          
-                      
-                 
-           
+
+
+
+
             <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
                 <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 md:flex-row md:mt-0 md:border-0 md:bg-white">
                     <li>
@@ -38,37 +38,38 @@
                         <a href="./about.php" class="block py-2 px-3 text-black hover:text-indigo-600" id="about">About Youdemy</a>
 
                     </li>
-                    <?php 
-                       if(isset($_SESSION['id'])){
-                        if($_SESSION['role'] == 2){      
+                    <?php
+                    if (isset($_SESSION['id'])) {
+                        if ($_SESSION['role'] == 2) {
                     ?>
-                    <li>
-                        <a href="./mycours.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Mes Cours</a>
-                    </li>
+                            <li>
+                                <a href="./mycours.php" class="block py-2 px-3 text-gray-900 hover:text-indigo-600">Mes Cours</a>
+                            </li>
 
-                    <?php 
-                  }}
-                ?>
-                    
+                    <?php
+                        }
+                    }
+                    ?>
+
                 </ul>
-                
-            </div>
-            <?php 
-              if(isset($_SESSION['id'])){
-                  if($_SESSION['role'] == 2){
-            ?>
-             <div class="flex md:order-2 space-x-3">
-                <form action="../login/logout.php" method="post">
 
-                    <button type="submit" name="logout" class="text-white bg-indigo-600 hover:bg-indigo-700 font-medium rounded-lg text-sm px-4 py-2">
-                        Déconnexion
-                    </button>
-                </form>
-                
-                <!-- <a href="../login/signup.php" class="text-indigo-600 bg-white hover:bg-indigo-50 hover:text-indigo-700 font-medium rounded-lg text-sm px-4 py-2 border border-indigo-600">
+            </div>
+            <?php
+            if (isset($_SESSION['id'])) {
+                if ($_SESSION['role'] == 2) {
+            ?>
+                    <div class="flex md:order-2 space-x-3">
+                        <form action="../login/logout.php" method="post">
+
+                            <button type="submit" name="logout" class="text-white bg-indigo-600 hover:bg-indigo-700 font-medium rounded-lg text-sm px-4 py-2">
+                                Déconnexion
+                            </button>
+                        </form>
+
+                        <!-- <a href="../login/signup.php" class="text-indigo-600 bg-white hover:bg-indigo-50 hover:text-indigo-700 font-medium rounded-lg text-sm px-4 py-2 border border-indigo-600">
                     S'inscrire
                 </a> -->
-                <!-- <button data-collapse-toggle="navbar-sticky" type="button"
+                        <!-- <button data-collapse-toggle="navbar-sticky" type="button"
                     class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100"
                     aria-controls="navbar-sticky" aria-expanded="false">
                     <span class="sr-only">Menu</span>
@@ -77,31 +78,32 @@
                             d="M1 1h15M1 7h15M1 13h15" />
                     </svg>
                 </button> -->
-            </div>
-     
-                <?php 
-                  }}else{
-                ?>
-                 <div class="flex md:order-2 space-x-3">
-                <a href="../login/signin.php" class="text-white bg-indigo-600 hover:bg-indigo-700 font-medium rounded-lg text-sm px-4 py-2">
-                    Connexion
-                </a>
-                 <a href="../login/signup.php" class="text-indigo-600 bg-white hover:bg-indigo-50 hover:text-indigo-700 font-medium rounded-lg text-sm px-4 py-2 border border-indigo-600">
-                    S'inscrire
-                </a>
-                 <button data-collapse-toggle="navbar-sticky" type="button"
-                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100"
-                    aria-controls="navbar-sticky" aria-expanded="false">
-                    <span class="sr-only">Menu</span>
-                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M1 1h15M1 7h15M1 13h15" />
-                    </svg>
-                </button> 
+                    </div>
+
                 <?php
-                  }
+                }
+            } else {
                 ?>
-        </div>
+                <div class="flex md:order-2 space-x-3">
+                    <a href="../login/signin.php" class="text-white bg-indigo-600 hover:bg-indigo-700 font-medium rounded-lg text-sm px-4 py-2">
+                        Connexion
+                    </a>
+                    <a href="../login/signup.php" class="text-indigo-600 bg-white hover:bg-indigo-50 hover:text-indigo-700 font-medium rounded-lg text-sm px-4 py-2 border border-indigo-600">
+                        S'inscrire
+                    </a>
+                    <button data-collapse-toggle="navbar-sticky" type="button"
+                        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100"
+                        aria-controls="navbar-sticky" aria-expanded="false">
+                        <span class="sr-only">Menu</span>
+                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M1 1h15M1 7h15M1 13h15" />
+                        </svg>
+                    </button>
+                <?php
+            }
+                ?>
+                </div>
     </nav>
 
     <!-- Filtres et Catalogue -->
@@ -162,23 +164,23 @@
                         <p class="text-gray-600 mb-4"><?php echo htmlspecialchars($Cours['description']); ?></p>
                         <div class="flex items-center justify-between">
                             <span class="text-xl font-bold text-indigo-600"><?php echo number_format($Cours['prix'], 2, ',', ' ') . '€'; ?></span>
-                            <?php 
-                            if(isset($_SESSION['id'])){
-                                if($_SESSION['role'] == 2){
-                                    ?>
-                                       <form action="./details.php" method="POST">
+                            <?php
+                            if (isset($_SESSION['id'])) {
+                                if ($_SESSION['role'] == 2) {
+                            ?>
+                                    <form action="./details.php" method="POST">
                                         <input type="hidden" name="cours_id" value="<?php echo $Cours['id']; ?>">
                                         <button type="submit" class="text-white bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-lg">
                                             <a href="./details.php?cours_id=<?= $Cours['id'] ?>" class="text-white bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-lg">
                                                 Détail de cours
                                             </a>
                                         </button>
-                                    <?php
+                                <?php
                                 }
                             }
-                            ?>
-                           
-                            </form>
+                                ?>
+
+                                    </form>
                         </div>
                     </div>
                 </div>

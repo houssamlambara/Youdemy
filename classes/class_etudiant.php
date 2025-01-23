@@ -13,7 +13,6 @@ class Student extends User {
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    // Exemple d'ajout dans la classe Student
 
     public function getTotalStudents() {
         $db = Database::getInstance()->getConnection();
@@ -45,7 +44,6 @@ class Student extends User {
     public function getcoursStudent(){
         $db = Database::getInstance()->getConnection();
         
-        // Requête SQL avec un ? pour le paramètre
         $sql = "SELECT * FROM cours
                 INNER JOIN inscriptions ON cours.id = inscriptions.cours_id
                 INNER JOIN users ON inscriptions.etudiant_id = users.id

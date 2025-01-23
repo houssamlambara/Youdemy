@@ -78,7 +78,7 @@ class Categorie
             $stmt = $db->query("SELECT id, nom FROM categories");
             $categories = [];
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $categories[] = new Categorie($row['nom'], $row['id']); // Create Categorie objects
+                $categories[] = new Categorie($row['nom'], $row['id']); 
             }
             return $categories;
         } catch (PDOException $e) {
