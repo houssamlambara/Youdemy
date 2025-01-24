@@ -78,24 +78,6 @@ CREATE TABLE inscriptions (
     FOREIGN KEY (cours_id) REFERENCES cours(id) ON DELETE CASCADE
 );
 
-
-CREATE TABLE validation_enseignants (
-    enseignant_id INT PRIMARY KEY,
-    statut_validation ENUM('En_attente', 'Valide', 'Refuse') DEFAULT 'en_attente',
-    date_validation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (enseignant_id) REFERENCES users(id) ON DELETE CASCADE
-);
-
-CREATE TABLE logs_admin (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    admin_id INT,
-    action VARCHAR(255) NOT NULL,
-    cible_type ENUM('Utilisateur', 'Cours', 'Categorie', 'Tag', 'Validation') NOT NULL,
-    cible_id INT NOT NULL,
-    date_action TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (admin_id) REFERENCES users(id) ON DELETE CASCADE
-);
-
 INSERT INTO roles (role_name) VALUES ('Admin');
 INSERT INTO roles (role_name) VALUES ('Etudiant');
 INSERT INTO roles (role_name) VALUES ('Enseignant');

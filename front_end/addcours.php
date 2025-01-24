@@ -1,43 +1,43 @@
 <?php
-require_once('../classes/class_cours.php');
-require_once('../classes/database.php');
+// require_once('../classes/class_cours.php');
+// require_once('../classes/database.php');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
+// if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_course'])) {
 
-    $titre = htmlspecialchars($_POST['titre']);
-    $description = htmlspecialchars($_POST['description']);
-    $categorie_id = htmlspecialchars($_POST['categorie_id']);
-    $prix = htmlspecialchars($_POST['prix']);
-    $image_url = '';
+//     $titre = htmlspecialchars($_POST['titre']);
+//     $description = htmlspecialchars($_POST['description']);
+//     $categorie_id = htmlspecialchars($_POST['categorie_id']);
+//     $prix = htmlspecialchars($_POST['prix']);
+//     $image_url = '';
 
-    if (isset($_FILES['image_url']) && !empty($_FILES['image_url']['name'])) {
-        $dir = '../uploads/';
-        $path = basename($_FILES['image_url']['name']);
-        $finalPath = $dir . uniqid() . "_" . $path;
-        $allowedExtensions = ['png', 'jpg', 'jpeg', 'gif', 'svg'];
-        $extension = pathinfo($finalPath, PATHINFO_EXTENSION);
+//     if (isset($_FILES['image_url']) && !empty($_FILES['image_url']['name'])) {
+//         $dir = '../uploads/';
+//         $path = basename($_FILES['image_url']['name']);
+//         $finalPath = $dir . uniqid() . "_" . $path;
+//         $allowedExtensions = ['png', 'jpg', 'jpeg', 'gif', 'svg'];
+//         $extension = pathinfo($finalPath, PATHINFO_EXTENSION);
 
-        if (in_array(strtolower($extension), $allowedExtensions)) {
-            if (move_uploaded_file($_FILES['image_url']['tmp_name'], $finalPath)) {
-                $image_url = $finalPath;
-            } else {
-                echo "Erreur lors du téléchargement de l'image.";
-            }
-        } else {
-            echo "Extension non autorisée pour l'image.";
-        }
+//         if (in_array(strtolower($extension), $allowedExtensions)) {
+//             if (move_uploaded_file($_FILES['image_url']['tmp_name'], $finalPath)) {
+//                 $image_url = $finalPath;
+//             } else {
+//                 echo "Erreur lors du téléchargement de l'image.";
+//             }
+//         } else {
+//             echo "Extension non autorisée pour l'image.";
+//         }
 
-        $cours = new Cours($titre, $description, $image_url, $categorie_id, $prix);
+//         $cours = new Cours($titre, $description, $image_url, $categorie_id, $prix);
 
-        if ($cours->save()) {
-            echo "Le cours a été ajouté avec succès !";
-            header('Location: addcours.php');
-            exit();
-        } else {
-            echo "Une erreur s'est produite lors de l'ajout du cours.";
-        }
-    }
-}
+//         if ($cours->save()) {
+//             echo "Le cours a été ajouté avec succès !";
+//             header('Location: addcours.php');
+//             exit();
+//         } else {
+//             echo "Une erreur s'est produite lors de l'ajout du cours.";
+//         }
+//     }
+// }
 ?>
 
 <!DOCTYPE html>
